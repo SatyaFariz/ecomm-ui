@@ -24,14 +24,28 @@ const shipping_methods = [
     "https://kejorahq.com/wp-content/uploads/2021/06/sicepat-logo.png"
 ]
 
+const socials = [
+    {
+        url: 'https://instagram.com',
+        icon: <AiOutlineInstagram className={styles.icon}/>
+    },
+    {
+        url: 'https://facebook.com',
+        icon: <AiFillFacebook className={styles.icon}/>
+    }
+]
+
 const Footer: NextPage = () => {
   return (
     <div className={styles.footer}>
         <div className={styles.section}>
             <h6 className={styles.title}>Follow us</h6>
             <div className={styles.icons}>
-                <AiOutlineInstagram className={styles.icon}/>
-                <AiFillFacebook className={styles.icon}/>
+                {socials.map(social =>
+                    <a href={social.url} target="_blank">
+                        {social.icon}
+                    </a>
+                )}
             </div>
         </div>
 
