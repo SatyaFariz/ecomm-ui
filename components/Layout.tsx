@@ -1,4 +1,5 @@
 import AppHeader from './AppHeader'
+import Footer from './Footer'
 
 const AppTemplate = (props: any) => {
   return (
@@ -7,6 +8,7 @@ const AppTemplate = (props: any) => {
       <div>
       {props.children}
       </div>
+      <Footer/>
     </div>
   )
 }

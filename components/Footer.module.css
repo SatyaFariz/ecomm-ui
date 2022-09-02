@@ -1,0 +1,24 @@
+.footer {
+    @apply p-8 pb-3 bg-slate-50
+}
+
+.title {
+    @apply uppercase font-medium text-sm
+}
+
+.icons {
+    @apply flex gap-4 my-4 flex-wrap
+}
+
+.icon {
+    font-size: 24px;
+    max-height: 24px;
+}
+
+.section {
+    @apply border-b border-slate-900/10 mb-4
+}
+
+.copyright {
+    @apply text-xs text-center
+}
