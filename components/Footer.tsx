@@ -37,8 +37,8 @@ const socials = [
 
 const Footer: NextPage = () => {
   return (
-    <div className={styles.footer}>
-        <div className={styles.section}>
+    <footer className={styles.footer}>
+        <section className={styles.section}>
             <h6 className={styles.title}>Follow us</h6>
             <div className={styles.icons}>
                 {socials.map(social =>
@@ -47,28 +47,28 @@ const Footer: NextPage = () => {
                     </a>
                 )}
             </div>
-        </div>
+        </section>
 
-        <div className={styles.section}>
+        <section className={styles.section}>
             <h6 className={styles.title}>Payment methods</h6>
             <div className={styles.icons}>
                 {payment_methods.map(method =>
                     <img className={styles.icon} src={method} alt="payment method" key={method}/>
                 )}
             </div>
-        </div>
+        </section>
 
-        <div className={styles.section}>
+        <section className={styles.section}>
             <h6 className={styles.title}>Shipping methods</h6>
             <div className={styles.icons}>
                 {shipping_methods.map(method =>
                     <img className={styles.icon} src={method} alt="shipping method" key={method}/>
                 )}
             </div>
-        </div>
+        </section>
 
         <p className={styles.copyright}>Copyright @ {new Date().getFullYear()} - Market X. All Right Reserved</p>
-    </div>
+    </footer>
   )
 }
 
