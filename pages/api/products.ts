@@ -13,10 +13,10 @@ class Oauth1Helper {
     
       const oauth = oauth1a({
           consumer: { key: CONSUMERKEY, secret: CONSUMERSECRET },
-          signature_method: 'HMAC-SHA1',
+          signature_method: 'HMAC-SHA256',
           hash_function(base_string: string, key: string) {
               return crypto
-                  .createHmac('sha1', key)
+                  .createHmac('sha256', key)
                   .update(base_string)
                   .digest('base64')
           },
@@ -48,7 +48,7 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
         'searchCriteria[pageSize]': req.query.limit || '10'
     }
 
-    const url = `https://magento.femaledaily.net/rest/default/V1/products?${qs.stringify(query, { encode: false })}`
+    const url = `http://localhost/rest/default/V1/products?${qs.stringify(query, { encode: false })}`
 
     const request = {
         url,
