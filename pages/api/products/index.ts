@@ -44,7 +44,6 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
         } : null
 
         return {
-            slug: customAttributes.url_key || null,
             sale,
             ...i
         }

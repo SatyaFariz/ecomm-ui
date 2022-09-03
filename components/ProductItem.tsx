@@ -4,7 +4,7 @@ import styles from './ProductItem.module.css'
 const ProductItem = (props: any) => {
     const { product } = props
     return (
-        <Link href={`/products/${product.id}`}>
+        <Link href={`/products/${product.sku}`}>
             <div className={styles.container}>
                 {product.sale &&
                 <div className={styles.discountPercentage}>
