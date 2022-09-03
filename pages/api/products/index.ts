@@ -3,10 +3,6 @@ import axios from 'axios'
 import qs from 'query-string'
 import Oauth1Helper from '../../../helpers/Oauth1Helper'
 
-// type Data = {
-//   name: string
-// }
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
