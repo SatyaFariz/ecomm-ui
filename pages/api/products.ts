@@ -39,7 +39,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
     const request = {
-        url: 'https://magento.femaledaily.net/rest/default/V1/products?searchCriteria[currentPage]=1',
+        url: 'https://magento.femaledaily.net/rest/default/V1/products?searchCriteria[currentPage]=1&searchCriteria[pageSize]=10',
         method: 'GET',
     };
     
@@ -49,5 +49,5 @@ export default async function handler(
         request.url,
         { headers: authHeader });
 
-    res.status(200).send(result.data)
+    res.status(200).json(result.data)
 }
