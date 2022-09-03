@@ -60,7 +60,7 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
     const result = await axios.get(request.url, { headers: authHeader })
 
     const { data } = result
-    const mappedData = data.items.map((i: any) => {
+    data.items = data.items.map((i: any) => {
         const customAttributes = i.custom_attributes.reduce((obj: any, val: any) => {
             obj[val.attribute_code] = val.value
             return obj
@@ -81,5 +81,5 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
         }
     })
 
-    res.status(200).json(mappedData)
+    res.status(200).json(data)
 }

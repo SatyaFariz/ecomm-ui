@@ -3,5 +3,9 @@
 }
 
 .price {
-    @apply mt-2 text-sm font-bold
+    @apply mt-2 text-sm font-bold leading-[1]
+}
+
+.salePrice {
+    @apply price line-through text-red-600
 }

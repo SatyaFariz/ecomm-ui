@@ -1,3 +1,3 @@
 .list {
-    @apply grid-cols-2 grid gap-[15px]
+    @apply grid-cols-2 grid gap-[15px] gap-y-[25px]
 }
