@@ -2,10 +2,18 @@
     @apply mt-2 text-sm
 }
 
+.container {
+    @apply relative
+}
+
 .price {
     @apply mt-2 text-sm font-bold leading-[1]
 }
 
 .salePrice {
     @apply price line-through text-slate-500
+}
+
+.discountPercentage {
+    @apply h-[35px] w-[35px] bg-amber-300 absolute left-1 top-1 rounded-[50%] flex justify-center items-center text-sm font-extrabold opacity-[0.85]
 }
