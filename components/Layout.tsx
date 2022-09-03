@@ -1,7 +1,7 @@
 import AppHeader from './AppHeader'
 import Footer from './Footer'
 
-const AppTemplate = (props: any) => {
+const Layout = (props: any) => {
   return (
     <>
       <AppHeader/>
@@ -13,4 +13,4 @@ const AppTemplate = (props: any) => {
   )
 }
 
-export default AppTemplate
+export default Layout

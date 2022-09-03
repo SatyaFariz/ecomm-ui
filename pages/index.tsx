@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
 import Layout from '../components/Layout'
+import ProductList from '../components/ProductList'
 
 const Home: NextPage = () => {
   return (
     <Layout>
-        <div className="h-[9000px]">
-        </div>
+        <ProductList/>
     </Layout>
   )
 }
