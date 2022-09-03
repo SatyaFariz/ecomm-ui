@@ -1,14 +1,14 @@
-const oauth1a = require('oauth-1.0a')
+import oauth1a from 'oauth-1.0a'
 import { createHmac } from 'crypto'
 
 class Oauth1Helper {
     static getAuthHeaderForRequest(request: any) {
-      const CONSUMERKEY = process.env.MAGENTO_CONSUMER_KEY
-      const CONSUMERSECRET = process.env.MAGENTO_CONSUMER_SECRET
-      const TOKENKEY = process.env.MAGENTO_TOKEN_KEY
-      const TOKENSECRET = process.env.MAGENTO_TOKEN_SECRET
+      const CONSUMERKEY = process.env.MAGENTO_CONSUMER_KEY || ''
+      const CONSUMERSECRET = process.env.MAGENTO_CONSUMER_SECRET || ''
+      const TOKENKEY = process.env.MAGENTO_TOKEN_KEY || ''
+      const TOKENSECRET = process.env.MAGENTO_TOKEN_SECRET || ''
     
-      const oauth = oauth1a({
+      const oauth = new oauth1a({
           consumer: { key: CONSUMERKEY, secret: CONSUMERSECRET },
           signature_method: 'HMAC-SHA256',
           hash_function(base_string: string, key: string) {
