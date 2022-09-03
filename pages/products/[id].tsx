@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import Layout from '../../components/Layout'
+import styles from '../../styles/ProductDetail.module.css'
 
 const Product = () => {
     const router = useRouter()
@@ -16,8 +17,8 @@ const Product = () => {
     return (
         <Layout>
             <img src={`http://192.168.1.101/media/catalog/product${data.media_gallery_entries[0]?.file}`}/>
-            <div className="p-5">
-                PRODUCT PAGE
+            <div className={styles.section}>
+                <p className={styles.name}>{data.name}</p>
             </div>
         </Layout>
     )
