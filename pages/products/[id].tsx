@@ -10,16 +10,20 @@ const Product = () => {
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
         fetch(`/api/products/${id}`).then(res => res.json())
     )
-    
-    if (isLoading) return 'Loading...'
  
     if (error) return 'An error has occurred: ' + error.message
     return (
         <Layout>
-            <img src={`http://192.168.1.101/media/catalog/product${data.media_gallery_entries[0]?.file}`}/>
-            <div className={styles.section}>
-                <p className={styles.name}>{data.name}</p>
-            </div>
+            {isLoading ?
+            <p>Loading...</p>
+            :
+            <>
+                <img src={`http://192.168.1.101/media/catalog/product${data.media_gallery_entries[0]?.file}`}/>
+                <div className={styles.section}>
+                    <p className={styles.name}>{data.name}</p>
+                </div>
+            </>
+            }
         </Layout>
     )
 }
