@@ -12,6 +12,7 @@
     "axios": "^0.27.2",
     "next": "12.2.5",
     "oauth-1.0a": "^2.2.6",
+    "query-string": "^7.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",

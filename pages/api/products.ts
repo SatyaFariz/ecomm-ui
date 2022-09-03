@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
+import qs from 'query-string'
 const oauth1a = require('oauth-1.0a')
 const crypto = require('crypto')
 
@@ -38,16 +39,25 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+    if(req.method === 'GET') return await get(req, res)
+}
+
+async function get(req: NextApiRequest, res: NextApiResponse) {
+    const query = {
+        'searchCriteria[currentPage]': req.query.page || '1',
+        'searchCriteria[pageSize]': req.query.limit || '10'
+    }
+
+    const url = `https://magento.femaledaily.net/rest/default/V1/products?${qs.stringify(query, { encode: false })}`
+
     const request = {
-        url: 'https://magento.femaledaily.net/rest/default/V1/products?searchCriteria[currentPage]=1&searchCriteria[pageSize]=10',
+        url,
         method: 'GET',
-    };
+    }
+
+    const authHeader = Oauth1Helper.getAuthHeaderForRequest(request)
     
-    const authHeader = Oauth1Helper.getAuthHeaderForRequest(request);
-    
-    const result = await axios.get(
-        request.url,
-        { headers: authHeader });
+    const result = await axios.get(request.url, { headers: authHeader })
 
     res.status(200).json(result.data)
 }
