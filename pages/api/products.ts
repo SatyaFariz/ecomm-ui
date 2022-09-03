@@ -71,7 +71,8 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
         const sale = parsedSpecialPrice > 0 ? {
             price: parsedSpecialPrice,
             from: customAttributes.special_from_date,
-            to: customAttributes.special_to_date
+            to: customAttributes.special_to_date,
+            discount_percentage: Math.floor(100 * (i.price - parsedSpecialPrice) / i.price)
         } : null
 
         return {
