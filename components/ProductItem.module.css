@@ -1,0 +1,7 @@
+.name {
+    @apply mt-2 text-sm
+}
+
+.price {
+    @apply mt-2 text-sm font-bold
+}

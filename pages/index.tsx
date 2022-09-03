@@ -13,7 +13,9 @@ const Home = () => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <Layout>
-            <ProductList products={data.items}/>
+            <div className="p-5">
+                <ProductList products={data.items}/>
+            </div>
         </Layout>
     )
 }

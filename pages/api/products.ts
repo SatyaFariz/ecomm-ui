@@ -59,5 +59,27 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
     
     const result = await axios.get(request.url, { headers: authHeader })
 
-    res.status(200).json(result.data)
+    const { data } = result
+    const mappedData = data.items.map((i: any) => {
+        const customAttributes = i.custom_attributes.reduce((obj: any, val: any) => {
+            obj[val.attribute_code] = val.value
+            return obj
+        }, {})
+
+        const parsedSpecialPrice = parseFloat(customAttributes.special_price)
+
+        const sale = parsedSpecialPrice > 0 ? {
+            price: parsedSpecialPrice,
+            from: customAttributes.special_from_date,
+            to: customAttributes.special_to_date
+        } : null
+
+        return {
+            slug: customAttributes.url_key || null,
+            sale,
+            ...i
+        }
+    })
+
+    res.status(200).json(mappedData)
 }
