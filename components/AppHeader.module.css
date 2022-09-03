@@ -1,5 +1,5 @@
 .header {
-    @apply sticky h-[64px] top-0 flex items-center border-b border-slate-900/10 justify-between
+    @apply bg-white sticky h-[64px] top-0 flex items-center border-b border-slate-900/10 justify-between
 }
 
 .logo {

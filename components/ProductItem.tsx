@@ -1,10 +1,11 @@
 
 
 const ProductItem = (props: any) => {
+    const { product } = props
     return (
-      <div>
-        
-      </div>
+        <div>
+            <p>{product.id}</p>
+        </div>
     )
   }
   
