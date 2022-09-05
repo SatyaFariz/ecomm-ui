@@ -1,5 +1,9 @@
 .header {
-    @apply z-[99999999] bg-white sticky h-[64px] top-0 flex items-center border-b border-slate-900/10 justify-between
+    @apply z-[99999999] bg-white sticky h-[64px] top-0 border-b border-slate-900/10
+}
+
+.container {
+    @apply flex items-center justify-between h-full
 }
 
 .logo {
