@@ -6,6 +6,17 @@
     @apply flex items-center justify-between h-full px-4
 }
 
+.searchbar {
+    @apply flex items-center h-full px-4
+}
+
+.searchbox {
+    @apply h-[32px] bg-slate-100 flex items-center w-full px-2 ml-3
+}
+
+.textinput {
+    @apply text-sm bg-[transparent] w-full
+}
 .icons {
     @apply flex gap-4
 }
