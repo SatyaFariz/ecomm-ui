@@ -11,7 +11,7 @@ const ProductItem = (props: any) => {
                     {product.sale.discount_percentage}%
                 </div>
                 }
-                <img src={`http://192.168.1.101/media/catalog/product${product.media_gallery_entries[0]?.file}`}/>
+                <img src={`http://localhost/media/catalog/product${product.media_gallery_entries[0]?.file}`}/>
                 <p className={styles.name}>{product.name}</p>
                 <p className={styles.price}>Rp {product.sale?.price || product.price}</p>
                 {product.sale &&

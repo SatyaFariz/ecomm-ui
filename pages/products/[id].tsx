@@ -18,7 +18,7 @@ const Product = () => {
             <p>Loading...</p>
             :
             <>
-                <img src={`http://192.168.1.101/media/catalog/product${data.media_gallery_entries[0]?.file}`}/>
+                <img src={`http://localhost/media/catalog/product${data.media_gallery_entries[0]?.file}`}/>
                 <div className={styles.section}>
                     <p className={styles.name}>{data.name}</p>
                 </div>

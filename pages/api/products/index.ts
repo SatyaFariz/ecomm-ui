@@ -11,9 +11,16 @@ export default async function handler(
 }
 
 async function get(req: NextApiRequest, res: NextApiResponse) {
-    const query = {
+    const { search_term } = req.query
+    const query: any = {
         'searchCriteria[currentPage]': req.query.page || '1',
         'searchCriteria[pageSize]': req.query.limit || '10'
+    }
+
+    if(search_term) {
+        query['searchCriteria[filterGroups][0][filters][0][field]'] = 'name'
+        query['searchCriteria[filterGroups][0][filters][0][value]'] = `%25${search_term}%25`
+        query['searchCriteria[filterGroups][0][filters][0][conditionType]'] = 'like'
     }
 
     const url = `http://localhost/rest/default/V1/products?${qs.stringify(query, { encode: false })}`
