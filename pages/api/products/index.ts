@@ -11,16 +11,27 @@ export default async function handler(
 }
 
 async function get(req: NextApiRequest, res: NextApiResponse) {
-    const { search_term } = req.query
+    const { search_term, page, limit, sort } = req.query
+
     const query: any = {
-        'searchCriteria[currentPage]': req.query.page || '1',
-        'searchCriteria[pageSize]': req.query.limit || '10'
+        'searchCriteria[currentPage]': page || '1',
+        'searchCriteria[pageSize]': limit || '10'
     }
 
     if(search_term) {
         query['searchCriteria[filterGroups][0][filters][0][field]'] = 'name'
         query['searchCriteria[filterGroups][0][filters][0][value]'] = `%25${search_term}%25`
         query['searchCriteria[filterGroups][0][filters][0][conditionType]'] = 'like'
+    }
+
+    if(sort) {
+        if(sort === 'price_asc') {
+            query['searchCriteria[sortOrders][0][field]'] = 'price'
+            query['searchCriteria[sortOrders][0][direction]'] = 'asc'
+        } else if(sort === 'price_desc') {
+            query['searchCriteria[sortOrders][0][field]'] = 'price'
+            query['searchCriteria[sortOrders][0][direction]'] = 'desc'
+        }
     }
 
     const url = `http://localhost/rest/default/V1/products?${qs.stringify(query, { encode: false })}`
