@@ -1,16 +1,23 @@
 import type { NextPage } from 'next'
 import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft } from 'react-icons/ai'
-import { useState, useRef, RefObject } from 'react'
+import { useState, useRef, RefObject, ChangeEvent } from 'react'
 import styles from './AppHeader.module.css'
+import { useRouter } from 'next/router'
 
 const AppHeader: NextPage = () => {
     const [isSearching, setIsSearching] = useState(false)
     const inputRef: RefObject<HTMLInputElement> = useRef(null)
+    const router = useRouter()
 
     const toggleSearch = (isSearching: boolean) => {
         setIsSearching(isSearching)
         if(isSearching) inputRef.current?.focus()
         else inputRef.current?.blur()
+    }
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        router.query.search_term = e.target.value
+        router.replace(router)
     }
 
     return (
@@ -37,6 +44,7 @@ const AppHeader: NextPage = () => {
                         type="text" 
                         spellCheck="false"
                         ref={inputRef}
+                        onChange={handleInputChange}
                     />
                 </div>
             </div>
