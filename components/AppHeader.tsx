@@ -26,9 +26,12 @@ const AppHeader: NextPage = () => {
 
     useEffect(() => {
         if(isMounted && debouncedSearchTerm.length > 0) {
-            console.log(debouncedSearchTerm)
-            // router.query.search_term = debouncedSearchTerm
-            // router.replace(router)
+            router.replace(router.pathname, {
+                query: {
+                    ...router.query,
+                    search_term: debouncedSearchTerm
+                }
+            })
         }
     }, [debouncedSearchTerm])
 
