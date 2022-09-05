@@ -7,7 +7,6 @@ const AppHeader: NextPage = () => {
     <header className={styles.header}>
         <div className={styles.container}>
             <img
-                className={styles.logo}
                 src="https://werkidz.mygostore.com/_next/static/images/goStore-logo-64f7ac0ca37c2341f8ae739a75345580.svg"
                 alt="app logo"
             />
