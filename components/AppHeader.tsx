@@ -13,8 +13,8 @@ const AppHeader: NextPage = () => {
             />
 
             <div className={styles.icons}>
-                <AiOutlineSearch size={24}/>
-                <AiOutlineShopping size={24}/>
+                <AiOutlineSearch className={styles.icon}/>
+                <AiOutlineShopping className={styles.icon}/>
             </div>
         </div>
     </header>

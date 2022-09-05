@@ -13,3 +13,7 @@
 .icons {
     @apply flex gap-4 mr-4
 }
+
+.icon {
+    @apply text-[24px]
+}
