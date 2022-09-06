@@ -1,5 +1,5 @@
 .container {
-    @apply flex
+    @apply flex justify-center
 }
 
 .button {
