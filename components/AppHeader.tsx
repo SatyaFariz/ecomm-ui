@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft } from 'react-icons/ai'
+import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineClose } from 'react-icons/ai'
 import { useState, useRef, RefObject, ChangeEvent, useEffect } from 'react'
 import styles from './AppHeader.module.css'
 import { useRouter } from 'next/router'
@@ -24,16 +24,25 @@ const AppHeader: NextPage = () => {
         setSearchTerm(e.target.value)
     }
 
+    const resetInput = () => {
+        setSearchTerm('')
+        setQuery()
+    }
+
+    const setQuery = () => {
+        const query = { ...router.query }
+        if((debouncedSearchTerm as string)?.trim().length === 0)
+            delete query.search_term
+        else query.search_term = debouncedSearchTerm
+        
+        router.replace(router.pathname, {
+            query
+        })
+    }
+
     useEffect(() => {
         if(isMounted) {
-            const query = { ...router.query }
-            if((debouncedSearchTerm as string)?.trim().length === 0)
-                delete query.search_term
-            else query.search_term = debouncedSearchTerm
-            
-            router.replace(router.pathname, {
-                query
-            })
+            setQuery()
         }
     }, [debouncedSearchTerm])
 
@@ -61,9 +70,14 @@ const AppHeader: NextPage = () => {
                         type="text" 
                         spellCheck="false"
                         ref={inputRef}
-                        defaultValue={searchTerm}
+                        value={searchTerm}
                         onChange={handleInputChange}
                     />
+                    {searchTerm.length > 0 &&
+                    <button className={styles.closeButton} onClick={resetInput}>
+                        <AiOutlineClose/>
+                    </button>
+                    }
                 </div>
             </div>
         </header>

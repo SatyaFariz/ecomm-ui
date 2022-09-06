@@ -11,7 +11,7 @@
 }
 
 .searchbox {
-    @apply h-[32px] bg-slate-100 flex items-center w-full px-2 ml-3
+    @apply h-[32px] bg-slate-100 flex items-center w-full pl-2 ml-3
 }
 
 .textinput {
@@ -23,4 +23,8 @@
 
 .icon {
     @apply text-[24px]
+}
+
+.closeButton {
+    @apply p-2
 }
