@@ -5,6 +5,23 @@ import useQueryParams from '../hooks/useQueryParams'
 import useQuery from '../hooks/useQuery'
 import qs from 'query-string'
 import styles from '../styles/Home.module.css'
+import { dehydrate, QueryClient } from 'react-query'
+
+export async function getServerSideProps(context: any) {
+    const { query } = context
+    const endpoint: string = `http://localhost:3000/api/products?${qs.stringify(query)}`
+    const queryClient = new QueryClient()
+  
+    await queryClient.prefetchQuery(['product_list_home', endpoint], () => {
+        return fetch(endpoint).then(res => res.json())
+    })
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    }
+}
 
 const Home = () => {
     const query = useQueryParams()
