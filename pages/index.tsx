@@ -4,6 +4,7 @@ import Pagination from '../components/Pagination'
 import useQueryParams from '../hooks/useQueryParams'
 import useQuery from '../hooks/useQuery'
 import qs from 'query-string'
+import styles from '../styles/Home.module.css'
 
 const Home = () => {
     const query = useQueryParams()
@@ -16,7 +17,7 @@ const Home = () => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <Layout>
-            <div className="p-5">
+            <div className={styles.container}>
                 {data ?
                 <>
                     <ProductList products={data.items}/>
