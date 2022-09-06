@@ -1,14 +1,14 @@
-import { useQuery } from 'react-query'
 import Layout from '../components/Layout'
 import ProductList from '../components/ProductList'
 import useQueryParams from '../hooks/useQueryParams'
+import useQuery from '../hooks/useQuery'
 import qs from 'query-string'
 
 const Home = () => {
     const query = useQueryParams()
     const endpoint: string = `/api/products?${qs.stringify(query)}`
 
-    const { isLoading, error, data }: any = useQuery(['product_list_home', endpoint], () =>
+    const { error, data }: any = useQuery(['product_list_home', endpoint], () =>
         fetch(endpoint).then(res => res.json())
     )
     
@@ -16,10 +16,10 @@ const Home = () => {
     return (
         <Layout>
             <div className="p-5">
-                {isLoading ?
-                <p>Loading...</p>
-                :
+                {data ?
                 <ProductList products={data.items}/>
+                :
+                <p>Loading...</p>
                 }
             </div>
         </Layout>
