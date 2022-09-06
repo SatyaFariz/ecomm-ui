@@ -6,6 +6,10 @@
     @apply flex items-center justify-between h-full px-4
 }
 
+.logoContainer {
+    @apply flex gap-3
+}
+
 .searchbar {
     @apply flex items-center h-full px-4
 }
