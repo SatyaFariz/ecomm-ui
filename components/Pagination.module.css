@@ -3,7 +3,7 @@
 }
 
 .button {
-    @apply p-4 font-medium text-gray-600 flex items-center gap-1
+    @apply p-4 font-medium flex items-center gap-1
 }
 
 .disabled {
