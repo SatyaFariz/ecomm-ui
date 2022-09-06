@@ -40,7 +40,7 @@ const Pagination = (props: any) => {
     const prevButtonDisabled = currentPage.toString() === '1'
     const nextButtonDisabled = currentPage === totalPage
 
-    if(totalPage === 1) return null
+    if(totalPage === 1 || totalCount === 0) return null
     return (
         <div className={styles.container}>
             {prevButtonDisabled ?
