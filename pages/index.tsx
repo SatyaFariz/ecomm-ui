@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import ProductList from '../components/ProductList'
+import Pagination from '../components/Pagination'
 import useQueryParams from '../hooks/useQueryParams'
 import useQuery from '../hooks/useQuery'
 import qs from 'query-string'
@@ -17,7 +18,14 @@ const Home = () => {
         <Layout>
             <div className="p-5">
                 {data ?
-                <ProductList products={data.items}/>
+                <>
+                    <ProductList products={data.items}/>
+                    <Pagination 
+                        pageSize={data.search_criteria?.page_size} 
+                        currentPage={data.search_criteria?.current_page}
+                        totalCount={data.total_count} 
+                    />
+                </>
                 :
                 <p>Loading...</p>
                 }

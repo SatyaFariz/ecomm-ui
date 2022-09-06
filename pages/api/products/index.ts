@@ -15,7 +15,7 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
 
     const query: any = {
         'searchCriteria[currentPage]': page || '1',
-        'searchCriteria[pageSize]': limit || '10'
+        'searchCriteria[pageSize]': limit || '1'
     }
 
     if(search_term) {

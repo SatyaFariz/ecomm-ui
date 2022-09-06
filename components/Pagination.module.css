@@ -1,0 +1,7 @@
+.container {
+    @apply flex
+}
+
+.button {
+    @apply p-4
+}
