@@ -1,5 +1,6 @@
 import styles from './Pagination.module.css'
 import { useRouter } from 'next/router'
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
 import Link from 'next/link'
 import qs from 'query-string'
 import useQueryParams from '../hooks/useQueryParams'
@@ -43,14 +44,16 @@ const Pagination = (props: any) => {
     return (
         <div className={styles.container}>
             {prevButtonDisabled ?
-            <div className={styles.button}>
-                Prev
+            <div className={styles.disabled}>
+                <AiOutlineLeft/>
+                <span>Prev</span>
             </div>
             :
             <Link href={prevLink()}>
                 <a>
                     <div className={styles.button}>
-                        Prev
+                        <AiOutlineLeft/>
+                        <span>Prev</span>
                     </div>
                 </a>
             </Link>
@@ -59,7 +62,7 @@ const Pagination = (props: any) => {
                 const n = i + 1
                 if(n === currentPage) {
                     return (
-                        <div className={styles.button}>
+                        <div className={styles.active}>
                             {n}
                         </div>
                     )
@@ -75,13 +78,15 @@ const Pagination = (props: any) => {
                 )
             })}
             {nextButtonDisabled ?
-            <div className={styles.button}>
-                Next
+            <div className={styles.disabled}>
+                <span>Next</span>
+                <AiOutlineRight/>
             </div>
             :
             <Link href={nextLink()} passHref={true}>
                 <div className={styles.button}>
-                    Next
+                    <span>Next</span>
+                    <AiOutlineRight/>
                 </div>
             </Link>
             }

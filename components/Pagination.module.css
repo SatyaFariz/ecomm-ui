@@ -3,5 +3,13 @@
 }
 
 .button {
-    @apply p-4
+    @apply p-4 font-medium text-gray-600 flex items-center gap-1
+}
+
+.disabled {
+    @apply p-4 font-medium text-gray-300 flex items-center gap-1
+}
+
+.active {
+    @apply p-4 font-medium text-rose-600
 }
