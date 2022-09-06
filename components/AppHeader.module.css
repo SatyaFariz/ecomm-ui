@@ -6,6 +6,10 @@
     @apply flex items-center justify-between h-full px-4
 }
 
+.hidden {
+    display: none
+}
+
 .logoContainer {
     @apply flex gap-3
 }

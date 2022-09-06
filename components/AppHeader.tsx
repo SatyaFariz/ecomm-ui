@@ -48,7 +48,7 @@ const AppHeader: NextPage = () => {
 
     return (
         <header className={styles.header}>
-            <div className={styles.container} style={{ display: isSearching ? 'none' : undefined }}>
+            <div className={isSearching ? styles.hidden : styles.container}>
                 <div className={styles.logoContainer}>
                     {router.pathname !== '/' &&
                         <button onClick={() => router.back()}>
@@ -67,7 +67,7 @@ const AppHeader: NextPage = () => {
                 </div>
             </div>
 
-            <div className={styles.searchbar} style={{ display: isSearching ? undefined : 'none' }}>
+            <div className={isSearching ? styles.searchbar : styles.hidden}>
                 <AiOutlineLeft className={styles.icon} onClick={() => toggleSearch(false)}/>
 
                 <div className={styles.searchbox}>
