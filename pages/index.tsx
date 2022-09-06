@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import ProductList from '../components/ProductList'
+import ProductListShimmer from '../components/ProductListShimmer'
 import Pagination from '../components/Pagination'
 import useQueryParams from '../hooks/useQueryParams'
 import useQuery from '../hooks/useQuery'
@@ -45,7 +46,7 @@ const Home = () => {
                     />
                 </>
                 :
-                <p>Loading...</p>
+                <ProductListShimmer/>
                 }
             </div>
         </Layout>

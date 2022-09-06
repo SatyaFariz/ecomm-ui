@@ -1,0 +1,17 @@
+.list {
+    @apply grid-cols-2 grid gap-[15px] gap-y-[25px]
+}
+
+.imageContainer {
+    @apply relative mb-2
+}
+
+.imageContainer::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.image {
+    @apply absolute h-full w-full object-cover
+}
