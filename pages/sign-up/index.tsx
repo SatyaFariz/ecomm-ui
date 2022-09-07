@@ -6,6 +6,9 @@ import Button from '../../components/Button'
 const SignUp = (props: any) => {
     return (
         <div className={styles.container}>
+            <div className="text-blue-500">
+                <Link href='/'>Back</Link>
+            </div>
             <div className={styles.inputContainer}>
                 <TextInput
                     placeholder="Full name"
