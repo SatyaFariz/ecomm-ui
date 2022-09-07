@@ -5,6 +5,8 @@ import Button from '../../components/Button'
 import { useState } from 'react'
 import useIsMounted from '../../hooks/useIsMounted'
 import Validator from '../../helpers/Validator'
+import axios from 'axios'
+import { useMutation } from 'react-query'
 
 const SignUp = (props: any) => {
     const isMounted = useIsMounted()
@@ -13,6 +15,13 @@ const SignUp = (props: any) => {
         email: '',
     })
     const [password, setPassword] = useState('')
+    const mutation = useMutation((data: any) => {
+        return axios({
+            method: 'post',
+            url: '/api/customers',
+            data
+        })
+    })
 
     const isValid = () => {
         const validator = new Validator([
@@ -43,7 +52,11 @@ const SignUp = (props: any) => {
 
     const submit = () => {
         if(isValid()) {
-
+            mutation.mutate({ customer, password }, {
+                onSuccess: (data, variables, context) => {
+                    console.log(data, variables, context)
+                }
+            })
         }
     }
 
