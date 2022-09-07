@@ -36,7 +36,14 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
         discount_percentage: Math.floor(100 * (data.price - parsedSpecialPrice) / data.price)
     } : null
 
+    const meta = {
+        title: customAttributes.meta_title || null,
+        description: customAttributes.meta_description || null,
+        keyword: customAttributes.meta_keyword || null
+    }
+
     data.sale = sale
+    data.meta = meta
 
     res.status(200).json(result.data)
 }
