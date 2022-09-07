@@ -1,0 +1,7 @@
+.container {
+    @apply p-3 bg-gray-100 rounded-md
+}
+
+.input {
+    @apply bg-[transparent]
+}

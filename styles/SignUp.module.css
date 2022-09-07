@@ -1,0 +1,7 @@
+.container {
+    @apply p-8
+}
+
+.inputContainer {
+    @apply flex flex-col gap-5
+}
