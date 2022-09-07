@@ -29,5 +29,5 @@
 }
 
 .discountPercentage {
-    @apply h-[35px] w-[35px] bg-amber-300 absolute left-1 top-1 rounded-[50%] flex justify-center items-center text-sm font-extrabold opacity-[0.85]
+    @apply z-[9] h-[35px] w-[35px] bg-amber-300 absolute left-1 top-1 rounded-[50%] flex justify-center items-center text-sm font-extrabold opacity-[0.85]
 }
