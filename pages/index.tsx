@@ -7,6 +7,7 @@ import useQuery from '../hooks/useQuery'
 import qs from 'query-string'
 import styles from '../styles/Home.module.css'
 import { dehydrate, QueryClient } from 'react-query'
+import Link from 'next/link'
 
 export async function getServerSideProps(context: any) {
     const { query } = context
@@ -36,6 +37,11 @@ const Home = () => {
     return (
         <Layout>
             <div className={styles.container}>
+                <div className="text-blue-500">
+                    <Link href='/sign-up'>
+                        Sign Up
+                    </Link>
+                </div>
                 {data ?
                 <>
                     <ProductList products={data.items}/>
