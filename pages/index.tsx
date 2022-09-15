@@ -8,6 +8,7 @@ import qs from 'query-string'
 import styles from '../styles/Home.module.css'
 import { dehydrate, QueryClient } from 'react-query'
 import Link from 'next/link'
+import Http from '../libs/http'
 
 export async function getServerSideProps(context: any) {
     const { query } = context
@@ -30,7 +31,8 @@ const Home = () => {
     const endpoint: string = `/api/products?${qs.stringify(query)}`
 
     const { error, data }: any = useQuery(['product_list_home', endpoint], () =>
-        fetch(endpoint).then(res => res.json())
+        // fetch(endpoint).then(res => res.json())
+        Http.get(endpoint)
     )
     
     if (error) return 'An error has occurred: ' + error.message
