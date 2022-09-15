@@ -1,7 +1,27 @@
 import axios, { AxiosInstance } from 'axios'
 
 class Http {
-    static instance: AxiosInstance = axios.create()
+    private static instance: AxiosInstance = ((): AxiosInstance => {
+        const instance = axios.create()
+        instance.interceptors.request.use(
+            async (config) => {
+                const token = window.localStorage.getItem("token")
+                if(token) {
+                    config.headers = {
+                        Authorization: `Bearer ${token}`,
+                    }
+                } else {
+                    config.headers = {}
+                }
+                return config
+            },
+            (error) => {
+                Promise.reject(error)
+            }
+        )
+
+        return instance
+    })()
 
     static async get(url: string): Promise<any> {
         const res = await this.instance.get(url)
@@ -21,5 +41,6 @@ class Http {
         delete this.instance.defaults.headers.common[key]
     }
 }
+
 
 export default Http

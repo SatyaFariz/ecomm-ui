@@ -43,6 +43,11 @@ const Home = () => {
                         Sign Up
                     </Link>
                 </div>
+                <div className="text-blue-500">
+                    <Link href='/sign-in'>
+                        Sign In
+                    </Link>
+                </div>
                 {data ?
                 <>
                     <ProductList products={data.items}/>
