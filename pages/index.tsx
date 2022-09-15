@@ -31,7 +31,6 @@ const Home = () => {
     const endpoint: string = `/api/products?${qs.stringify(query)}`
 
     const { error, data }: any = useQuery(['product_list_home', endpoint], () =>
-        // fetch(endpoint).then(res => res.json())
         Http.get(endpoint)
     )
     
