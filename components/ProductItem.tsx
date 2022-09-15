@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styles from './ProductItem.module.css'
+import Image from 'next/image'
 
 const ProductItem = (props: any) => {
     const { product } = props
@@ -12,7 +13,12 @@ const ProductItem = (props: any) => {
                 </div>
                 }
                 <div className={styles.imageContainer}>
-                    <img className={styles.image} src={`http://localhost/media/catalog/product${product.media_gallery_entries[0]?.file}`}/>
+                    <Image 
+                        className={styles.image} 
+                        src={`http://localhost/media/catalog/product${product.media_gallery_entries[0]?.file}`}
+                        layout="fill"
+                        priority={true}
+                    />
                 </div>
 
                 <p className={styles.name}>{product.name}</p>
