@@ -3,12 +3,13 @@ import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import Layout from '../../components/Layout'
 import styles from '../../styles/ProductDetail.module.css'
+import Http from '../../libs/http'
 
 const Product = () => {
     const router = useRouter()
     const { id } = router.query
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
-        fetch(`/api/products/${id}`).then(res => res.json())
+        Http.get(`/api/products/${id}`)
     )
  
     if (error) return 'An error has occurred: ' + error.message
