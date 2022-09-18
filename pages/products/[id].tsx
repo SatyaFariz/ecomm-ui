@@ -14,7 +14,6 @@ const Product = () => {
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState()
     const { id } = router.query
-    console.log(id)
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
         Http.get(`/api/products/${id}`),
         {
