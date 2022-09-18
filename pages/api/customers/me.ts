@@ -21,13 +21,18 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
 
     const authHeader = Oauth1Helper.getAuthHeaderForRequest(request)
     
-    
-    const result = await axios.get(request.url, { headers: { ...authHeader, ...req.headers } })
-    const { data } = result
+    try {
+        const result = await axios.get(request.url, { headers: { ...authHeader, ...req.headers } })
 
-    data.fullname = data.firstname
-    delete data.firstname
-    delete data.lastname
+        const { data } = result
 
-    res.status(200).json(data)
+        data.fullname = data.firstname
+        delete data.firstname
+        delete data.lastname
+
+        res.status(200).json(data)
+    } catch (error) {
+        if(error.response.status === 401)
+        res.status(401).send(null)
+    }
 }

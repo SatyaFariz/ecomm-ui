@@ -33,6 +33,12 @@ const Home = () => {
     const { error, data }: any = useQuery(['product_list_home', endpoint], () =>
         Http.get(endpoint)
     )
+
+    const { error: userResponseError, data: userResponseData }: any = useQuery(['me', endpoint], () =>
+        Http.get('/api/customers/me')
+    )
+
+    console.log('USER', userResponseData)
     
     if (error) return 'An error has occurred: ' + error.message
     return (
