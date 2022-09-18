@@ -14,8 +14,12 @@ const Product = () => {
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState()
     const { id } = router.query
+    console.log(id)
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
-        Http.get(`/api/products/${id}`)
+        Http.get(`/api/products/${id}`),
+        {
+            enabled: id !== undefined
+        }
     )
 
     const handleSwipe = (obj: any) => {
@@ -25,9 +29,7 @@ const Product = () => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <Layout>
-            {isLoading ?
-            <p>Loading...</p>
-            :
+            {data?
             <>  
                 <Head>
                     <title>{data.name}</title>
@@ -60,6 +62,8 @@ const Product = () => {
                     <p className={styles.name}>{data.name}</p>
                 </div>
             </>
+            :
+            <div>Loading...</div>
             }
         </Layout>
     )
