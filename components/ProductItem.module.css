@@ -17,7 +17,7 @@
 }
 
 .image {
-    @apply absolute h-full w-full object-cover
+    @apply absolute h-full w-full object-cover z-[0]
 }
 
 .price {

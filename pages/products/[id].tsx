@@ -4,18 +4,21 @@ import { useQuery } from 'react-query'
 import Layout from '../../components/Layout'
 import styles from '../../styles/ProductDetail.module.css'
 import Http from '../../libs/http'
+import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
+import { useState } from 'react'
 
 const Product = () => {
     const router = useRouter()
+    const [swiperIndex, setSwiperIndex] = useState()
     const { id } = router.query
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
         Http.get(`/api/products/${id}`)
     )
 
-    const handleSwipe = () => {
-
+    const handleSwipe = (obj: any) => {
+        setSwiperIndex(obj.activeIndex)
     }
  
     if (error) return 'An error has occurred: ' + error.message
@@ -26,11 +29,9 @@ const Product = () => {
             :
             <>  
                 <div className={styles.imageContainer}>
-                    {/* <img src={`http://localhost/media/catalog/product${data.media_gallery_entries[0]?.file}`}/> */}
                     <Swiper 
                         onSlideChange={handleSwipe}
                         virtual={false}
-                        style={{ zIndex: 0 }}
                         className={styles.image}
                     >
                         {data.media_gallery_entries.map((item: any, i: number) => {
@@ -38,24 +39,12 @@ const Product = () => {
                             <SwiperSlide
                                 key={i}
                             >
-                                <div style={{
-                                position: 'relative',
-                                width: '100vw',
-                                paddingBottom: '100%'
-                                }}>
-                                <img
+                                <Image 
+                                    className={styles.image} 
                                     src={`http://localhost/media/catalog/product${item.file}`}
-                                    alt={`product.name ${i}`}
-                                    style={{
-                                    position: 'absolute',
-                                    height: '100%',
-                                    width: '100%',
-                                    left: 0,
-                                    bottom: 0,
-                                    objectFit: 'cover'
-                                    }}
+                                    layout="fill"
+                                    priority={true}
                                 />
-                                </div>
                             </SwiperSlide>
                             )
                         })}

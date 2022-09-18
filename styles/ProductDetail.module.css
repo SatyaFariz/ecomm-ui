@@ -17,5 +17,6 @@
 }
 
 .image {
-    @apply absolute h-full w-full object-cover
+    position: absolute !important;
+    @apply h-full w-full object-cover;
 }
