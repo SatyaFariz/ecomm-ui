@@ -16,7 +16,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     const body = {
         cartItem: {
             sku: req.body.sku,
-            quote_id: req.body.quote_id,
+            quote_id: req.query.cart_id,
             qty: req.body.qty
         }
     }
