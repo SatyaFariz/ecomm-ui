@@ -7,8 +7,10 @@ import useIsMounted from '../../hooks/useIsMounted'
 import Validator from '../../helpers/Validator'
 import http from '../../libs/http'
 import { useMutation } from 'react-query'
+import { useRouter } from 'next/router'
 
 const SignUp = (props: any) => {
+    const router = useRouter()
     const isMounted = useIsMounted()
     const [credentials, setCredentials] = useState({
         username: '',
@@ -46,7 +48,8 @@ const SignUp = (props: any) => {
                     if(data.error) {
                         alert(data.message)
                     } else {
-                        
+                        window.localStorage.setItem('token', data.token)
+                        router.replace('/')
                     }
                     console.log(data, variables, context)
                 }
