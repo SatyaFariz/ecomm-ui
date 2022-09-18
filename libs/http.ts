@@ -24,7 +24,6 @@ class Http {
         instance.interceptors.response.use(function (response) {
             // Any status code that lie within the range of 2xx cause this function to trigger
             // Do something with response data
-            console.log(response.status)
             return response
         }, function (error) {
             // Any status codes that falls outside the range of 2xx cause this function to trigger
@@ -33,7 +32,6 @@ class Http {
             if(error.response.status === 401) {
                 // if user token has expired
                 window.localStorage.removeItem('token')
-                console.log('Token removed')
             }
 
             return Promise.reject(error)
