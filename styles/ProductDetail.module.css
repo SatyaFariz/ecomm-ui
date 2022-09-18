@@ -5,3 +5,17 @@
 .section {
     @apply p-5
 }
+
+.imageContainer {
+    @apply relative
+}
+
+.imageContainer::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.image {
+    @apply absolute h-full w-full object-cover
+}
