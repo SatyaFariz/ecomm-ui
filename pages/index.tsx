@@ -38,8 +38,6 @@ const Home = () => {
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery(['me', endpoint], () =>
         Http.get('/api/customers/me')
     )
-
-    console.log('USER', userResponseData)
     
     if (error) return 'An error has occurred: ' + error.message
     return (
