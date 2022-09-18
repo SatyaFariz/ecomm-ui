@@ -35,6 +35,6 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
             error: true,
             message: error.response.data.message
         }
-        res.status(200).json(payload)
+        res.status(error.response.status).json(payload)
     }
 }

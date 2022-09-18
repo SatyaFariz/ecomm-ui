@@ -32,7 +32,8 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
 
         res.status(200).json(data)
     } catch (error) {
-        if(error.response.status === 401)
-        res.status(401).send(null)
+        const { status } = error.response
+        if(status === 401)
+        res.status(status).send(null)
     }
 }

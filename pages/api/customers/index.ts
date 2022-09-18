@@ -37,15 +37,17 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
 
     const authHeader = Oauth1Helper.getAuthHeaderForRequest(request)
     
-    let payload: any = {}
+    
     try {
         const result = await axios.post(request.url, body, { headers: authHeader })
-        payload = result.data
+        const payload = result.data
 
         payload.fullname = payload.firstname
         delete payload.firstname
         delete payload.lastname
+        res.status(200).json(payload)
     } catch (error) {
+        const { status } = error.response
         const { message, parameters } = error.response.data
         const characters = message.split('')
         for(let i = 0; i < characters.length; i++) {
@@ -56,11 +58,12 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
             }
         }
 
-        payload = {
+        const payload = {
             error: true,
             message: characters.join('')
         }
+        res.status(status).json(payload)
     }
 
-    res.status(200).json(payload)
+    
 }
