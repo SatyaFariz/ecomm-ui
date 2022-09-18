@@ -35,7 +35,13 @@ const Home = () => {
     )
 
     const { error: userResponseError, data: userResponseData }: any = useQuery(['me', endpoint], () =>
-        Http.get('/api/customers/me')
+        Http.get('/api/customers/me'),
+        {
+            retry: (_, { response: { status }}: any) => {
+                if(status === 401) return false
+                return true
+            }
+        }
     )
 
     console.log('USER', userResponseData)
