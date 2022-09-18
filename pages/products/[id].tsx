@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { useState } from 'react'
+import Head from 'next/head'
 
 const Product = () => {
     const router = useRouter()
@@ -28,6 +29,10 @@ const Product = () => {
             <p>Loading...</p>
             :
             <>  
+                <Head>
+                    <title>{data.name}</title>
+                    <meta name="description" content={data.meta.description} />
+                </Head>
                 <div className={styles.imageContainer}>
                     <Swiper 
                         onSlideChange={handleSwipe}
