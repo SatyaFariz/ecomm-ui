@@ -31,10 +31,11 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
         }
         res.status(200).json(payload)
     } catch(error) {
+        const { status } = error.response
         const payload = {
             error: true,
             message: error.response.data.message
         }
-        res.status(error.response.status).json(payload)
+        res.status(status === 401 ? 200 : status).json(payload)
     }
 }
