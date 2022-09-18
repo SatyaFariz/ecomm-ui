@@ -4,6 +4,7 @@ import ProductListShimmer from '../components/ProductListShimmer'
 import Pagination from '../components/Pagination'
 import useQueryParams from '../hooks/useQueryParams'
 import useQuery from '../hooks/useQuery'
+import useAuthedQuery from '../hooks/useAuthedQuery'
 import qs from 'query-string'
 import styles from '../styles/Home.module.css'
 import { dehydrate, QueryClient } from 'react-query'
@@ -34,14 +35,8 @@ const Home = () => {
         Http.get(endpoint)
     )
 
-    const { error: userResponseError, data: userResponseData }: any = useQuery(['me', endpoint], () =>
-        Http.get('/api/customers/me'),
-        {
-            retry: (_, { response: { status }}: any) => {
-                if(status === 401) return false
-                return true
-            }
-        }
+    const { error: userResponseError, data: userResponseData }: any = useAuthedQuery(['me', endpoint], () =>
+        Http.get('/api/customers/me')
     )
 
     console.log('USER', userResponseData)
