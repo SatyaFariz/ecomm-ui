@@ -39,7 +39,7 @@ const Product = () => {
             cartId = await Http.post('/api/guest-carts')
             window.localStorage.setItem('cart_id', cartId as string)
         }
-        
+
         const body = {
             cartId,
             sku: data.sku,
@@ -52,6 +52,9 @@ const Product = () => {
                 } else {
                 }
                 console.log(data, variables, context)
+            },
+            onError: (error: any) => {
+                alert(error.response.data.message)
             }
         })
 
