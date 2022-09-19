@@ -45,7 +45,7 @@ class Http {
         return res.data
     }
 
-    static async post(url: string, data: any): Promise<any> {
+    static async post(url: string, data?: any): Promise<any> {
         const res = await this.instance.post(url, data)
         return res.data
     }

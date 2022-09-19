@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { useState } from 'react'
+import { useMutation } from 'react-query'
 import Head from 'next/head'
 
 const Product = () => {
@@ -20,9 +21,40 @@ const Product = () => {
             enabled: id !== undefined
         }
     )
+    const mutation = useMutation((data: any) => {
+        const cartItem = {
+            qty: data.qty,
+            sku: data.sku
+        }
+        return Http.post(`/api/guest-carts/${data.cartId}/items`, cartItem)
+    })
 
     const handleSwipe = (obj: any) => {
         setSwiperIndex(obj.activeIndex)
+    }
+
+    const addToCart = async () => {
+        let cartId = window.localStorage.getItem('cart_id')
+        if(!cartId) {
+            cartId = await Http.post('/api/guest-carts')
+            window.localStorage.setItem('cart_id', cartId as string)
+        }
+        
+        const body = {
+            cartId,
+            sku: data.sku,
+            qty: 1
+        }
+        mutation.mutate(body, {
+            onSuccess: (data, variables, context) => {
+                if(data.error) {
+                    alert(data.message)
+                } else {
+                }
+                console.log(data, variables, context)
+            }
+        })
+
     }
  
     if (error) return 'An error has occurred: ' + error.message
@@ -60,6 +92,8 @@ const Product = () => {
                 <div className={styles.section}>
                     <p className={styles.name}>{data.name}</p>
                 </div>
+
+                <button onClick={addToCart}>Add To Cart</button>
             </>
             :
             <div>Loading...</div>
