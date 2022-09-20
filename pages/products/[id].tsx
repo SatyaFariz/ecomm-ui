@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import Layout from '../../components/Layout'
 import styles from '../../styles/ProductDetail.module.css'
 import Http from '../../libs/http'
@@ -12,6 +12,7 @@ import { useMutation } from 'react-query'
 import Head from 'next/head'
 
 const Product = () => {
+    const queryClient = useQueryClient()
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState()
     const { id } = router.query
@@ -47,6 +48,7 @@ const Product = () => {
         }
         mutation.mutate(body, {
             onSuccess: (data, variables, context) => {
+                queryClient.invalidateQueries('guest-cart')
                 if(data.error) {
                     alert(data.message)
                 } else {
