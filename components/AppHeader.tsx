@@ -20,7 +20,8 @@ const AppHeader: NextPage = () => {
     const { error, data }: any = useQuery([cartId], () =>
         http.get(`/api/guest-carts/${cartId}/totals`),
         {
-            enabled: !!cartId
+            enabled: !!cartId,
+            refetchOnWindowFocus: false
         }
     )
 
