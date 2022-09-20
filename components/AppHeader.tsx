@@ -7,6 +7,7 @@ import { useDebounce } from 'use-debounce'
 import useIsMounted from '../hooks/useIsMounted'
 import http from '../libs/http'
 import useQuery from '../hooks/useQuery'
+import IconButton from '@mui/material/IconButton'
 
 const AppHeader: NextPage = () => {
     const router = useRouter()
@@ -75,8 +76,12 @@ const AppHeader: NextPage = () => {
                 </div>
 
                 <div className={styles.icons}>
-                    <AiOutlineSearch className={styles.icon} onClick={() => toggleSearch(true)}/>
-                    <AiOutlineShopping className={styles.icon}/>
+                    <IconButton onClick={() => toggleSearch(true)}>
+                        <AiOutlineSearch className={styles.icon}/>
+                    </IconButton>
+                    <IconButton>
+                        <AiOutlineShopping className={styles.icon}/>
+                    </IconButton>
                 </div>
             </div>
 

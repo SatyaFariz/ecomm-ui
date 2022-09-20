@@ -26,11 +26,11 @@
     @apply text-sm bg-[transparent] w-full
 }
 .icons {
-    @apply flex gap-4
+    @apply flex gap-2
 }
 
 .icon {
-    @apply text-[24px]
+    @apply text-[24px] text-black
 }
 
 .closeButton {
