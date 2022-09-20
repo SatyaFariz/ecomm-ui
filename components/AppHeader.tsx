@@ -8,6 +8,7 @@ import useIsMounted from '../hooks/useIsMounted'
 import http from '../libs/http'
 import useQuery from '../hooks/useQuery'
 import IconButton from '@mui/material/IconButton'
+import Badge from '@mui/material/Badge'
 
 const AppHeader: NextPage = () => {
     const router = useRouter()
@@ -18,15 +19,13 @@ const AppHeader: NextPage = () => {
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const cartId = isMounted && window.localStorage.getItem('cart_id')
 
-    const { error, data }: any = useQuery([cartId], () =>
+    const { error, data: cartData }: any = useQuery([cartId], () =>
         http.get(`/api/guest-carts/${cartId}/totals`),
         {
             enabled: !!cartId,
             refetchOnWindowFocus: false
         }
     )
-
-    console.log(data)
 
     const toggleSearch = (isSearching: boolean) => {
         setIsSearching(isSearching)
@@ -80,7 +79,9 @@ const AppHeader: NextPage = () => {
                         <AiOutlineSearch className={styles.icon}/>
                     </IconButton>
                     <IconButton>
+                        <Badge badgeContent={cartData?.items_qty} color="primary">
                         <AiOutlineShopping className={styles.icon}/>
+                        </Badge>
                     </IconButton>
                 </div>
             </div>
