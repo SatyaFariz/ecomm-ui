@@ -8,25 +8,35 @@ export default async function handler(
     if(req.method === 'POST') return await post(req, res)
 }
 
-async function getCartId(req: NextApiRequest, res: NextApiResponse) {
-
-    const url = `http://localhost/rest/default/V1/carts/mine`
+async function post(req: NextApiRequest, res: NextApiResponse) {
+    const url = `http://localhost/graphql`
 
     const headers = {
-        authorization: req.headers.authorization as string
+        authorization: req.headers.authorization as string,
+        'Content-Type': 'application/json'
+    }
+
+    const body = {
+        query: `
+            mutation {
+                mergeCarts(source_cart_id: "${req.body.source_cart_id}") { 
+                    id
+                }
+            }
+        `
     }
     
     try {
-        const result = await axios.post(url, req.body, { headers })
-        const { data } = result
-        return data
+        await axios.post(
+            url, 
+            body, 
+            { 
+                headers 
+            }
+        )
+        return res.status(200).json(true)
     } catch(error) {
         const { status } = error.response
         return res.status(status).json(null)
     }
-}
-
-async function post(req: NextApiRequest, res: NextApiResponse) {
-    const cartId = await getCartId(req, res)
-    res.status(200).send(cartId)
 }
