@@ -10,6 +10,7 @@ import styles from '../styles/Home.module.css'
 import { dehydrate, QueryClient } from 'react-query'
 import Link from 'next/link'
 import Http from '../libs/http'
+import { ReactElement } from 'react'
 
 export async function getServerSideProps(context: any) {
     const { query } = context
@@ -41,32 +42,38 @@ const Home = () => {
     
     if (error) return 'An error has occurred: ' + error.message
     return (
-        <Layout>
-            <div className={styles.container}>
-                <div className="text-blue-500">
-                    <Link href='/sign-up'>
-                        Sign Up
-                    </Link>
-                </div>
-                <div className="text-blue-500">
-                    <Link href='/sign-in'>
-                        Sign In
-                    </Link>
-                </div>
-                {data ?
-                <>
-                    <ProductList products={data.items}/>
-                    <Pagination 
-                        pageSize={data.search_criteria?.page_size} 
-                        currentPage={data.search_criteria?.current_page}
-                        totalCount={data.total_count} 
-                    />
-                </>
-                :
-                <ProductListShimmer/>
-                }
+        <div className={styles.container}>
+            <div className="text-blue-500">
+                <Link href='/sign-up'>
+                    Sign Up
+                </Link>
             </div>
-        </Layout>
+            <div className="text-blue-500">
+                <Link href='/sign-in'>
+                    Sign In
+                </Link>
+            </div>
+            {data ?
+            <>
+                <ProductList products={data.items}/>
+                <Pagination 
+                    pageSize={data.search_criteria?.page_size} 
+                    currentPage={data.search_criteria?.current_page}
+                    totalCount={data.total_count} 
+                />
+            </>
+            :
+            <ProductListShimmer/>
+            }
+        </div>
+    )
+}
+
+Home.getLayout = function getLayout(page: ReactElement) {
+    return (
+      <Layout>
+        {page}
+      </Layout>
     )
 }
 
