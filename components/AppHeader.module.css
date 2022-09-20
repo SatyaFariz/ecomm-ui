@@ -6,20 +6,24 @@
     @apply flex items-center justify-between h-full px-4
 }
 
+.container2 {
+    @apply flex items-center justify-between h-full px-4 pl-2
+}
+
 .hidden {
     display: none
 }
 
 .logoContainer {
-    @apply flex gap-3
+    @apply flex gap-1
 }
 
 .searchbar {
-    @apply flex items-center h-full px-4
+    @apply flex items-center h-full px-4 pl-2
 }
 
 .searchbox {
-    @apply h-[32px] bg-slate-100 flex items-center w-full pl-2 ml-3
+    @apply h-[32px] bg-slate-100 flex items-center w-full pl-2 ml-1
 }
 
 .textinput {
@@ -34,5 +38,5 @@
 }
 
 .closeButton {
-    @apply p-2
+    @apply text-[16px] text-black
 }

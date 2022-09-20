@@ -61,14 +61,16 @@ const AppHeader: NextPage = () => {
         }
     }, [debouncedSearchTerm])
 
+    const showsBackButton = router.pathname !== '/'
+
     return (
         <header className={styles.header}>
-            <div className={isSearching ? styles.hidden : styles.container}>
+            <div className={isSearching ? styles.hidden : (showsBackButton ? styles.container2 : styles.container)}>
                 <div className={styles.logoContainer}>
-                    {router.pathname !== '/' &&
-                        <button onClick={() => router.back()}>
-                            <AiOutlineLeft className={styles.icon} onClick={() => toggleSearch(false)}/>
-                        </button>
+                    {showsBackButton &&
+                        <IconButton onClick={() => router.back()}>
+                            <AiOutlineLeft className={styles.icon}/>
+                        </IconButton>
                     }
                     <img
                         src="https://werkidz.mygostore.com/_next/static/images/goStore-logo-64f7ac0ca37c2341f8ae739a75345580.svg"
@@ -89,8 +91,9 @@ const AppHeader: NextPage = () => {
             </div>
 
             <div className={isSearching ? styles.searchbar : styles.hidden}>
-                <AiOutlineLeft className={styles.icon} onClick={() => toggleSearch(false)}/>
-
+                <IconButton onClick={() => toggleSearch(false)}>
+                    <AiOutlineLeft className={styles.icon}/>
+                </IconButton>
                 <div className={styles.searchbox}>
                     <input 
                         className={styles.textinput} 
@@ -102,9 +105,9 @@ const AppHeader: NextPage = () => {
                         onChange={handleInputChange}
                     />
                     {searchTerm.length > 0 &&
-                    <button className={styles.closeButton} onClick={resetInput}>
-                        <AiOutlineClose/>
-                    </button>
+                    <IconButton onClick={resetInput}>
+                        <AiOutlineClose className={styles.closeButton}/>
+                    </IconButton>
                     }
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import Layout from '../../components/Layout'
 import styles from '../../styles/ProductDetail.module.css'
 import Http from '../../libs/http'
@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { useState, ReactElement } from 'react'
 import { useMutation } from 'react-query'
+import useQuery from '../../hooks/useQuery'
 import Head from 'next/head'
 
 const Product = () => {
@@ -16,6 +17,7 @@ const Product = () => {
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState()
     const { id } = router.query
+    console.log(id)
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
         Http.get(`/api/products/${id}`),
         {
