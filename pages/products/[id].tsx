@@ -7,7 +7,7 @@ import Http from '../../libs/http'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import { useState } from 'react'
+import { useState, ReactElement } from 'react'
 import { useMutation } from 'react-query'
 import Head from 'next/head'
 
@@ -62,7 +62,7 @@ const Product = () => {
  
     if (error) return 'An error has occurred: ' + error.message
     return (
-        <Layout>
+        <>
             {data?
             <>  
                 <Head>
@@ -101,7 +101,15 @@ const Product = () => {
             :
             <div>Loading...</div>
             }
-        </Layout>
+        </>
+    )
+}
+
+Product.getLayout = function getLayout(page: ReactElement) {
+    return (
+      <Layout>
+        {page}
+      </Layout>
     )
 }
 
