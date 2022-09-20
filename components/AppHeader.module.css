@@ -7,7 +7,8 @@
 }
 
 .container2 {
-    @apply flex items-center justify-between h-full px-4 pl-2
+    @apply container;
+    @apply pl-2;
 }
 
 .hidden {
