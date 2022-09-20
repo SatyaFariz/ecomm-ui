@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
     if(req.method === 'PUT') return await post(req, res)
-    else if(req.method === 'GET') return await get(req, res)
+    else if(req.method === 'DELETE') return await del(req, res)
 }
 
 async function post(req: NextApiRequest, res: NextApiResponse) {
@@ -38,15 +38,15 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-async function get(req: NextApiRequest, res: NextApiResponse) {
-    const url = `http://localhost/rest/default/V1/carts/mine/items`
+async function del(req: NextApiRequest, res: NextApiResponse) {
+    const url = `http://localhost/rest/default/V1/carts/mine/items/${req.query.id}`
 
     const headers = {
         authorization: req.headers.authorization as string
     }
     
     try {
-        const result = await axios.get(url, { headers })
+        const result = await axios.delete(url, { headers })
         const { data } = result
         res.status(200).json(data)
     } catch(error) {
