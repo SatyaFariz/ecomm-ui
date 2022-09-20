@@ -40,7 +40,7 @@ class Http {
         return instance
     })()
 
-    static async get(url: string): Promise<any> {console.log(url)
+    static async get(url: string): Promise<any> {
         const res = await this.instance.get(url)
         return res.data
     }
