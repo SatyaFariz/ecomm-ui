@@ -5,6 +5,8 @@ import styles from './AppHeader.module.css'
 import { useRouter } from 'next/router'
 import { useDebounce } from 'use-debounce'
 import useIsMounted from '../hooks/useIsMounted'
+import http from '../libs/http'
+import useQuery from '../hooks/useQuery'
 
 const AppHeader: NextPage = () => {
     const router = useRouter()
@@ -13,6 +15,16 @@ const AppHeader: NextPage = () => {
     const inputRef: RefObject<HTMLInputElement> = useRef(null)
     const isMounted: boolean = useIsMounted()
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
+    const cartId = isMounted && window.localStorage.getItem('cart_id')
+
+    const { error, data }: any = useQuery([cartId], () =>
+        http.get(`/api/guest-carts/${cartId}/totals`),
+        {
+            enabled: !!cartId
+        }
+    )
+
+    console.log(data)
 
     const toggleSearch = (isSearching: boolean) => {
         setIsSearching(isSearching)
