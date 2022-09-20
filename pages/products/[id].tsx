@@ -48,7 +48,7 @@ const Product = () => {
         }
         mutation.mutate(body, {
             onSuccess: (data, variables, context) => {
-                queryClient.invalidateQueries('guest-cart')
+                queryClient.invalidateQueries('cart/totals')
                 if(data.error) {
                     alert(data.message)
                 } else {
