@@ -18,7 +18,7 @@ const AppHeader: NextPage = () => {
     const isMounted: boolean = useIsMounted()
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const cartId = isMounted && window.localStorage.getItem('cart_id')
-console.log(cartId)
+
     const { error, data: cartData }: any = useQuery([cartId], () =>
         http.get(`/api/guest-carts/${cartId}/totals`),
         {
