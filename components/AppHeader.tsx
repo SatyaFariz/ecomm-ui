@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineClose } from 'react-icons/ai'
-import { useState, useRef, RefObject, ChangeEvent, useEffect } from 'react'
+import { useState, useRef, RefObject, ChangeEvent, useEffect, MutableRefObject } from 'react'
 import styles from './AppHeader.module.css'
 import { useRouter } from 'next/router'
 import { useDebounce } from 'use-debounce'
@@ -15,14 +15,16 @@ const AppHeader: NextPage = () => {
     const [isSearching, setIsSearching] = useState(false)
     const [searchTerm, setSearchTerm] = useState(router.query.search_term || '')
     const inputRef: RefObject<HTMLInputElement> = useRef(null)
-    const isMounted: boolean = useIsMounted()
+    const isMounted: MutableRefObject<boolean> = useIsMounted()
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
-    const cartId = isMounted && window.localStorage.getItem('cart_id')
-
-    const { error, data: cartData }: any = useQuery([cartId], () =>
-        http.get(`/api/guest-carts/${cartId}/totals`),
+    
+    const { error, data: cartData }: any = useQuery('guest-cart', () =>
+        { 
+            const cartId = window.localStorage.getItem('cart_id')
+            return http.get(`/api/guest-carts/${cartId}/totals`)
+        },
         {
-            enabled: !!cartId,
+            enabled: isMounted.current,
             refetchOnWindowFocus: false
         }
     )
@@ -54,7 +56,7 @@ const AppHeader: NextPage = () => {
     }
 
     useEffect(() => {
-        if(isMounted) {
+        if(isMounted.current) {
             setQuery()
         }
     }, [debouncedSearchTerm])
