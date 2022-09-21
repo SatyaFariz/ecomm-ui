@@ -12,8 +12,8 @@ import CartItem from '../../components/CartItem'
 
 function Cart(props: AppProps) {
     const isMounted: MutableRefObject<boolean> = useIsMounted()
-    const cartId = useLocalStorage('cart_id')
-    const token = useLocalStorage('token')
+    const [cartId] = useLocalStorage('cart_id')
+    const [token] = useLocalStorage('token')
 
     const { error, data: cartItems }: any = useQuery('cart/items', () =>
         {
