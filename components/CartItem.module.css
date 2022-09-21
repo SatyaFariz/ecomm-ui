@@ -1,0 +1,29 @@
+.container {
+    @apply py-3 px-5
+}
+
+.imageContainer {
+    @apply relative w-[60px]
+}
+
+.imageContainer::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.image {
+    @apply absolute h-full w-full object-cover z-[0]
+}
+
+.productCols {
+    @apply flex gap-3
+}
+
+.name {
+    @apply text-sm
+}
+
+.price {
+    @apply text-sm font-bold
+}
