@@ -7,6 +7,7 @@ import http from '../libs/http'
 import { useState } from 'react'
 
 const CartItem = (props: any) => {
+    const [loading, setLoading] = useState(false)
     const queryClient = useQueryClient()
     const { item } = props
     const [qty, setQty] = useState(item.qty)
@@ -63,18 +64,27 @@ const CartItem = (props: any) => {
 
             <div className={styles.actionButtons}>
                 <div className={styles.qtyButtons}>
-                    <IconButton onClick={() => setQty((prev: number) => prev - 1)}>
+                    <IconButton 
+                        onClick={() => setQty((prev: number) => prev - 1)}
+                        disabled={loading}
+                    >
                         <AiOutlineMinusCircle className={styles.icon}/>
                     </IconButton>
 
                     <div className={styles.qty}>{qty}</div>
 
-                    <IconButton onClick={() => setQty((prev: number) => prev + 1)}>
+                    <IconButton 
+                        onClick={() => setQty((prev: number) => prev + 1)}
+                        disabled={loading}
+                    >
                         <AiOutlinePlusCircle className={styles.icon}/>
                     </IconButton>
                 </div>
 
-                <IconButton onClick={deleteItem}>
+                <IconButton 
+                    onClick={deleteItem}
+                    disabled={loading}
+                >
                     <AiOutlineDelete className={styles.icon}/>
                 </IconButton>
             </div>
