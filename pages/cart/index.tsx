@@ -29,7 +29,6 @@ function Cart(props: AppProps) {
         }
     )
 
-    console.log(cartItems)
     return (
         <>
             {cartItems?

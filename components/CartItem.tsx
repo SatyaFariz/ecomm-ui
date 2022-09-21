@@ -4,34 +4,48 @@ import { AiOutlineDelete, AiOutlinePlusCircle, AiOutlineMinusCircle } from 'reac
 import IconButton from '@mui/material/IconButton'
 import { useMutation, useQueryClient } from 'react-query'
 import http from '../libs/http'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDebouncedCallback } from 'use-debounce'
+import useIsMounted from '../hooks/useIsMounted'
 
 const CartItem = (props: any) => {
     const [loading, setLoading] = useState(false)
     const queryClient = useQueryClient()
     const { item } = props
     const [qty, setQty] = useState(item.qty)
+    const isMounted = useIsMounted()
+    
     const qtyMutation = useMutation((qty: number) => {
         return http.put(`/api/carts/items/${item.item_id}`, { qty })
     })
+
+    const debouncedQty = useDebouncedCallback(
+        // function
+        (value: number) => {
+            if(isMounted.current) setLoading(true)
+            qtyMutation.mutate(value, {
+                onSuccess: () => {
+                    queryClient.invalidateQueries('cart/totals')
+                    queryClient.invalidateQueries('cart/items')
+                },
+                onError: (error: any) => {
+                    alert(error.response.data.message)
+                },
+                onSettled: () => {
+                    if(isMounted.current) setLoading(false)
+                }
+            })
+        },
+        // delay in ms
+        500
+    )
 
     const deleteMutation = useMutation(() => {
         return http.delete(`/api/carts/items/${item.item_id}`)
     })
 
-    const updateQty = (qty: number) => {
-        qtyMutation.mutate(qty, {
-            onSuccess: () => {
-                queryClient.invalidateQueries('cart/totals')
-                queryClient.invalidateQueries('cart/items')
-            },
-            onError: (error: any) => {
-                alert(error.response.data.message)
-            }
-        })
-    }
-
     const deleteItem = () => {
+        setLoading(true)
         deleteMutation.mutate(undefined, {
             onSuccess: () => {
                 queryClient.invalidateQueries('cart/totals')
@@ -39,9 +53,32 @@ const CartItem = (props: any) => {
             },
             onError: (error: any) => {
                 alert(error.response.data.message)
+            },
+            onSettled: () => {
+                if(isMounted.current) setLoading(false)
             }
         })
     }
+
+    const onMinusButtonClick = () => {
+        setQty((prev: number) => {
+            const qty = prev - 1
+            debouncedQty(qty)
+            return qty
+        })
+    }
+
+    const onPlusButtonClick = () => {
+        setQty((prev: number) => {
+            const qty = prev + 1
+            debouncedQty(qty)
+            return qty
+        })
+    }
+
+    useEffect(() => {
+
+    })
 
     return (
         <>
@@ -65,7 +102,7 @@ const CartItem = (props: any) => {
             <div className={styles.actionButtons}>
                 <div className={styles.qtyButtons}>
                     <IconButton 
-                        onClick={() => setQty((prev: number) => prev - 1)}
+                        onClick={onMinusButtonClick}
                         disabled={loading}
                     >
                         <AiOutlineMinusCircle className={styles.icon}/>
@@ -74,7 +111,7 @@ const CartItem = (props: any) => {
                     <div className={styles.qty}>{qty}</div>
 
                     <IconButton 
-                        onClick={() => setQty((prev: number) => prev + 1)}
+                        onClick={onPlusButtonClick}
                         disabled={loading}
                     >
                         <AiOutlinePlusCircle className={styles.icon}/>
