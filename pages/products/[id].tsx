@@ -54,11 +54,6 @@ const Product = () => {
         mutation.mutate(body, {
             onSuccess: (data, variables, context) => {
                 queryClient.invalidateQueries('cart/totals')
-                if(data.error) {
-                    alert(data.message)
-                } else {
-                }
-                console.log(data, variables, context)
             },
             onError: (error: any) => {
                 alert(error.response.data.message)

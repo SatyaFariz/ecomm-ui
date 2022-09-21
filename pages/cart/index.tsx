@@ -34,7 +34,7 @@ function Cart(props: AppProps) {
             {cartItems?
             <div className={styles.container}>
                 {cartItems.map((item: any) =>
-                    <CartItem item={item} key={item.item_id}/>
+                    <CartItem item={item} key={`${item.item_id}_${item.qty}`}/>
                 )}
             </div>
             :
