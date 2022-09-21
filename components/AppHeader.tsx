@@ -9,6 +9,7 @@ import http from '../libs/http'
 import useQuery from '../hooks/useQuery'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
+import Link from '../components/Link'
 
 const AppHeader: NextPage = () => {
     const router = useRouter()
@@ -82,7 +83,10 @@ const AppHeader: NextPage = () => {
                     <IconButton onClick={() => toggleSearch(true)}>
                         <AiOutlineSearch className={styles.icon}/>
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                        component={Link}
+                        href='/cart'
+                    >
                         <Badge badgeContent={cartData?.items_qty} color="primary">
                         <AiOutlineShopping className={styles.icon}/>
                         </Badge>
