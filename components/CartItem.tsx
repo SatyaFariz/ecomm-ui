@@ -41,6 +41,7 @@ const CartItem = (props: any) => {
     }
 
     return (
+        <>
         <div className={styles.container}>
             <div className={styles.productCols}>
                 <div className={styles.imageContainer}>
@@ -76,6 +77,8 @@ const CartItem = (props: any) => {
                 </IconButton>
             </div>
         </div>
+        <hr className={styles.divider}/>
+        </>
     )
 }
   
