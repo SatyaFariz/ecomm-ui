@@ -4,10 +4,12 @@ import { AiOutlineDelete, AiOutlinePlusCircle, AiOutlineMinusCircle } from 'reac
 import IconButton from '@mui/material/IconButton'
 import { useMutation, useQueryClient } from 'react-query'
 import http from '../libs/http'
+import { useState } from 'react'
 
 const CartItem = (props: any) => {
     const queryClient = useQueryClient()
     const { item } = props
+    const [qty, setQty] = useState(item.qty)
     const qtyMutation = useMutation((qty: number) => {
         return http.put(`/api/carts/items/${item.item_id}`, { qty })
     })
@@ -61,13 +63,13 @@ const CartItem = (props: any) => {
 
             <div className={styles.actionButtons}>
                 <div className={styles.qtyButtons}>
-                    <IconButton onClick={() => updateQty(item.qty - 1)}>
+                    <IconButton onClick={() => setQty((prev: number) => prev - 1)}>
                         <AiOutlineMinusCircle className={styles.icon}/>
                     </IconButton>
 
-                    <div>{item.qty}</div>
+                    <div className={styles.qty}>{qty}</div>
 
-                    <IconButton onClick={() => updateQty(item.qty + 1)}>
+                    <IconButton onClick={() => setQty((prev: number) => prev + 1)}>
                         <AiOutlinePlusCircle className={styles.icon}/>
                     </IconButton>
                 </div>

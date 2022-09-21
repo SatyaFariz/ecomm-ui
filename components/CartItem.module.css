@@ -42,3 +42,7 @@
 .qtyButtons {
     @apply flex gap-1 items-center
 }
+
+.qty {
+    @apply flex items-center justify-center w-[22px]
+}
