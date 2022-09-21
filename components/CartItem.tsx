@@ -1,6 +1,6 @@
 import styles from './CartItem.module.css'
 import Image from 'next/image'
-import { AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
 
 const CartItem = (props: any) => {
@@ -24,8 +24,16 @@ const CartItem = (props: any) => {
             </div>
 
             <div className={styles.actionButtons}>
-                <div>
+                <div className={styles.qtyButtons}>
+                    <IconButton>
+                        <AiOutlineMinusCircle className={styles.icon}/>
+                    </IconButton>
 
+                    <div>{item.qty}</div>
+
+                    <IconButton>
+                        <AiOutlinePlusCircle className={styles.icon}/>
+                    </IconButton>
                 </div>
 
                 <IconButton>

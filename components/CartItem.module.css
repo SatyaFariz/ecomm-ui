@@ -17,7 +17,7 @@
 }
 
 .productCols {
-    @apply flex gap-3
+    @apply flex gap-3 mb-4
 }
 
 .name {
@@ -33,4 +33,8 @@
 }
 .icon {
     @apply text-black
+}
+
+.qtyButtons {
+    @apply flex gap-1 items-center
 }
