@@ -29,10 +29,8 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
         const { data } = result
         res.status(200).json(data)
     } catch(error) {
-        console.log(error)
         const { status } = error.response
         const payload = {
-            error: true,
             message: error.response.data.message
         }
         res.status(status).json(payload)
