@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { useState, ReactElement } from 'react'
 import { useMutation } from 'react-query'
+import useLocalStorage from '../../hooks/useLocalStorage'
 import useQuery from '../../hooks/useQuery'
 import Head from 'next/head'
 
@@ -17,6 +18,7 @@ const Product = () => {
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState()
     const { id } = router.query
+    const [token] = useLocalStorage('token')
 
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
         Http.get(`/api/products/${id}`),
@@ -29,6 +31,7 @@ const Product = () => {
             qty: data.qty,
             sku: data.sku
         }
+        if(token) return Http.post(`/api/carts/items`, cartItem)
         return Http.post(`/api/guest-carts/${data.cartId}/items`, cartItem)
     })
 
