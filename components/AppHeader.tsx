@@ -19,13 +19,18 @@ const AppHeader: NextPage = () => {
     const isMounted: MutableRefObject<boolean> = useIsMounted()
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const cartId = isMounted.current && window.localStorage.getItem('cart_id')
+    const token = isMounted.current && window.localStorage.getItem('token')
     
     const { error, data: cartData }: any = useQuery('cart/totals', () =>
         {
+            if(token) {
+                return http.get(`/api/carts/totals`)
+            }
+
             return http.get(`/api/guest-carts/${cartId}/totals`)
         },
         {
-            enabled: !!cartId,
+            enabled: !!token || !!cartId,
             refetchOnWindowFocus: false
         }
     )
