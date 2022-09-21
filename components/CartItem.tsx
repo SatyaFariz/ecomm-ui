@@ -12,8 +12,24 @@ const CartItem = (props: any) => {
         return http.put(`/api/carts/items/${item.item_id}`, { qty })
     })
 
+    const deleteMutation = useMutation(() => {
+        return http.delete(`/api/carts/items/${item.item_id}`)
+    })
+
     const updateQty = (qty: number) => {
         qtyMutation.mutate(qty, {
+            onSuccess: () => {
+                queryClient.invalidateQueries('cart/totals')
+                queryClient.invalidateQueries('cart/items')
+            },
+            onError: (error: any) => {
+                alert(error.response.data.message)
+            }
+        })
+    }
+
+    const deleteItem = () => {
+        deleteMutation.mutate(undefined, {
             onSuccess: () => {
                 queryClient.invalidateQueries('cart/totals')
                 queryClient.invalidateQueries('cart/items')
@@ -55,7 +71,7 @@ const CartItem = (props: any) => {
                     </IconButton>
                 </div>
 
-                <IconButton>
+                <IconButton onClick={deleteItem}>
                     <AiOutlineDelete className={styles.icon}/>
                 </IconButton>
             </div>

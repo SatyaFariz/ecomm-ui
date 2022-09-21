@@ -55,6 +55,11 @@ class Http {
         return res.data
     }
 
+    static async delete(url: string): Promise<any> {
+        const res = await this.instance.delete(url)
+        return res.data
+    }
+
     static setHeader(key: string, value: string): void {
         this.instance.defaults.headers.common[key] = value
     }
