@@ -18,14 +18,14 @@ const AppHeader: NextPage = () => {
     const inputRef: RefObject<HTMLInputElement> = useRef(null)
     const isMounted: MutableRefObject<boolean> = useIsMounted()
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
+    const cartId = isMounted.current && window.localStorage.getItem('cart_id')
     
     const { error, data: cartData }: any = useQuery('cart/totals', () =>
-        { 
-            const cartId = window.localStorage.getItem('cart_id')
+        {
             return http.get(`/api/guest-carts/${cartId}/totals`)
         },
         {
-            enabled: isMounted.current,
+            enabled: !!cartId,
             refetchOnWindowFocus: false
         }
     )
