@@ -27,3 +27,10 @@
 .price {
     @apply text-sm font-bold
 }
+
+.actionButtons {
+    @apply flex justify-between
+}
+.icon {
+    @apply text-black
+}
