@@ -19,31 +19,6 @@ const CartItem = (props: any) => {
         return http.put(`/api/carts/items/${item.item_id}`, { qty })
     })
 
-    const debouncedQty = useDebouncedCallback(
-        // function
-        (value: number) => {
-            if(isMounted.current) setLoading(true)
-            qtyMutation.mutate(value, {
-                onSuccess: () => {
-                    queryClient.invalidateQueries('cart/totals')
-                    queryClient.invalidateQueries('cart/items')
-                },
-                onError: (error: any) => {
-                    alert(error.response.data.message)
-                },
-                onSettled: () => {
-                    if(isMounted.current) setLoading(false)
-                }
-            })
-        },
-        // delay in ms
-        500
-    )
-
-    const deleteMutation = useMutation(() => {
-        return http.delete(`/api/carts/items/${item.item_id}`)
-    })
-
     const deleteItem = () => {
         setLoading(true)
         deleteMutation.mutate(undefined, {
@@ -60,9 +35,38 @@ const CartItem = (props: any) => {
         })
     }
 
+    const debouncedQty = useDebouncedCallback(
+        // function
+        (value: number) => {
+            if(value === 0) {
+                deleteItem()
+            } else {
+                if(isMounted.current) setLoading(true)
+                qtyMutation.mutate(value, {
+                    onSuccess: () => {
+                        queryClient.invalidateQueries('cart/totals')
+                        queryClient.invalidateQueries('cart/items')
+                    },
+                    onError: (error: any) => {
+                        alert(error.response.data.message)
+                    },
+                    onSettled: () => {
+                        if(isMounted.current) setLoading(false)
+                    }
+                })
+            }
+        },
+        // delay in ms
+        500
+    )
+
+    const deleteMutation = useMutation(() => {
+        return http.delete(`/api/carts/items/${item.item_id}`)
+    })
+
     const onMinusButtonClick = () => {
         setQty((prev: number) => {
-            const qty = prev - 1
+            const qty = Math.max(prev - 1, 0)
             debouncedQty(qty)
             return qty
         })
@@ -70,7 +74,7 @@ const CartItem = (props: any) => {
 
     const onPlusButtonClick = () => {
         setQty((prev: number) => {
-            const qty = prev + 1
+            const qty = Math.min(prev + 1, 99)
             debouncedQty(qty)
             return qty
         })
