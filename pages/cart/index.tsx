@@ -33,7 +33,7 @@ function Cart(props: AppProps) {
     return (
         <>
             {cartItems?
-            <div>
+            <div className={styles.container}>
                 {cartItems.map((item: any, i: number) =>
                     <CartItem item={item} key={i}/>
                 )}

@@ -1,5 +1,5 @@
 .container {
-    @apply py-3 px-5
+    @apply py-4 px-5 border-gray-200/80 border-b
 }
 
 .imageContainer {
