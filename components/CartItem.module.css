@@ -3,7 +3,7 @@
 }
 
 .divider {
-    @apply bg-gray-200/80 mx-5
+    @apply bg-gray-100/70 mx-5
 }
 
 .imageContainer {
