@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useQueryClient } from 'react-query'
 import styles from '../../styles/SignUp.module.css'
 import TextInput from '../../components/TextInput'
 import Button from '../../components/Button'
@@ -8,9 +9,9 @@ import Validator from '../../helpers/Validator'
 import http from '../../libs/http'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
-import { AxiosError } from 'axios'
 
 const SignUp = (props: any) => {
+    const queryClient = useQueryClient()
     const router = useRouter()
     const isMounted = useIsMounted()
     const [credentials, setCredentials] = useState({
@@ -45,9 +46,20 @@ const SignUp = (props: any) => {
     const submit = () => {
         if(isValid()) {
             mutation.mutate(credentials, {
-                onSuccess: (data) => {
+                onSuccess: async (data) => {
                     window.localStorage.setItem('token', data)
                     router.replace('/')
+
+                    const cartIdKey = 'cart_id'
+                    const cartId = window.localStorage.getItem(cartIdKey)
+                    
+                    if(cartId) {
+                        window.localStorage.removeItem(cartIdKey)
+                        await http.post('/api/carts/merge', { source_cart_id: cartId })
+                        queryClient.invalidateQueries('cart/totals')
+                        queryClient.invalidateQueries('cart/items')
+                    }
+
                 },
                 onError: (error: any) => {
                     alert(error.response.data.message)
