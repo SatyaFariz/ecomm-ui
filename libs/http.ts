@@ -50,6 +50,11 @@ class Http {
         return res.data
     }
 
+    static async put(url: string, data?: any): Promise<any> {
+        const res = await this.instance.put(url, data)
+        return res.data
+    }
+
     static setHeader(key: string, value: string): void {
         this.instance.defaults.headers.common[key] = value
     }

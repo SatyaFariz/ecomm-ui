@@ -2,9 +2,28 @@ import styles from './CartItem.module.css'
 import Image from 'next/image'
 import { AiOutlineDelete, AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
+import { useMutation, useQueryClient } from 'react-query'
+import http from '../libs/http'
 
 const CartItem = (props: any) => {
+    const queryClient = useQueryClient()
     const { item } = props
+    const qtyMutation = useMutation((qty: number) => {
+        return http.put(`/api/carts/items/${item.item_id}`, { qty })
+    })
+
+    const updateQty = (qty: number) => {
+        qtyMutation.mutate(qty, {
+            onSuccess: () => {
+                queryClient.invalidateQueries('cart/totals')
+                queryClient.invalidateQueries('cart/items')
+            },
+            onError: (error: any) => {
+                alert(error.response.data.message)
+            }
+        })
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.productCols}>
@@ -25,13 +44,13 @@ const CartItem = (props: any) => {
 
             <div className={styles.actionButtons}>
                 <div className={styles.qtyButtons}>
-                    <IconButton>
+                    <IconButton onClick={() => updateQty(item.qty - 1)}>
                         <AiOutlineMinusCircle className={styles.icon}/>
                     </IconButton>
 
                     <div>{item.qty}</div>
 
-                    <IconButton>
+                    <IconButton onClick={() => updateQty(item.qty + 1)}>
                         <AiOutlinePlusCircle className={styles.icon}/>
                     </IconButton>
                 </div>
