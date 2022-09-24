@@ -23,6 +23,9 @@ const ProductItem = (props: any) => {
                         layout="fill"
                         priority={true}
                     />
+                    {product.stock_status === 'OUT_OF_STOCK' &&
+                    <div className={styles.outOfStock}>OUT OF STOCK</div>
+                    }
                 </div>
 
                 <p className={styles.name}>{product.name}</p>

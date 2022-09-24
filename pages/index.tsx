@@ -20,6 +20,7 @@ const graphql = `query search($search_term: String) {
         uid,
         sku,
         name,
+        stock_status,
         price_range {
             minimum_price {
                 discount {

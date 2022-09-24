@@ -20,6 +20,10 @@
     @apply absolute h-full w-full object-cover z-[0]
 }
 
+.outOfStock {
+    @apply p-2 absolute z-[1] bg-rose-500/80 text-white text-sm font-bold left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] whitespace-nowrap
+}
+
 .price {
     @apply mt-2 text-sm font-bold leading-[1]
 }
