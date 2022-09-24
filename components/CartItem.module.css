@@ -32,6 +32,10 @@
     @apply text-sm font-bold
 }
 
+.outOfStock {
+    @apply text-sm font-bold text-rose-500
+}
+
 .actionButtons {
     @apply flex justify-between
 }

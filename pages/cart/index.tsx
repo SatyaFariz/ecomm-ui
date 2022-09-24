@@ -32,6 +32,7 @@ const guestQuery = `query cart($cart_id: String!) {
             product {
                 name,
                 sku,
+                stock_status,
                 image {
                     url
                 }
@@ -60,6 +61,7 @@ const customerQuery = `query {
             product {
                 name,
                 sku,
+                stock_status,
                 image {
                     url
                 }

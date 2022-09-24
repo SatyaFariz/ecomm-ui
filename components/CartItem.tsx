@@ -107,6 +107,9 @@ const CartItem = (props: any) => {
                 <div>
                     <p className={styles.name}>{item.product.name}</p>
                     <p className={styles.price}>Rp {item.prices.price.value}</p>
+                    {item.product.stock_status === 'OUT_OF_STOCK' &&
+                    <p className={styles.outOfStock}>OUT OF STOCK</p>
+                    }
                 </div>
             </div>
 
