@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
-import Oauth1Helper from '../../../../helpers/Oauth1Helper'
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,22 +20,12 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
             qty: req.body.qty
         }
     }
-
-    const request = {
-        url,
-        method: 'POST',
-        body
-    }
-
-    const authHeader = Oauth1Helper.getAuthHeaderForRequest(request)
-    
     
     try {
-        const result = await axios.post(request.url, body, { headers: authHeader })
+        const result = await axios.post(url, body)
         const { data } = result
         res.status(200).json(data)
     } catch(error) {
-        console.log(error)
         const { status } = error.response
         const payload = {
             error: true,
@@ -48,23 +37,13 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
 
 async function get(req: NextApiRequest, res: NextApiResponse) {
 
-    const url = `http://localhost/rest/default/V1/guest-carts/${req.query.cart_id}/items`
-
-
-    const request = {
-        url,
-        method: 'GET'
-    }
-
-    const authHeader = Oauth1Helper.getAuthHeaderForRequest(request)
-    
+    const url = `http://localhost/rest/default/V1/guest-carts/${req.query.cart_id}/items`    
     
     try {
-        const result = await axios.get(request.url, { headers: authHeader })
+        const result = await axios.get(url)
         const { data } = result
         res.status(200).json(data)
     } catch(error) {
-        console.log(error)
         const { status } = error.response
         const payload = {
             error: true,
