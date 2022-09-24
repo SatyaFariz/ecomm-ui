@@ -20,14 +20,12 @@ const guestQuery = `query cart($cart_id: String!) {
             quantity,
             prices {
                 price {
-                    value,
-                    },
-                    discounts {
-                    label,
-                    amount {
-                        value
-                    }
-                }
+                    value
+                },
+                row_total {
+                    currency
+                    value
+                },
             },
             product {
                 name,
@@ -36,6 +34,11 @@ const guestQuery = `query cart($cart_id: String!) {
                 image {
                     url
                 }
+            }
+        },
+        prices {
+            grand_total {
+              value
             }
         }
     }
@@ -49,14 +52,12 @@ const customerQuery = `query {
             quantity,
             prices {
                 price {
-                    value,
-                    },
-                    discounts {
-                    label,
-                    amount {
-                        value
-                    }
-                }
+                    value
+                },
+                row_total {
+                    currency
+                    value
+                },
             },
             product {
                 name,
@@ -65,6 +66,11 @@ const customerQuery = `query {
                 image {
                     url
                 }
+            }
+        },
+        prices {
+            grand_total {
+              value
             }
         }
     }
