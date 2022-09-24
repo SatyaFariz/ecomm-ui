@@ -117,6 +117,10 @@ function Cart(props: AppProps) {
                 {data.data[token ? 'customerCart' : 'cart'].items.map((item: any) =>
                     <CartItem item={item} key={`${item.id}_${item.quantity}`}/>
                 )}
+                <div className={styles.total}>
+                    <div className={styles.totalText}>Total</div>
+                    <div className={styles.totalText}>Rp {data.data[token ? 'customerCart' : 'cart'].prices.grand_total.value}</div>
+                </div>
             </div>
             :
             <div>Loading...</div>
