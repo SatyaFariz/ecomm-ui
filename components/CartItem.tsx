@@ -54,6 +54,7 @@ const CartItem = (props: any) => {
                     },
                     onError: (error: any) => {
                         alert(error.response.data.message)
+                        if(isMounted.current) setQty(item.quantity)
                     },
                     onSettled: () => {
                         if(isMounted.current) setLoading(false)
