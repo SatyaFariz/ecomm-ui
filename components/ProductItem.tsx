@@ -13,7 +13,7 @@ const ProductItem = (props: any) => {
             <div className={styles.container}>
                 {minimum_price.discount.percent_off > 0 &&
                 <div className={styles.discountPercentage}>
-                    {minimum_price.discount.percent_off}%
+                    {Math.floor(minimum_price.discount.percent_off)}%
                 </div>
                 }
                 <div className={styles.imageContainer}>
