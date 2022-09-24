@@ -40,6 +40,34 @@ const guestQuery = `query cart($cart_id: String!) {
     }
 }`
 
+const customerQuery = `query {
+    customerCart {
+        items {
+            id,
+            uid,
+            quantity,
+            prices {
+                price {
+                    value,
+                    },
+                    discounts {
+                    label,
+                    amount {
+                        value
+                    }
+                }
+            },
+            product {
+                name,
+                sku,
+                image {
+                    url
+                }
+            }
+        }
+    }
+}`
+
 function Cart(props: AppProps) {
     const isMounted: MutableRefObject<boolean> = useIsMounted()
     const [cartId] = useLocalStorage('cart_id')
@@ -50,7 +78,12 @@ function Cart(props: AppProps) {
     const { error, data }: any = useQuery('cart/items', () =>
         {
             if(token) {
-                return http.get(`/api/carts/items`)
+                return http.post(
+                    `/api/graphql`,
+                    {
+                        query: customerQuery
+                    }
+                )
             }
 
             return http.post(
@@ -73,7 +106,7 @@ function Cart(props: AppProps) {
         <>
             {data?
             <div className={styles.container}>
-                {data.data.cart.items.map((item: any) =>
+                {data.data[token ? 'customerCart' : 'cart'].items.map((item: any) =>
                     <CartItem item={item} key={`${item.id}_${item.quantity}`}/>
                 )}
             </div>
