@@ -7,6 +7,7 @@ import http from '../libs/http'
 import { useState, useEffect } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import useIsMounted from '../hooks/useIsMounted'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const CartItem = (props: any) => {
     const [loading, setLoading] = useState(false)
@@ -14,9 +15,13 @@ const CartItem = (props: any) => {
     const { item } = props
     const [qty, setQty] = useState(item.quantity)
     const isMounted = useIsMounted()
+    const [cartId] = useLocalStorage('cart_id')
+    const [token] = useLocalStorage('token')
     
     const qtyMutation = useMutation((qty: number) => {
-        return http.put(`/api/carts/items/${item.id}`, { qty })
+        if(token) return http.put(`/api/carts/items/${item.id}`, { qty })
+
+        return http.put(`/api/guest-carts/${cartId}/items/${item.id}`, { qty })
     })
 
     const deleteItem = () => {
@@ -61,7 +66,9 @@ const CartItem = (props: any) => {
     )
 
     const deleteMutation = useMutation(() => {
-        return http.delete(`/api/carts/items/${item.id}`)
+        if(token) return http.delete(`/api/carts/items/${item.id}`)
+
+        return http.delete(`/api/guest-carts/${cartId}/items/${item.id}`)
     })
 
     const onMinusButtonClick = () => {
