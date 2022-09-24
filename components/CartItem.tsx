@@ -12,11 +12,11 @@ const CartItem = (props: any) => {
     const [loading, setLoading] = useState(false)
     const queryClient = useQueryClient()
     const { item } = props
-    const [qty, setQty] = useState(item.qty)
+    const [qty, setQty] = useState(item.quantity)
     const isMounted = useIsMounted()
     
     const qtyMutation = useMutation((qty: number) => {
-        return http.put(`/api/carts/items/${item.item_id}`, { qty })
+        return http.put(`/api/carts/items/${item.id}`, { qty })
     })
 
     const deleteItem = () => {
@@ -61,7 +61,7 @@ const CartItem = (props: any) => {
     )
 
     const deleteMutation = useMutation(() => {
-        return http.delete(`/api/carts/items/${item.item_id}`)
+        return http.delete(`/api/carts/items/${item.id}`)
     })
 
     const onMinusButtonClick = () => {
@@ -91,15 +91,15 @@ const CartItem = (props: any) => {
                 <div className={styles.imageContainer}>
                     <Image 
                         className={styles.image} 
-                        src={`http://localhost/media/catalog/product${'/k/m/kmr112-4.jpeg'}`}
+                        src={item.product.image.url}
                         layout="fill"
                         priority={true}
                     />
                 </div>
 
                 <div>
-                    <p className={styles.name}>{item.name}</p>
-                    <p className={styles.price}>Rp {item.price}</p>
+                    <p className={styles.name}>{item.product.name}</p>
+                    <p className={styles.price}>Rp {item.prices.price.value}</p>
                 </div>
             </div>
 

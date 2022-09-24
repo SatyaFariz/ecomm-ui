@@ -10,18 +10,56 @@ import useQuery from '../../hooks/useQuery'
 import http from '../../libs/http'
 import CartItem from '../../components/CartItem'
 
+const guestQuery = `query cart($cart_id: String!) {
+    cart(
+        cart_id: $cart_id
+    ) {
+        items {
+            id,
+            uid,
+            quantity,
+            prices {
+                price {
+                    value,
+                    },
+                    discounts {
+                    label,
+                    amount {
+                        value
+                    }
+                }
+            },
+            product {
+                name,
+                sku,
+                image {
+                    url
+                }
+            }
+        }
+    }
+}`
+
 function Cart(props: AppProps) {
     const isMounted: MutableRefObject<boolean> = useIsMounted()
     const [cartId] = useLocalStorage('cart_id')
     const [token] = useLocalStorage('token')
 
-    const { error, data: cartItems }: any = useQuery('cart/items', () =>
+    const cartItems = []
+
+    const { error, data }: any = useQuery('cart/items', () =>
         {
             if(token) {
                 return http.get(`/api/carts/items`)
             }
 
-            return http.get(`/api/guest-carts/${cartId}/items`)
+            return http.post(
+                `/api/graphql`,
+                {
+                    query: guestQuery,
+                    variables: { cart_id: cartId }
+                }
+            )
         },
         {
             enabled: !!token || !!cartId,
@@ -29,12 +67,14 @@ function Cart(props: AppProps) {
         }
     )
 
+    console.log(data)
+
     return (
         <>
-            {cartItems?
+            {data?
             <div className={styles.container}>
-                {cartItems.map((item: any) =>
-                    <CartItem item={item} key={`${item.item_id}_${item.qty}`}/>
+                {data.data.cart.items.map((item: any) =>
+                    <CartItem item={item} key={`${item.id}_${item.quantity}`}/>
                 )}
             </div>
             :
