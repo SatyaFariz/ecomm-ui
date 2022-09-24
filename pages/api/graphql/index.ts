@@ -11,19 +11,21 @@ export default async function handler(
 async function post(req: NextApiRequest, res: NextApiResponse) {
     const url = `http://localhost/graphql`
 
-    const headers = {
-        authorization: req.headers.authorization as string
+    const headers: any = {
     }
+
+    if(req.headers.authorization)
+        headers.authorization = req.headers.authorization as string
 
     try {
         const result = await axios.post(url, req.body, { headers })
         const { data } = result
         res.status(200).json(data)
     } catch(error) {
-        const { status } = error.response
+        const { code } = error
         const payload = {
-            message: error.response.data.message
+            code
         }
-        res.status(status).json(payload)
+        res.status(500).json(payload)
     }
 }
