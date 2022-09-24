@@ -6,7 +6,7 @@ const ProductList = (props: any) => {
     return (
         <section className={styles.list}>
             {products.map((product: any) =>
-                <ProductItem product={product} key={product.id}/>
+                <ProductItem product={product} key={product.uid}/>
             )}
         </section>
     )

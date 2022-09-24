@@ -4,27 +4,31 @@ import Image from 'next/image'
 
 const ProductItem = (props: any) => {
     const { product } = props
+    const {
+        minimum_price,
+        // maximum_price
+    } = product.price_range
     return (
         <Link href={`/products/${product.sku}`}>
             <div className={styles.container}>
-                {product.sale &&
+                {minimum_price.discount.percent_off > 0 &&
                 <div className={styles.discountPercentage}>
-                    {product.sale.discount_percentage}%
+                    {minimum_price.discount.percent_off}%
                 </div>
                 }
                 <div className={styles.imageContainer}>
                     <Image 
                         className={styles.image} 
-                        src={`http://localhost/media/catalog/product${product.media_gallery_entries[0]?.file}`}
+                        src={product?.image?.url}
                         layout="fill"
                         priority={true}
                     />
                 </div>
 
                 <p className={styles.name}>{product.name}</p>
-                <p className={styles.price}>Rp {product.sale?.price || product.price}</p>
-                {product.sale &&
-                <p className={styles.salePrice}>Rp {product.price}</p>
+                <p className={styles.price}>Rp {product.price_range.minimum_price.final_price.value}</p>
+                {minimum_price.discount.percent_off > 0 &&
+                <p className={styles.salePrice}>Rp {product.price_range.minimum_price.regular_price.value}</p>
                 }
             </div>
         </Link>

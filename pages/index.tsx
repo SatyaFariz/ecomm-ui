@@ -12,6 +12,40 @@ import Link from 'next/link'
 import Http from '../libs/http'
 import { ReactElement } from 'react'
 
+const graphql = `query search($search_term: String) {
+	products(
+    search: $search_term
+  ) {
+    items {
+        uid,
+        sku,
+        name,
+        price_range {
+            minimum_price {
+                discount {
+                    percent_off
+                },
+                regular_price {
+                    value
+                },
+                final_price {
+                    value
+                }
+            }
+        },
+        image {
+            url
+        }
+     
+    },
+    page_info {
+        page_size,
+        total_pages,
+        current_page
+    }
+  }
+}`
+
 export async function getServerSideProps(context: any) {
     const { query } = context
     const endpoint: string = `http://localhost:3000/api/products?${qs.stringify(query)}`
@@ -30,11 +64,19 @@ export async function getServerSideProps(context: any) {
 
 const Home = () => {
     const query = useQueryParams()
+    const queryString = qs.stringify(query)
     const endpoint: string = `/api/products?${qs.stringify(query)}`
 
-    const { error, data }: any = useQuery(['product_list_home', endpoint], () =>
-        Http.get(endpoint)
+    const { error, data }: any = useQuery(['product_list_home', queryString], () =>
+        Http.post('/api/graphql', {
+            query: graphql,
+            variables: {
+                search_term: ""
+            }
+        })
     )
+
+    console.log(data)
 
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery(['me', endpoint], () =>
         Http.get('/api/customers/me')
@@ -55,12 +97,12 @@ const Home = () => {
             </div>
             {data ?
             <>
-                <ProductList products={data.items}/>
-                <Pagination 
+                <ProductList products={data.data?.products?.items}/>
+                {/* <Pagination 
                     pageSize={data.search_criteria?.page_size} 
                     currentPage={data.search_criteria?.current_page}
                     totalCount={data.total_count} 
-                />
+                /> */}
             </>
             :
             <ProductListShimmer/>
