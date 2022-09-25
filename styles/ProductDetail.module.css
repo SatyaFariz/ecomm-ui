@@ -52,3 +52,11 @@
 .stockThreshold {
     @apply text-sm mt-2 text-gray-500
 }
+
+.divider {
+    @apply bg-gray-100/70 my-6
+}
+
+.description {
+    white-space: break-spaces;
+}

@@ -53,6 +53,9 @@ const productQuery = `query productDetails($id: String!) {
                     }
                 }
             },
+            short_description {
+                html
+            }
         }
     }
 }`
@@ -183,6 +186,11 @@ const Product = () => {
                     <p className={styles.stockThreshold}>Only {product.only_x_left_in_stock} left in stock</p>
                     }
                     
+                    <hr className={styles.divider}/>
+
+                    <div className={styles.description}>
+                        {product.short_description?.html}
+                    </div>
                 </div>
 
                 <button onClick={addToCart}>Add To Cart</button>
