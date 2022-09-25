@@ -74,7 +74,9 @@ const Product = () => {
     const { id } = router.query
     const [token] = useLocalStorage('token')
 
-    const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
+    const queryKey = `product_detail_${id}`
+
+    const { isLoading, error, data }: any = useQuery(queryKey, () =>
         Http.post(`/api/graphql`, {
             query: productQuery,
             variables: { id }
@@ -83,6 +85,11 @@ const Product = () => {
             enabled: id !== undefined
         }
     )
+
+    const products = data?.data?.products?.items
+    const product = products && products[0]
+    const category = product?.categories && product.categories[product.categories.length - 1]
+    const minimum_price = product?.price_range?.minimum_price
 
     const mutation = useMutation((data: any) => {
         const cartItem = {
@@ -107,7 +114,7 @@ const Product = () => {
 
         const body = {
             cartId,
-            sku: data.sku,
+            sku: product.sku,
             qty
         }
         mutation.mutate(body, {
@@ -123,11 +130,6 @@ const Product = () => {
         })
 
     }
-
-    const products = data?.data?.products?.items
-    const product = products && products[0]
-    const category = product?.categories && product.categories[product.categories.length - 1]
-    const minimum_price = product?.price_range?.minimum_price
  
     if (error) return 'An error has occurred: ' + error.message
     return (
