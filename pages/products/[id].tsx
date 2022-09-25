@@ -7,7 +7,7 @@ import Http from '../../libs/http'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import { useState, ReactElement } from 'react'
+import { useState, ReactElement, Fragment } from 'react'
 import { useMutation } from 'react-query'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useQuery from '../../hooks/useQuery'
@@ -141,10 +141,10 @@ const Product = () => {
                     {category &&
                     <div className={styles.breadcrumbs}>
                         {category.breadcrumbs.map((item: any) =>
-                            <>
-                                <div key={item.category_uid}>{item.category_name}</div>
-                                <div key={`${item.category_uid}_`}>/</div>
-                            </>
+                            <Fragment key={item.category_uid}>
+                                <div>{item.category_name}</div>
+                                <div>/</div>
+                            </Fragment>
                         )}
                         <div>{category.name}</div>
                     </div>
