@@ -1,3 +1,15 @@
 .button, .button:active, .button:focus, .button:focus-within, .button:target, .button:hover, .button:visited, .button:focus-visible {
-    @apply bg-amber-300 text-black shadow-none normal-case font-bold font-[inherit]
+    @apply bg-sky-500 text-white shadow-none normal-case font-bold font-[inherit]
+}
+
+.content {
+    @apply relative
+}
+
+.hidden {
+    @apply invisible
+}
+
+.loading {
+    @apply absolute left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]
 }

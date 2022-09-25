@@ -67,6 +67,7 @@ const Product = () => {
     const queryClient = useQueryClient()
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState(1)
+    const [loading, setLoading] = useState(false)
     const { id } = router.query
     const [token] = useLocalStorage('token')
 
@@ -113,6 +114,13 @@ const Product = () => {
             }
         })
 
+    }
+
+    const testLoading = () => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
     }
 
     const products = data?.data?.products?.items
@@ -226,6 +234,8 @@ const Product = () => {
                     <Button 
                         variant="contained"
                         fullWidth={true}
+                        loading={loading}
+                        onClick={testLoading}
                     >
                         Add to Cart
                     </Button>

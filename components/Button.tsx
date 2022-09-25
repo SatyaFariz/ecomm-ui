@@ -10,9 +10,12 @@ const CustomButton = (props: any) => {
             className={[styles.button, props.className]}
             {...props}
         >
-            {props.loading ? 
-            <ReactLoading type="spokes" height={iconSize} width={iconSize}/>
-            : props.children}
+            <div className={styles.content}>
+                <div className={props.loading ? styles.hidden : undefined}>{props.children}</div>
+                {props.loading &&
+                <ReactLoading type="spokes" height={iconSize} width={iconSize} className={styles.loading}/>
+                }
+            </div>
         </Button>
     )
 }
