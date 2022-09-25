@@ -3,12 +3,13 @@ import Button from '@mui/material/Button'
 import ReactLoading from 'react-loading'
 
 const CustomButton = (props: any) => {
+    const { loading, ...rest } = props
     const iconSize = 24
     return (
         <Button 
             variant="contained"
-            className={[styles.button, props.className]}
-            {...props}
+            className={styles.button}
+            {...rest}
         >
             <div className={styles.content}>
                 <div className={props.loading ? styles.hidden : undefined}>{props.children}</div>
