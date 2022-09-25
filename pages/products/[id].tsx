@@ -46,7 +46,7 @@ const productQuery = `query productDetails($id: String!) {
 const Product = () => {
     const queryClient = useQueryClient()
     const router = useRouter()
-    const [swiperIndex, setSwiperIndex] = useState()
+    const [swiperIndex, setSwiperIndex] = useState(1)
     const { id } = router.query
     const [token] = useLocalStorage('token')
 
@@ -69,7 +69,7 @@ const Product = () => {
     })
 
     const handleSwipe = (obj: any) => {
-        setSwiperIndex(obj.activeIndex)
+        setSwiperIndex(obj.activeIndex + 1)
     }
 
     const addToCart = async () => {
@@ -129,6 +129,12 @@ const Product = () => {
                             )
                         })}
                     </Swiper>
+                    
+                    {product.media_gallery.length > 1 &&
+                    <div className={styles.swipeIndicator}>
+                        {swiperIndex}/{product.media_gallery.length}
+                    </div>
+                    }
                 </div>
                 
                 <div className={styles.section}>

@@ -24,3 +24,7 @@
 .breadcrumbs {
     @apply flex gap-2 mb-2
 }
+
+.swipeIndicator {
+    @apply absolute z-[1] bg-stone-900/60 text-white p-1 px-2 text-sm rounded-lg right-[10px] bottom-[10px]
+}
