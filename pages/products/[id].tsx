@@ -38,7 +38,20 @@ const productQuery = `query productDetails($id: String!) {
                     category_uid,
                     category_name
                 }
-            }
+            },
+            price_range {
+                minimum_price {
+                    discount {
+                        percent_off
+                    },
+                    regular_price {
+                        value
+                    },
+                    final_price {
+                        value
+                    }
+                }
+            },
         }
     }
 }`
@@ -98,6 +111,7 @@ const Product = () => {
     const products = data?.data?.products?.items
     const product = products && products[0]
     const category = product?.categories && product.categories[product.categories.length - 1]
+    const minimum_price = product?.price_range?.minimum_price
  
     if (error) return 'An error has occurred: ' + error.message
     return (
@@ -150,6 +164,15 @@ const Product = () => {
                     </div>
                     }
                     <p className={styles.name}>{product.name}</p>
+                    {minimum_price.discount.percent_off > 0 &&
+                    <p className={styles.discountPrice}>Rp {product.price_range.minimum_price.regular_price.value}</p>
+                    }
+                    <div className={styles.price}>
+                        <p className={styles.finalPrice}>Rp {product.price_range.minimum_price.final_price.value}</p>
+                        {minimum_price.discount.percent_off > 0 &&
+                        <div className={styles.percentOff}>{Math.floor(minimum_price.discount.percent_off)}% Off</div>
+                        }
+                    </div>
                 </div>
 
                 <button onClick={addToCart}>Add To Cart</button>

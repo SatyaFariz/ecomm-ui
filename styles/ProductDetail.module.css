@@ -1,5 +1,5 @@
 .name {
-    @apply font-extrabold text-lg
+    @apply font-extrabold text-lg mb-2
 }
 
 .section {
@@ -27,4 +27,20 @@
 
 .swipeIndicator {
     @apply absolute z-[1] bg-stone-900/60 text-white p-1 px-2 text-sm rounded-lg right-[10px] bottom-[10px]
+}
+
+.finalPrice {
+    @apply text-base font-bold
+}
+
+.discountPrice {
+    @apply text-xs line-through text-gray-500
+}
+
+.price {
+    @apply flex gap-3 flex items-center
+}
+
+.percentOff {
+    @apply bg-rose-500 text-white text-sm flex justify-center items-center p-2 py-[2px]
 }
