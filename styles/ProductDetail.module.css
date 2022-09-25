@@ -42,5 +42,9 @@
 }
 
 .percentOff {
-    @apply bg-rose-500 text-white text-sm flex justify-center items-center p-2 py-[2px]
+    @apply bg-amber-300 text-black font-bold text-sm flex justify-center items-center p-2 py-[2px] uppercase
+}
+
+.outOfStock {
+    @apply bg-rose-500 text-white font-bold text-sm flex justify-center items-center p-2 py-[2px] uppercase
 }

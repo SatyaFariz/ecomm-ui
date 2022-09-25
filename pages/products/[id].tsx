@@ -172,7 +172,12 @@ const Product = () => {
                         {minimum_price.discount.percent_off > 0 &&
                         <div className={styles.percentOff}>{Math.floor(minimum_price.discount.percent_off)}% Off</div>
                         }
+
+                        {product.stock_status === 'OUT_OF_STOCK' &&
+                        <div className={styles.outOfStock}>Out of stock</div>
+                        }
                     </div>
+                    
                 </div>
 
                 <button onClick={addToCart}>Add To Cart</button>
