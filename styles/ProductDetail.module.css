@@ -83,10 +83,6 @@
     @apply bg-gray-100 h-2
 }
 
-.button, .button:active, .button:focus, .button:focus-within, .button:target, .button:hover, .button:visited, .button:focus-visible {
-    @apply bg-amber-300 text-black shadow-none normal-case font-bold font-[inherit]
-}
-
 .icon {
     @apply text-black
 }

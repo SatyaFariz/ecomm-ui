@@ -12,8 +12,8 @@ import { useMutation } from 'react-query'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useQuery from '../../hooks/useQuery'
 import Head from 'next/head'
-import Button from '@mui/material/Button'
-import { AiOutlineDelete, AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
+import Button from '../../components/Button'
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
 
 const productQuery = `query productDetails($id: String!) {
@@ -225,7 +225,6 @@ const Product = () => {
                 <div className={styles.stickyButton}>
                     <Button 
                         variant="contained"
-                        className={styles.button}
                         fullWidth={true}
                     >
                         Add to Cart

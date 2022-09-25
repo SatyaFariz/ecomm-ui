@@ -1,11 +1,14 @@
 import styles from './Button.module.css'
+import Button from '@mui/material/Button'
 
-const Button = (props: any) => {
+const CustomButton = (props: any) => {
     return (
-        <button className={styles.button} {...props}>
-            {props.label}
-        </button>
+        <Button 
+            variant="contained"
+            className={[styles.button, props.className]}
+            {...props}
+        />
     )
 }
   
-export default Button
+export default CustomButton
