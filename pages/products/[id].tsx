@@ -13,6 +13,36 @@ import useLocalStorage from '../../hooks/useLocalStorage'
 import useQuery from '../../hooks/useQuery'
 import Head from 'next/head'
 
+const productQuery = `query productDetails($id: String!) {
+	products(
+        filter: {
+            sku: {
+                eq: $id
+            }
+        }
+    ) {
+        items {
+            sku,
+            name,
+            stock_status,
+            media_gallery {
+                url
+            },
+            categories {
+                level,
+                uid,
+                name,
+                path,
+                breadcrumbs {
+                    category_level,
+                    category_uid,
+                    category_name
+                }
+            }
+        }
+    }
+}`
+
 const Product = () => {
     const queryClient = useQueryClient()
     const router = useRouter()
@@ -21,7 +51,10 @@ const Product = () => {
     const [token] = useLocalStorage('token')
 
     const { isLoading, error, data }: any = useQuery(`product_detail_${id}`, () =>
-        Http.get(`/api/products/${id}`),
+        Http.post(`/api/graphql`, {
+            query: productQuery,
+            variables: { id }
+        }),
         {
             enabled: id !== undefined
         }
@@ -61,15 +94,19 @@ const Product = () => {
         })
 
     }
+
+    const products = data?.data?.products?.items
+    const product = products && products[0]
+    const category = product?.categories && product.categories[product.categories.length - 1]
  
     if (error) return 'An error has occurred: ' + error.message
     return (
         <>
-            {data?
+            {product?
             <>  
                 <Head>
-                    <title>{data.name}</title>
-                    <meta name="description" content={data.meta.description} />
+                    <title>{product.name}</title>
+                    <meta name="description" content={product.meta?.description} />
                 </Head>
                 <div className={styles.imageContainer}>
                     <Swiper 
@@ -77,14 +114,14 @@ const Product = () => {
                         virtual={false}
                         className={styles.image}
                     >
-                        {data.media_gallery_entries.map((item: any, i: number) => {
+                        {product.media_gallery.map((item: any, i: number) => {
                             return (
                             <SwiperSlide
                                 key={i}
                             >
                                 <Image 
                                     className={styles.image} 
-                                    src={`http://localhost/media/catalog/product${item.file}`}
+                                    src={item.url}
                                     layout="fill"
                                     priority={true}
                                 />
@@ -95,7 +132,18 @@ const Product = () => {
                 </div>
                 
                 <div className={styles.section}>
-                    <p className={styles.name}>{data.name}</p>
+                    {category &&
+                    <div className={styles.breadcrumbs}>
+                        {category.breadcrumbs.map((item: any) =>
+                            <>
+                                <div key={item.category_uid}>{item.category_name}</div>
+                                <div key={`${item.category_uid}_`}>/</div>
+                            </>
+                        )}
+                        <div>{category.name}</div>
+                    </div>
+                    }
+                    <p className={styles.name}>{product.name}</p>
                 </div>
 
                 <button onClick={addToCart}>Add To Cart</button>
