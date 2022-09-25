@@ -241,7 +241,7 @@ const Product = () => {
                     </Button>
                 </div>
 
-                
+                <hr className={styles.sectionDivider}/>
             </>
             :
             <div>Loading...</div>
