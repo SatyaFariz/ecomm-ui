@@ -25,6 +25,7 @@ const productQuery = `query productDetails($id: String!) {
             sku,
             name,
             stock_status,
+            only_x_left_in_stock,
             media_gallery {
                 url
             },
@@ -177,6 +178,10 @@ const Product = () => {
                         <div className={styles.outOfStock}>Out of stock</div>
                         }
                     </div>
+
+                    {product.only_x_left_in_stock &&
+                    <p className={styles.stockThreshold}>Only {product.only_x_left_in_stock} left in stock</p>
+                    }
                     
                 </div>
 
