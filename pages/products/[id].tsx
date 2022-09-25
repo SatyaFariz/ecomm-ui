@@ -10,6 +10,7 @@ import 'swiper/css'
 import { useState, ReactElement, Fragment } from 'react'
 import { useMutation } from 'react-query'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import useIsMounted from '../../hooks/useIsMounted'
 import useQuery from '../../hooks/useQuery'
 import Head from 'next/head'
 import Button from '../../components/Button'
@@ -68,6 +69,8 @@ const Product = () => {
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState(1)
     const [loading, setLoading] = useState(false)
+    const isMounted = useIsMounted()
+    const [qty, setQty] = useState(1)
     const { id } = router.query
     const [token] = useLocalStorage('token')
 
@@ -80,6 +83,7 @@ const Product = () => {
             enabled: id !== undefined
         }
     )
+
     const mutation = useMutation((data: any) => {
         const cartItem = {
             qty: data.qty,
@@ -94,6 +98,7 @@ const Product = () => {
     }
 
     const addToCart = async () => {
+        setLoading(true)
         let cartId = window.localStorage.getItem('cart_id')
         if(!cartId) {
             cartId = await Http.post('/api/guest-carts')
@@ -103,24 +108,20 @@ const Product = () => {
         const body = {
             cartId,
             sku: data.sku,
-            qty: 1
+            qty
         }
         mutation.mutate(body, {
-            onSuccess: (data, variables, context) => {
+            onSuccess: () => {
                 queryClient.invalidateQueries('cart/totals')
             },
             onError: (error: any) => {
                 alert(error.response.data.message)
+            },
+            onSettled: () => {
+                if(isMounted.current) setLoading(false)
             }
         })
 
-    }
-
-    const testLoading = () => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
     }
 
     const products = data?.data?.products?.items
@@ -207,23 +208,22 @@ const Product = () => {
                 <hr className={styles.sectionDivider}/>
 
                 <div className={styles.addToCartSection}>
-                    {/* <button onClick={addToCart}>Add To Cart</button> */}
-                    <div className={styles.qty}>
+                    <div className={styles.qtyContainer}>
                         <div className={styles.sectionTitle}>Quantity</div>
 
                         <div className={styles.qtyButtons}>
                             <IconButton 
-                                // onClick={onMinusButtonClick}
-                                // disabled={loading}
+                                onClick={() => setQty(prev => prev - 1)}
+                                disabled={loading}
                             >
                                 <AiOutlineMinusCircle className={styles.icon}/>
                             </IconButton>
 
-                            <div className={styles.qty}>{1}</div>
+                            <div className={styles.qty}>{qty}</div>
 
                             <IconButton 
-                                // onClick={onPlusButtonClick}
-                                // disabled={loading}
+                                onClick={() => setQty(prev => prev + 1)}
+                                disabled={loading}
                             >
                                 <AiOutlinePlusCircle className={styles.icon}/>
                             </IconButton>
@@ -235,7 +235,7 @@ const Product = () => {
                         variant="contained"
                         fullWidth={true}
                         loading={loading}
-                        onClick={testLoading}
+                        onClick={addToCart}
                     >
                         Add to Cart
                     </Button>

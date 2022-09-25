@@ -91,6 +91,10 @@
     @apply flex gap-1 items-center
 }
 
-.qty {
+.qtyContainer {
     @apply flex justify-between items-center
+}
+
+.qty {
+    @apply flex items-center justify-center w-[22px]
 }
