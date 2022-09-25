@@ -121,7 +121,7 @@ const Product = () => {
     return (
         <>
             {product?
-            <>  
+            <div className={styles.container}>  
                 <Head>
                     <title>{product.name}</title>
                     <meta name="description" content={product.meta?.description} />
@@ -193,8 +193,12 @@ const Product = () => {
                     </div>
                 </div>
 
-                <button onClick={addToCart}>Add To Cart</button>
-            </>
+                <div className={styles.section}>
+                    <button onClick={addToCart}>Add To Cart</button>
+                </div>
+
+                
+            </div>
             :
             <div>Loading...</div>
             }

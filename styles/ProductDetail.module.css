@@ -3,7 +3,11 @@
 }
 
 .section {
-    @apply p-5
+    @apply p-5 bg-white
+}
+
+.container {
+    @apply bg-gray-100 flex flex-col gap-2
 }
 
 .imageContainer {
