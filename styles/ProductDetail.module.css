@@ -12,6 +12,7 @@
 }
 
 .stickyButton {
+    @apply section;
     @apply py-3 sticky left-0 bottom-0
 }
 
@@ -74,6 +75,10 @@
     white-space: break-spaces;
 }
 
-.button {
+.sectionDivider {
+    @apply bg-gray-100 h-2
+}
+
+.button, .button:active, .button:focus, .button:focus-within, .button:target, .button:hover, .button:visited, .button:focus-visible {
     @apply bg-rose-500 text-white shadow-none
 }

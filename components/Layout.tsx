@@ -4,11 +4,9 @@ import Footer from './Footer'
 const Layout = (props: any) => {
   return (
     <>
-      <AppHeader/>
-      <main>
+        <AppHeader/>
         {props.children}
-      </main>
-      <Footer/>
+        <Footer/>
     </>
   )
 }

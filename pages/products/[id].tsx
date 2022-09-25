@@ -122,7 +122,7 @@ const Product = () => {
     return (
         <>
             {product?
-            <div className={styles.container}>  
+            <>  
                 <Head>
                     <title>{product.name}</title>
                     <meta name="description" content={product.meta?.description} />
@@ -194,20 +194,24 @@ const Product = () => {
                     </div>
                 </div>
 
+                <hr className={styles.sectionDivider}/>
+
                 <div className={styles.addToCartSection}>
                     {/* <button onClick={addToCart}>Add To Cart</button> */}
-                    <div className={styles.stickyButton}>
-                        <Button 
-                            variant="contained"
-                            className={styles.button}
-                        >
-                            Contained
-                        </Button>
-                    </div>
+                    
+                </div>
+                <div className={styles.stickyButton}>
+                    <Button 
+                        variant="contained"
+                        className={styles.button}
+                        fullWidth={true}
+                    >
+                        Add to Cart
+                    </Button>
                 </div>
 
                 
-            </div>
+            </>
             :
             <div>Loading...</div>
             }
