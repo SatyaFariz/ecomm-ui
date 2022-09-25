@@ -1,5 +1,5 @@
 .button, .button:active, .button:focus, .button:focus-within, .button:target, .button:hover, .button:visited, .button:focus-visible {
-    @apply bg-sky-500 text-white shadow-none normal-case font-bold font-[inherit] py-[12px] leading-[20px]
+    @apply bg-primary text-white shadow-none normal-case font-bold font-[inherit] py-[12px] leading-[20px]
 }
 
 .content {
