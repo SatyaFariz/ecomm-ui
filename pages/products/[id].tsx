@@ -13,6 +13,8 @@ import useLocalStorage from '../../hooks/useLocalStorage'
 import useQuery from '../../hooks/useQuery'
 import Head from 'next/head'
 import Button from '@mui/material/Button'
+import { AiOutlineDelete, AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
+import IconButton from '@mui/material/IconButton'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -198,7 +200,27 @@ const Product = () => {
 
                 <div className={styles.addToCartSection}>
                     {/* <button onClick={addToCart}>Add To Cart</button> */}
-                    
+                    <div className={styles.qty}>
+                        <div className={styles.sectionTitle}>Quantity</div>
+
+                        <div className={styles.qtyButtons}>
+                            <IconButton 
+                                // onClick={onMinusButtonClick}
+                                // disabled={loading}
+                            >
+                                <AiOutlineMinusCircle className={styles.icon}/>
+                            </IconButton>
+
+                            <div className={styles.qty}>{1}</div>
+
+                            <IconButton 
+                                // onClick={onPlusButtonClick}
+                                // disabled={loading}
+                            >
+                                <AiOutlinePlusCircle className={styles.icon}/>
+                            </IconButton>
+                        </div>
+                    </div>
                 </div>
                 <div className={styles.stickyButton}>
                     <Button 

@@ -6,6 +6,10 @@
     @apply p-5 bg-white
 }
 
+.sectionTitle {
+    @apply font-bold
+}
+
 .addToCartSection {
     @apply section;
     @apply pb-0
@@ -80,5 +84,17 @@
 }
 
 .button, .button:active, .button:focus, .button:focus-within, .button:target, .button:hover, .button:visited, .button:focus-visible {
-    @apply bg-rose-500 text-white shadow-none
+    @apply bg-amber-300 text-black shadow-none normal-case font-bold font-[inherit]
+}
+
+.icon {
+    @apply text-black
+}
+
+.qtyButtons {
+    @apply flex gap-1 items-center
+}
+
+.qty {
+    @apply flex justify-between items-center
 }
