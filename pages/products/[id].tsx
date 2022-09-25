@@ -12,6 +12,7 @@ import { useMutation } from 'react-query'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useQuery from '../../hooks/useQuery'
 import Head from 'next/head'
+import Button from '@mui/material/Button'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -193,8 +194,16 @@ const Product = () => {
                     </div>
                 </div>
 
-                <div className={styles.section}>
-                    <button onClick={addToCart}>Add To Cart</button>
+                <div className={styles.addToCartSection}>
+                    {/* <button onClick={addToCart}>Add To Cart</button> */}
+                    <div className={styles.stickyButton}>
+                        <Button 
+                            variant="contained"
+                            className={styles.button}
+                        >
+                            Contained
+                        </Button>
+                    </div>
                 </div>
 
                 

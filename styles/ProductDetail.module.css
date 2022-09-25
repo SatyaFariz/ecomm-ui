@@ -6,6 +6,15 @@
     @apply p-5 bg-white
 }
 
+.addToCartSection {
+    @apply section;
+    @apply pb-0
+}
+
+.stickyButton {
+    @apply py-3 sticky left-0 bottom-0
+}
+
 .container {
     @apply bg-gray-100 flex flex-col gap-2
 }
@@ -63,4 +72,8 @@
 
 .description {
     white-space: break-spaces;
+}
+
+.button {
+    @apply bg-rose-500 text-white shadow-none
 }
