@@ -47,13 +47,26 @@ const graphql = `query search($search_term: String) {
   }
 }`
 
+const getKeyAndVariablesFromQuery = (query: any): [string, object] => {
+    const variables = {
+        search_term: query.search_term || '',
+        page: query.page,
+        limit: query.limit
+    }
+    const key = qs.stringify(variables)
+    return [key, variables]
+}
+
 export async function getServerSideProps(context: any) {
     const { query } = context
-    const endpoint: string = `http://localhost:3000/api/products?${qs.stringify(query)}`
+    const [key, variables] = getKeyAndVariablesFromQuery(query)
     const queryClient = new QueryClient()
   
-    await queryClient.prefetchQuery(['product_list_home', endpoint], () => {
-        return fetch(endpoint).then(res => res.json())
+    await queryClient.prefetchQuery(['product_list_home', key], () => {
+        return Http.post('/api/graphql', {
+            query: graphql,
+            variables
+        })
     })
 
     return {
@@ -65,12 +78,8 @@ export async function getServerSideProps(context: any) {
 
 const Home = () => {
     const router = useRouter()
-    const variables = {
-        search_term: router.query.search_term || '',
-        page: router.query.page,
-        limit: router.query.limit
-    }
-    const { error, data }: any = useQuery(['product_list_home', variables], () =>
+    const [key, variables] = getKeyAndVariablesFromQuery(router.query)
+    const { error, data }: any = useQuery(['product_list_home', key], () =>
         Http.post('/api/graphql', {
             query: graphql,
             variables
