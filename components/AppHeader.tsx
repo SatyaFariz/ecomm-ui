@@ -20,7 +20,6 @@ const AppHeader: NextPage = () => {
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const cartId = isMounted.current && window.localStorage.getItem('cart_id')
     const token = isMounted.current && window.localStorage.getItem('token')
-    console.log('cartId',cartId)
     const { error, data: cartData }: any = useQuery('cart/totals', () =>
         {
             if(token) {
