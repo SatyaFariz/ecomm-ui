@@ -79,9 +79,15 @@ export async function getServerSideProps(context: any) {
         })
     })
 
+    await queryClient.prefetchQuery('page/home', () => {
+        return fetch(`${process.env.BASE_URL}/api/cms-page/2`).then(async (res: any) => {
+            const json = await res.json()
+            return json
+        })
+    })
+
     return {
         props: {
-            headers: req.headers,
             dehydratedState: dehydrate(queryClient),
         },
     }
@@ -103,10 +109,11 @@ const Home = (props: any) => {
         initialData
     )
 
+    const initialCmsPageData = dehydratedState.queries.find(item => item.queryKey === 'page/home')?.state?.data || null
     const { data: cmsPage }: any = useQuery('page/home', () =>
         Http.get('/api/cms-page/2'),
         {},
-        null
+        initialCmsPageData
     )
 
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
