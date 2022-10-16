@@ -20,13 +20,21 @@ const AppHeader: NextPage = () => {
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const cartId = isMounted.current && window.localStorage.getItem('cart_id')
     const token = isMounted.current && window.localStorage.getItem('token')
+
+    const getGuestCartTotals = async (cartId: string) => {
+        try {
+            return await http.get(`/api/guest-carts/${cartId}/totals`)
+        } catch (error) {
+            throw error
+        }
+    }
+
     const { error, data: cartData }: any = useQuery('cart/totals', () =>
         {
-            if(token) {
+            if(token)
                 return http.get(`/api/carts/totals`)
-            }
-
-            return http.get(`/api/guest-carts/${cartId}/totals`)
+            else if(cartId)
+                return getGuestCartTotals(cartId)
         },
         {
             enabled: !!token || !!cartId,
