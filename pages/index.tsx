@@ -48,6 +48,16 @@ const graphql = `query search($search_term: String) {
   }
 }`
 
+const getDataFromDehydratedState = (key: string | object, dehydratedState: DehydratedState): any => {
+    return dehydratedState.queries
+    .find(item => {
+        if(typeof key === 'string')
+            return item.queryKey === key
+        else
+            return JSON.stringify(item.queryKey) === JSON.stringify(key)
+    })?.state?.data || null
+}
+
 const getKeyAndVariablesFromQuery = (query: any): [string, object] => {
     const variables = {
         search_term: query.search_term || '',
@@ -94,26 +104,25 @@ export async function getServerSideProps(context: any) {
 }
 
 const Home = (props: any) => {
-    const dehydratedState: DehydratedState = props.dehydratedState
+    const { dehydratedState } = props
     const router = useRouter()
     const [key, variables] = getKeyAndVariablesFromQuery(router.query)
 
-    const initialData = dehydratedState.queries.find(item => item.queryKey[1] === key)?.state?.data || null
-
-    const { error, data }: any = useQuery(['product_list_home', key], () =>
+    const productsQueryKey = ['product_list_home', key]
+    const { error, data }: any = useQuery(productsQueryKey, () =>
         Http.post('/api/graphql', {
             query: graphql,
             variables
         }),
         {},
-        initialData
+        getDataFromDehydratedState(productsQueryKey, dehydratedState)
     )
 
-    const initialCmsPageData = dehydratedState.queries.find(item => item.queryKey === 'page/home')?.state?.data || null
-    const { data: cmsPage }: any = useQuery('page/home', () =>
+    const cmsPageQueryKey = 'page/home'
+    const { data: cmsPage }: any = useQuery(cmsPageQueryKey, () =>
         Http.get('/api/cms-page/2'),
         {},
-        initialCmsPageData
+        getDataFromDehydratedState(cmsPageQueryKey, dehydratedState)
     )
 
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
