@@ -56,7 +56,8 @@ const AppHeader: NextPage = () => {
             delete query.search_term
         else query.search_term = debouncedSearchTerm
         
-        router.replace(router.pathname, {
+        router.replace({
+            pathname: router.pathname,
             query
         })
     }
