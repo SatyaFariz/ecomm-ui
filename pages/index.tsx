@@ -8,6 +8,7 @@ import qs from 'query-string'
 import styles from '../styles/Home.module.css'
 import { dehydrate, QueryClient, DehydratedState } from 'react-query'
 import Link from 'next/link'
+import Head from 'next/head'
 import Http from '../libs/http'
 import { ReactElement } from 'react'
 import { useRouter } from 'next/router'
@@ -102,6 +103,12 @@ const Home = (props: any) => {
         initialData
     )
 
+    const { data: cmsPage }: any = useQuery('page/home', () =>
+        Http.get('/api/cms-page/2'),
+        {},
+        null
+    )
+
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
         Http.get('/api/customers/me')
     )
@@ -109,6 +116,14 @@ const Home = (props: any) => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <div className={styles.container}>
+            {cmsPage &&
+                <Head>
+                    <title>{cmsPage.title}</title>
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                    <meta name="description" content={cmsPage.meta_description}/>
+                    <meta name="keywords" content={cmsPage.meta_keywords}/>
+                </Head>
+            }
             <div className="text-blue-500">
                 <Link href='/sign-up'>
                     Sign Up
