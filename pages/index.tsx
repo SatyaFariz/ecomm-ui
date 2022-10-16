@@ -58,12 +58,12 @@ const getKeyAndVariablesFromQuery = (query: any): [string, object] => {
 }
 
 export async function getServerSideProps(context: any) {
-    const { query } = context
+    const { query, req } = context
     const [key, variables] = getKeyAndVariablesFromQuery(query)
     const queryClient = new QueryClient()
   
     await queryClient.prefetchQuery(['product_list_home', key], () => {
-        return fetch('http://localhost:3000/api/graphql', {
+        return fetch(`${process.env.BASE_URL}/api/graphql`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,9 +79,10 @@ export async function getServerSideProps(context: any) {
     })
 
     return {
-      props: {
-        dehydratedState: dehydrate(queryClient),
-      },
+        props: {
+            headers: req.headers,
+            dehydratedState: dehydrate(queryClient),
+        },
     }
 }
 
