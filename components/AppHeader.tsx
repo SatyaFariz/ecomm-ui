@@ -5,6 +5,7 @@ import styles from './AppHeader.module.css'
 import { useRouter } from 'next/router'
 import { useDebounce } from 'use-debounce'
 import useIsMounted from '../hooks/useIsMounted'
+import useLocalStorage from '../hooks/useLocalStorage'
 import http from '../libs/http'
 import useQuery from '../hooks/useQuery'
 import IconButton from '@mui/material/IconButton'
@@ -18,18 +19,19 @@ const AppHeader: NextPage = () => {
     const inputRef: RefObject<HTMLInputElement> = useRef(null)
     const isMounted: MutableRefObject<boolean> = useIsMounted()
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
-    const cartId = isMounted.current && window.localStorage.getItem('cart_id')
-    const token = isMounted.current && window.localStorage.getItem('token')
+    const [cartId, setCartId] = useLocalStorage('cart_id')
+    const [token] = useLocalStorage('token')
 
     const getGuestCartTotals = async (cartId: string) => {
         try {
             return await http.get(`/api/guest-carts/${cartId}/totals`)
         } catch (error) {
+            setCartId(null)
             throw error
         }
     }
 
-    const { error, data: cartData }: any = useQuery('cart/totals', () =>
+    const { data: cartData }: any = useQuery('cart/totals', () =>
         {
             if(token)
                 return http.get(`/api/carts/totals`)
@@ -38,7 +40,11 @@ const AppHeader: NextPage = () => {
         },
         {
             enabled: !!token || !!cartId,
-            refetchOnWindowFocus: false
+            refetchOnWindowFocus: false,
+            retry: (_, error: any) => {
+                if(error.response.status === 404) return false
+                return true
+            }
         }
     )
 
