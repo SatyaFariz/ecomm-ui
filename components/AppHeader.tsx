@@ -17,12 +17,12 @@ const AppHeader: NextPage = () => {
     const [isSearching, setIsSearching] = useState(false)
     const [searchTerm, setSearchTerm] = useState(router.query.search_term || '')
     const inputRef: RefObject<HTMLInputElement> = useRef(null)
-    const isMounted: MutableRefObject<boolean> = useIsMounted()
+    const isMounted: boolean = useIsMounted()
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const [cartId, setCartId] = useLocalStorage('cart_id')
     const [token] = useLocalStorage('token')
 
-    const getGuestCartTotals = async (cartId: string) => {
+    const getGuestCartTotals = async (cartId: string): Promise<any> => {
         try {
             return await http.get(`/api/guest-carts/${cartId}/totals`)
         } catch (error) {
@@ -48,22 +48,22 @@ const AppHeader: NextPage = () => {
         }
     )
 
-    const toggleSearch = (isSearching: boolean) => {
+    const toggleSearch = (isSearching: boolean): void => {
         setIsSearching(isSearching)
         if(isSearching) inputRef.current?.focus()
         else inputRef.current?.blur()
     }
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
         setSearchTerm(e.target.value)
     }
 
-    const resetInput = () => {
+    const resetInput = (): void => {
         setSearchTerm('')
         setQuery()
     }
 
-    const setQuery = () => {
+    const setQuery = (): void => {
         const query = { ...router.query }
         if((debouncedSearchTerm as string)?.trim().length === 0)
             delete query.search_term
@@ -76,7 +76,7 @@ const AppHeader: NextPage = () => {
     }
 
     useEffect(() => {
-        if(isMounted.current) {
+        if(isMounted) {
             setQuery()
         }
     }, [debouncedSearchTerm])

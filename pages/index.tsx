@@ -77,8 +77,6 @@ const Home = () => {
         })
     )
 
-    // console.log(data)
-
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
         Http.get('/api/customers/me')
     )
