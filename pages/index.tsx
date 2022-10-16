@@ -83,17 +83,11 @@ export async function getServerSideProps(context: any) {
                 query: graphql,
                 variables
             })
-        }).then(async (res: any) => {
-            const json = await res.json()
-            return json
-        })
+        }).then(res => res.json())
     })
 
     await queryClient.prefetchQuery('page/home', () => {
-        return fetch(`${process.env.BASE_URL}/api/cms-page/2`).then(async (res: any) => {
-            const json = await res.json()
-            return json
-        })
+        return fetch(`${process.env.BASE_URL}/api/cms-page/2`).then(res => res.json())
     })
 
     return {
