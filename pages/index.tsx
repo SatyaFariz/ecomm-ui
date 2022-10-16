@@ -2,7 +2,6 @@ import Layout from '../components/Layout'
 import ProductList from '../components/ProductList'
 import ProductListShimmer from '../components/ProductListShimmer'
 import Pagination from '../components/Pagination'
-import useQueryParams from '../hooks/useQueryParams'
 import useQuery from '../hooks/useQuery'
 import useAuthedQuery from '../hooks/useAuthedQuery'
 import qs from 'query-string'
@@ -11,6 +10,7 @@ import { dehydrate, QueryClient } from 'react-query'
 import Link from 'next/link'
 import Http from '../libs/http'
 import { ReactElement } from 'react'
+import { useRouter } from 'next/router'
 
 const graphql = `query search($search_term: String) {
 	products(
@@ -64,22 +64,22 @@ export async function getServerSideProps(context: any) {
 }
 
 const Home = () => {
-    const query = useQueryParams()
-    const queryString = qs.stringify(query)
-    const endpoint: string = `/api/products?${qs.stringify(query)}`
-
-    const { error, data }: any = useQuery(['product_list_home', queryString], () =>
+    const router = useRouter()
+    const variables = {
+        search_term: router.query.search_term || '',
+        page: router.query.page,
+        limit: router.query.limit
+    }
+    const { error, data }: any = useQuery(['product_list_home', variables], () =>
         Http.post('/api/graphql', {
             query: graphql,
-            variables: {
-                search_term: ""
-            }
+            variables
         })
     )
 
-    console.log(data)
+    // console.log(data)
 
-    const { error: userResponseError, data: userResponseData }: any = useAuthedQuery(['me', endpoint], () =>
+    const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
         Http.get('/api/customers/me')
     )
     
