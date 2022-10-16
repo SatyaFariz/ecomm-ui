@@ -6,7 +6,7 @@ import useQuery from '../hooks/useQuery'
 import useAuthedQuery from '../hooks/useAuthedQuery'
 import qs from 'query-string'
 import styles from '../styles/Home.module.css'
-import { dehydrate, QueryClient } from 'react-query'
+import { dehydrate, QueryClient, DehydratedState } from 'react-query'
 import Link from 'next/link'
 import Http from '../libs/http'
 import { ReactElement } from 'react'
@@ -63,9 +63,18 @@ export async function getServerSideProps(context: any) {
     const queryClient = new QueryClient()
   
     await queryClient.prefetchQuery(['product_list_home', key], () => {
-        return Http.post('/api/graphql', {
-            query: graphql,
-            variables
+        return fetch('http://localhost:3000/api/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: graphql,
+                variables
+            })
+        }).then(async (res: any) => {
+            const json = await res.json()
+            return json
         })
     })
 
@@ -76,14 +85,20 @@ export async function getServerSideProps(context: any) {
     }
 }
 
-const Home = () => {
+const Home = (props: any) => {
+    const dehydratedState: DehydratedState = props.dehydratedState
     const router = useRouter()
     const [key, variables] = getKeyAndVariablesFromQuery(router.query)
+
+    const initialData = dehydratedState.queries.find(item => item.queryKey[1] === key)?.state?.data || null
+
     const { error, data }: any = useQuery(['product_list_home', key], () =>
         Http.post('/api/graphql', {
             query: graphql,
             variables
-        })
+        }),
+        {},
+        initialData
     )
 
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
@@ -103,7 +118,7 @@ const Home = () => {
                     Sign In
                 </Link>
             </div>
-            {data ?
+            {(data) ?
             <>
                 <ProductList products={data.data?.products?.items}/>
                 {/* <Pagination 
