@@ -24,7 +24,7 @@
 }
 
 .searchbox {
-    @apply h-[32px] bg-slate-100 flex items-center w-full pl-2 ml-1
+    @apply h-[40px] bg-slate-100 flex items-center w-full pl-2 ml-1 rounded-lg
 }
 
 .textinput {
