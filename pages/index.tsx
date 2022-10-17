@@ -48,6 +48,17 @@ const graphql = `query search($search_term: String) {
   }
 }`
 
+const cmsGraphql = `{
+    cmsPage(
+      identifier: "home"
+    ) {
+        meta_title,
+        meta_keywords,
+        meta_description,
+        title
+    }
+}`
+
 const getDataFromDehydratedState = (key: string | object, dehydratedState: DehydratedState): any => {
     return dehydratedState.queries
     .find(item => {
@@ -87,7 +98,16 @@ export async function getServerSideProps(context: any) {
     })
 
     await queryClient.prefetchQuery('page/home', () => {
-        return fetch(`${process.env.BASE_URL}/api/cms-page/2`).then(res => res.json())
+        return fetch(`${process.env.BASE_URL}/api/graphql`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: cmsGraphql,
+                variables: {}
+            })
+        }).then(res => res.json())
     })
 
     return {
@@ -113,8 +133,11 @@ const Home = (props: any) => {
     )
 
     const cmsPageQueryKey = 'page/home'
-    const { data: cmsPage }: any = useQuery(cmsPageQueryKey, () =>
-        Http.get('/api/cms-page/2'),
+    const { data: cmsData }: any = useQuery(cmsPageQueryKey, () =>
+        Http.post('/api/graphql', {
+            query: cmsGraphql,
+            variables: {}
+        }),
         {},
         getDataFromDehydratedState(cmsPageQueryKey, dehydratedState)
     )
@@ -126,12 +149,12 @@ const Home = (props: any) => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <div className={styles.container}>
-            {cmsPage &&
+            {cmsData &&
                 <Head>
-                    <title>{cmsPage.title}</title>
+                    <title>{cmsData.data?.cmsPage?.title}</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                    <meta name="description" content={cmsPage.meta_description}/>
-                    <meta name="keywords" content={cmsPage.meta_keywords}/>
+                    <meta name="description" content={cmsData.data?.cmsPage?.meta_description}/>
+                    <meta name="keywords" content={cmsData.data?.cmsPage?.meta_keywords}/>
                 </Head>
             }
             <div className="text-blue-500">
