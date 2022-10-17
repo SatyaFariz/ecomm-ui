@@ -60,7 +60,6 @@ const AppHeader: NextPage = () => {
 
     const resetInput = (): void => {
         setSearchTerm('')
-        setQuery()
     }
 
     const setQuery = (): void => {
