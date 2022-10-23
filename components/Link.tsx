@@ -6,7 +6,7 @@ const Link = forwardRef((props: any, ref: any)=>{
     const { href } = props;
     return (
         <NextLink href={href} passHref >
-            <MuiLink ref={ref} {...props}/>
+            <MuiLink ref={ref} color="inherit" underline="none" {...props}/>
         </NextLink>
     )
 })

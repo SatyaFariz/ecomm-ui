@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from './Link'
 import styles from './ProductItem.module.css'
 import Image from 'next/image'
 import formatCurrency from '../helpers/formatCurrency'
