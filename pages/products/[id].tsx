@@ -18,7 +18,6 @@ import Button from '../../components/Button'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
 import ProductDetailShimmer from '../../components/ProductDetailShimmer'
-import { get } from 'https'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
