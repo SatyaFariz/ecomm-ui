@@ -1,8 +1,10 @@
 [
     {
-        "image": "https://s3.ap-southeast-1.amazonaws.com/assets.femaledaily.com/banner/dev/mobile_home_bs/tmp/phpZ26TT0-635213970b7d88000154f8a1"
+        "image": "https://s3.ap-southeast-1.amazonaws.com/assets.femaledaily.com/banner/dev/mobile_home_bs/tmp/phpZ26TT0-635213970b7d88000154f8a1",
+        "url": "/products/Hiking-Shoes"
     },
     {
-        "image": "https://s3.ap-southeast-1.amazonaws.com/assets.femaledaily.com/banner/dev/mobile_home_bs/tmp/phpD24iTf-63437d970b7d88000154f890"
+        "image": "https://s3.ap-southeast-1.amazonaws.com/assets.femaledaily.com/banner/dev/mobile_home_bs/tmp/phpD24iTf-63437d970b7d88000154f890",
+        "url": "/products/cat-paw-pillow"
     }
 ]

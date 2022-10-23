@@ -161,12 +161,14 @@ const Home = (props: any) => {
                         <SwiperSlide
                             key={i}
                         >
-                            <img
-                                className={styles.image} 
-                                src={item.image}
-                                // layout="fill"
-                                // priority={true}
-                            />
+                            <Link href={item.url}>
+                                <img
+                                    className={styles.image} 
+                                    src={item.image}
+                                    // layout="fill"
+                                    // priority={true}
+                                />
+                            </Link>
                         </SwiperSlide>
                         )
                     })}
