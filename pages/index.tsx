@@ -71,7 +71,7 @@ const getKeyAndVariablesFromQuery = (query: any): [string, object] => {
 }
 
 export async function getServerSideProps(context: any) {
-    const { query, req } = context
+    const { query } = context
     const [key, variables] = getKeyAndVariablesFromQuery(query)
     const queryClient = new QueryClient()
   
