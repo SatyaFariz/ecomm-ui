@@ -4,6 +4,7 @@ import { useQueryClient } from 'react-query'
 import Layout from '../../components/Layout'
 import styles from '../../styles/ProductDetail.module.css'
 import Http from '../../libs/http'
+import Head from 'next/head'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -13,7 +14,6 @@ import getDataFromDehydratedState from '../../helpers/getDataFromDehydratedState
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useIsMounted from '../../hooks/useIsMounted'
 import useQuery from '../../hooks/useQuery'
-import Head from 'next/head'
 import Button from '../../components/Button'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
@@ -32,6 +32,9 @@ const productQuery = `query productDetails($id: String!) {
             name,
             stock_status,
             only_x_left_in_stock,
+            meta_title,
+            meta_keyword,
+            meta_description,
             media_gallery {
                 url
             },
@@ -162,10 +165,12 @@ const Product = (props: any) => {
     return (
         <>
             {product?
-            <>  
+            <>
                 <Head>
                     <title>{product.name}</title>
-                    <meta name="description" content={product.meta?.description} />
+                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                    <meta name="description" content={product.meta_description}/>
+                    <meta name="keywords" content={product.meta_keyword}/>
                 </Head>
                 <div className={styles.imageContainer}>
                     <Swiper 
