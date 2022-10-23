@@ -4,9 +4,10 @@ import ProductListShimmer from '../components/ProductListShimmer'
 import Pagination from '../components/Pagination'
 import useQuery from '../hooks/useQuery'
 import useAuthedQuery from '../hooks/useAuthedQuery'
+import getDataFromDehydratedState from '../helpers/getDataFromDehydratedState'
 import qs from 'query-string'
 import styles from '../styles/Home.module.css'
-import { dehydrate, QueryClient, DehydratedState } from 'react-query'
+import { dehydrate, QueryClient } from 'react-query'
 import Link from 'next/link'
 import Head from 'next/head'
 import Http from '../libs/http'
@@ -58,16 +59,6 @@ const cmsGraphql = `{
         title
     }
 }`
-
-const getDataFromDehydratedState = (key: string | object, dehydratedState: DehydratedState): any => {
-    return dehydratedState.queries
-    .find(item => {
-        if(typeof key === 'string')
-            return item.queryKey === key
-        else
-            return JSON.stringify(item.queryKey) === JSON.stringify(key)
-    })?.state?.data || null
-}
 
 const getKeyAndVariablesFromQuery = (query: any): [string, object] => {
     const variables = {
