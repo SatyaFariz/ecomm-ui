@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { useState, ReactElement, Fragment } from 'react'
-import { useMutation } from 'react-query'
+import { useMutation, dehydrate, QueryClient } from 'react-query'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useIsMounted from '../../hooks/useIsMounted'
 import useQuery from '../../hooks/useQuery'
@@ -65,6 +65,31 @@ const productQuery = `query productDetails($id: String!) {
     }
 }`
 
+export async function getServerSideProps(context: any) {
+    const { id } = context.query
+    const key = `product_detail_${id}`
+    const queryClient = new QueryClient()
+  
+    await queryClient.prefetchQuery(key, () => {
+        return fetch(`${process.env.BASE_URL}/api/graphql`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: productQuery,
+                variables: { id }
+            })
+        }).then(res => res.json())
+    })
+
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient),
+        },
+    }
+}
+
 const Product = () => {
     const queryClient = useQueryClient()
     const router = useRouter()
@@ -74,10 +99,11 @@ const Product = () => {
     const [qty, setQty] = useState(1)
     const { id } = router.query
     const [token] = useLocalStorage('token')
+    const [cartId, setCartId] = useLocalStorage('cart_id')
 
     const queryKey = `product_detail_${id}`
 
-    const { isLoading, error, data }: any = useQuery(queryKey, () =>
+    const { error, data }: any = useQuery(queryKey, () =>
         Http.post(`/api/graphql`, {
             query: productQuery,
             variables: { id }
@@ -107,10 +133,9 @@ const Product = () => {
 
     const addToCart = async () => {
         setLoading(true)
-        let cartId = window.localStorage.getItem('cart_id')
         if(!cartId) {
-            cartId = await Http.post('/api/guest-carts')
-            window.localStorage.setItem('cart_id', cartId as string)
+            const newCartId = await Http.post('/api/guest-carts')
+            setCartId(newCartId)
         }
 
         const body = {
