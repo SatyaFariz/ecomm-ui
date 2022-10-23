@@ -16,6 +16,7 @@ import Head from 'next/head'
 import Button from '../../components/Button'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
+import ProductDetailShimmer from '../../components/ProductDetailShimmer'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -125,7 +126,7 @@ const Product = () => {
                 alert(error.response.data.message)
             },
             onSettled: () => {
-                if(isMounted.current) setLoading(false)
+                if(isMounted) setLoading(false)
             }
         })
 
@@ -246,7 +247,7 @@ const Product = () => {
                 <hr className={styles.sectionDivider}/>
             </>
             :
-            <div>Loading...</div>
+            <ProductDetailShimmer/>
             }
         </>
     )

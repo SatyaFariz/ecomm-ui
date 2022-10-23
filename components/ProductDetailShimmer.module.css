@@ -1,0 +1,21 @@
+.imageContainer {
+    height: 100vw;
+    width: 100vw;
+    position: relative;
+}
+
+.image {
+    @apply !absolute right-0 left-0 top-0 bottom-0 w-full h-full;
+}
+
+.section {
+    @apply p-5;
+}
+
+.w80 {
+    width: 80vw !important;
+}
+
+.w30 {
+    width: 30vw !important;
+}
