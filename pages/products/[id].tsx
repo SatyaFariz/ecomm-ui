@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { useState, ReactElement, Fragment } from 'react'
 import { useMutation, dehydrate, QueryClient } from 'react-query'
+import getDataFromDehydratedState from '../../helpers/getDataFromDehydratedState'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useIsMounted from '../../hooks/useIsMounted'
 import useQuery from '../../hooks/useQuery'
@@ -17,6 +18,7 @@ import Button from '../../components/Button'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
 import ProductDetailShimmer from '../../components/ProductDetailShimmer'
+import { get } from 'https'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -90,7 +92,8 @@ export async function getServerSideProps(context: any) {
     }
 }
 
-const Product = () => {
+const Product = (props: any) => {
+    const { dehydratedState } = props
     const queryClient = useQueryClient()
     const router = useRouter()
     const [swiperIndex, setSwiperIndex] = useState(1)
@@ -108,9 +111,8 @@ const Product = () => {
             query: productQuery,
             variables: { id }
         }),
-        {
-            enabled: id !== undefined
-        }
+        {},
+        getDataFromDehydratedState(queryKey, dehydratedState)
     )
 
     const products = data?.data?.products?.items
