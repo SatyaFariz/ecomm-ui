@@ -77,7 +77,7 @@ const customerQuery = `query {
 }`
 
 function Cart(props: AppProps) {
-    const isMounted: MutableRefObject<boolean> = useIsMounted()
+    const isMounted: boolean = useIsMounted()
     const [cartId] = useLocalStorage('cart_id')
     const [token] = useLocalStorage('token')
 

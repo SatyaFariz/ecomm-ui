@@ -35,7 +35,7 @@ const CartItem = (props: any) => {
                 alert(error.response.data.message)
             },
             onSettled: () => {
-                if(isMounted.current) setLoading(false)
+                if(isMounted) setLoading(false)
             }
         })
     }
@@ -46,7 +46,7 @@ const CartItem = (props: any) => {
             if(value === 0) {
                 deleteItem()
             } else {
-                if(isMounted.current) setLoading(true)
+                if(isMounted) setLoading(true)
                 qtyMutation.mutate(value, {
                     onSuccess: () => {
                         queryClient.invalidateQueries('cart/totals')
@@ -54,10 +54,10 @@ const CartItem = (props: any) => {
                     },
                     onError: (error: any) => {
                         alert(error.response.data.message)
-                        if(isMounted.current) setQty(item.quantity)
+                        if(isMounted) setQty(item.quantity)
                     },
                     onSettled: () => {
-                        if(isMounted.current) setLoading(false)
+                        if(isMounted) setLoading(false)
                     }
                 })
             }
