@@ -10,6 +10,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+textarea, input {
+    -webkit-tap-highlight-color: transparent;
+}
+
 textarea:focus, input:focus {
     outline: none;
 }
