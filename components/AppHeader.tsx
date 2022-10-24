@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineClose } from 'react-icons/ai'
+import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineMore } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io'
 import { useState, useRef, RefObject, ChangeEvent, useEffect, MutableRefObject } from 'react'
 import styles from './AppHeader.module.css'
@@ -87,6 +87,8 @@ const AppHeader: NextPage = () => {
     }, [isSearching])
 
     const showsBackButton = router.pathname !== '/'
+    const isHomePage = router.pathname === '/'
+    const isProductPage = router.pathname.startsWith('/products')
 
     return (
         <header className={styles.header}>
@@ -104,9 +106,11 @@ const AppHeader: NextPage = () => {
                 </div>
 
                 <div className={styles.icons}>
+                    {isHomePage &&
                     <IconButton onClick={() => toggleSearch(true)}>
                         <AiOutlineSearch className={styles.icon}/>
                     </IconButton>
+                    }
                     <IconButton
                         component={Link}
                         href='/cart'
@@ -115,6 +119,11 @@ const AppHeader: NextPage = () => {
                         <AiOutlineShopping className={styles.icon}/>
                         </Badge>
                     </IconButton>
+                    {isProductPage &&
+                    <IconButton onClick={() => {}}>
+                        <AiOutlineMore className={styles.icon}/>
+                    </IconButton>
+                    }
                 </div>
             </div>
 
