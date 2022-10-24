@@ -42,7 +42,7 @@ const Footer: NextPage = () => {
             <h6 className={styles.title}>Follow us</h6>
             <div className={styles.icons}>
                 {socials.map(social =>
-                    <a href={social.url} target="_blank" key={social.url}>
+                    <a href={social.url} target="_blank" key={social.url} rel="noreferrer">
                         {social.icon}
                     </a>
                 )}
