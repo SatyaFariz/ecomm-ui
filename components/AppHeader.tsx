@@ -50,8 +50,6 @@ const AppHeader: NextPage = () => {
 
     const toggleSearch = (isSearching: boolean): void => {
         setIsSearching(isSearching)
-        if(isSearching) inputRef.current?.focus()
-        else inputRef.current?.blur()
     }
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -79,6 +77,13 @@ const AppHeader: NextPage = () => {
             setQuery()
         }
     }, [debouncedSearchTerm])
+
+    useEffect(() => {
+        if(isMounted) {
+            if(isSearching) inputRef.current?.focus()
+            else inputRef.current?.blur()
+        }
+    }, [isSearching])
 
     const showsBackButton = router.pathname !== '/'
 
