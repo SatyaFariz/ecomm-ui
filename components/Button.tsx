@@ -8,7 +8,9 @@ const CustomButton = (props: any) => {
     return (
         <Button 
             variant="contained"
-            className={styles.button}
+            classes={{
+                root: styles.button
+            }}
             {...rest}
         >
             <div className={styles.content}>
