@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
-import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineMore } from 'react-icons/ai'
+import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io'
+import { IoLogoWhatsapp } from 'react-icons/io5'
 import { useState, useRef, RefObject, ChangeEvent, useEffect, MutableRefObject } from 'react'
 import styles from './AppHeader.module.css'
 import { useRouter } from 'next/router'
@@ -120,9 +121,9 @@ const AppHeader: NextPage = () => {
                         <AiOutlineShopping className={styles.icon}/>
                         </Badge>
                     </IconButton>
-                    {isProductPage &&
+                    {/*isProductPage*/false &&
                     <IconButton onClick={() => PubSub.publish('test', { data: 'just a test' })}>
-                        <AiOutlineMore className={styles.icon}/>
+                        <IoLogoWhatsapp className={styles.icon}/>
                     </IconButton>
                     }
                 </div>
