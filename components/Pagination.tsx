@@ -62,7 +62,7 @@ const Pagination = (props: any) => {
                 const n = i + 1
                 if(n === currentPage) {
                     return (
-                        <div className={styles.active}>
+                        <div className={styles.active} key={i}>
                             {n}
                         </div>
                     )
