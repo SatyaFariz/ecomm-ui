@@ -12,6 +12,7 @@ import useQuery from '../hooks/useQuery'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
 import Link from '../components/Link'
+import PubSub from 'pubsub-js'
 
 const AppHeader: NextPage = () => {
     const router = useRouter()
@@ -120,7 +121,7 @@ const AppHeader: NextPage = () => {
                         </Badge>
                     </IconButton>
                     {isProductPage &&
-                    <IconButton onClick={() => {}}>
+                    <IconButton onClick={() => PubSub.publish('test', { data: 'just a test' })}>
                         <AiOutlineMore className={styles.icon}/>
                     </IconButton>
                     }

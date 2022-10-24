@@ -14,6 +14,7 @@ import getDataFromDehydratedState from '../../helpers/getDataFromDehydratedState
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useIsMounted from '../../hooks/useIsMounted'
 import useQuery from '../../hooks/useQuery'
+import useSubscribe from '../../hooks/useSubscribe'
 import Button from '../../components/Button'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
@@ -105,6 +106,10 @@ const Product = (props: any) => {
     const { id } = router.query
     const [token] = useLocalStorage('token')
     const [cartId, setCartId] = useLocalStorage('cart_id')
+
+    useSubscribe('test', (data: any) => {
+        console.log(data)
+    })
 
     const queryKey = `product_detail_${id}`
 
