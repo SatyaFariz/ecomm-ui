@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineClose } from 'react-icons/ai'
+import { IoMdClose } from 'react-icons/io'
 import { useState, useRef, RefObject, ChangeEvent, useEffect, MutableRefObject } from 'react'
 import styles from './AppHeader.module.css'
 import { useRouter } from 'next/router'
@@ -133,7 +134,7 @@ const AppHeader: NextPage = () => {
                     />
                     {searchTerm.length > 0 &&
                     <IconButton onClick={resetInput}>
-                        <AiOutlineClose className={styles.closeButton}/>
+                        <IoMdClose className={styles.closeButton}/>
                     </IconButton>
                     }
                 </div>
