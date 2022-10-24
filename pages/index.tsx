@@ -9,7 +9,7 @@ import qs from 'query-string'
 import styles from '../styles/Home.module.css'
 import { dehydrate, QueryClient } from 'react-query'
 import Link from '../components/Link'
-import Head from 'next/head'
+import Head from '../components/Head'
 import Http from '../libs/http'
 import { ReactElement, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -178,7 +178,6 @@ const Home = (props: any) => {
                 {cmsData &&
                     <Head>
                         <title>{cmsData.data?.cmsPage?.title}</title>
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
                         <meta name="description" content={cmsData.data?.cmsPage?.meta_description}/>
                         <meta name="keywords" content={cmsData.data?.cmsPage?.meta_keywords}/>
                     </Head>

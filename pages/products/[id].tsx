@@ -4,7 +4,7 @@ import { useQueryClient } from 'react-query'
 import Layout from '../../components/Layout'
 import styles from '../../styles/ProductDetail.module.css'
 import Http from '../../libs/http'
-import Head from 'next/head'
+import Head from '../../components/Head'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -168,7 +168,6 @@ const Product = (props: any) => {
             <>
                 <Head>
                     <title>{product.name}</title>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
                     <meta name="description" content={product.meta_description}/>
                     <meta name="keywords" content={product.meta_keyword}/>
                 </Head>
