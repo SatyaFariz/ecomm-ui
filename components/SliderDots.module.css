@@ -1,0 +1,12 @@
+.container {
+    @apply z-[1] absolute bottom-0 w-full flex justify-center gap-1 p-2 pointer-events-none
+}
+
+.dot {
+    @apply bg-white h-[5px] aspect-square rounded-[50%]
+}
+
+.active {
+    @apply dot;
+    @apply bg-slate-300
+}

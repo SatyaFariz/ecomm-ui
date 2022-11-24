@@ -14,6 +14,7 @@ import Http from '../libs/http'
 import { ReactElement, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import SliderDots from '../components/SliderDots'
 import Image from 'next/image'
 import 'swiper/css'
 
@@ -173,6 +174,10 @@ const Home = (props: any) => {
                         )
                     })}
                 </Swiper>
+                
+                {true &&
+                <SliderDots count={banners.length} position={swiperIndex}/>
+                }
             </div>
             <div className={styles.container}>
                 {cmsData &&
