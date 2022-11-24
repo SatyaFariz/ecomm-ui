@@ -142,6 +142,7 @@ const AppHeader: NextPage = () => {
                         ref={inputRef}
                         value={searchTerm}
                         onChange={handleInputChange}
+                        onBlur={() => toggleSearch(false)}
                     />
                     {searchTerm.length > 0 &&
                     <IconButton onClick={resetInput}>
