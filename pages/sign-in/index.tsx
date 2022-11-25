@@ -9,11 +9,14 @@ import http from '../../libs/http'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 import TextField from '@mui/material/TextField'
+import { isEmail } from 'validator'
 
 const SignUp = (props: any) => {
     const queryClient = useQueryClient()
     const router = useRouter()
     const isMounted = useIsMounted()
+    const [validation, setValidation]: [any, Function] = useState({})
+    const [loading, setLoading] = useState(false)
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
@@ -28,18 +31,24 @@ const SignUp = (props: any) => {
                 field: 'username',
                 method: Validator.isEmpty,
                 validWhen: false,
-                message: ''
+                message: 'Please enter your account email.'
+            },
+            {
+                field: 'username',
+                method: isEmail,
+                validWhen: true,
+                message: 'Please enter a valid email.'
             },
             {
                 field: 'password',
                 method: Validator.isEmpty,
                 validWhen: false,
-                message: ''
+                message: 'Please enter your account password.'
             }
         ])
 
         const validation = validator.validate(credentials)
-        console.log(validation)
+        setValidation(validation)
         return validation.isValid
     }
 
@@ -61,10 +70,16 @@ const SignUp = (props: any) => {
                     }
 
                 },
+                onSettled: () => {
+                    if(isMounted) {
+                        setLoading(false)
+                    }
+                },
                 onError: (error: any) => {
                     alert(error.response.data.message)
                 }
             })
+            setLoading(true)
         }
     }
 
@@ -80,6 +95,8 @@ const SignUp = (props: any) => {
                     variant="standard"
                     value={credentials.username}
                     onChange={(e: any) => setCredentials({ ...credentials, ['username']: e.target.value })}
+                    error={validation?.username?.isInvalid}
+                    helperText={validation?.username?.message}
                 />
 
                 <div className={styles.passwordSection}>
@@ -89,12 +106,14 @@ const SignUp = (props: any) => {
                         variant="standard"
                         value={credentials.password}
                         onChange={(e: any) => setCredentials({ ...credentials, ['password']: e.target.value })}
+                        error={validation?.password?.isInvalid}
+                        helperText={validation?.password?.message}
                     />
 
                     <Link href='/' className={styles.forgotPasswordLink}>Forgot password?</Link>
                 </div>
 
-                <Button label="Sign In" onClick={submit}>
+                <Button label="Sign In" onClick={submit} loading={loading}>
                     Sign in
                 </Button>
             </div>
