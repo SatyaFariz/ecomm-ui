@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { useQueryClient } from 'react-query'
 import styles from '../../styles/SignUp.module.css'
-import TextInput from '../../components/TextInput'
 import Button from '../../components/Button'
 import { useState } from 'react'
 import useIsMounted from '../../hooks/useIsMounted'
@@ -9,6 +8,7 @@ import Validator from '../../helpers/Validator'
 import http from '../../libs/http'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
+import TextField from '@mui/material/TextField'
 
 const SignUp = (props: any) => {
     const queryClient = useQueryClient()
@@ -74,20 +74,25 @@ const SignUp = (props: any) => {
                 <Link href='/'>Back</Link>
             </div>
             <div className={styles.inputContainer}>
-                <TextInput
-                    placeholder="Email"
+                <TextField
+                    label="Email"
                     type="email"
+                    variant="standard"
                     value={credentials.username}
                     onChange={(e: any) => setCredentials({ ...credentials, ['username']: e.target.value })}
                 />
-                <TextInput
-                    placeholder="Password"
-                    value={credentials.password}
+
+                <TextField
+                    label="Password"
                     type="password"
+                    variant="standard"
+                    value={credentials.password}
                     onChange={(e: any) => setCredentials({ ...credentials, ['password']: e.target.value })}
                 />
 
-                <Button label="Sign In" onClick={submit}/>
+                <Button label="Sign In" onClick={submit}>
+                    Sign in
+                </Button>
             </div>
         </div>
     )
