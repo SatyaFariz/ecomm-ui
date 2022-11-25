@@ -5,3 +5,11 @@
 .inputContainer {
     @apply flex flex-col gap-7
 }
+
+.passwordSection {
+    @apply flex flex-col gap-4
+}
+
+.forgotPasswordLink {
+    @apply self-end text-sm text-blue-500
+}

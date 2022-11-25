@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '../../components/Link'
 import { useQueryClient } from 'react-query'
 import styles from '../../styles/SignUp.module.css'
 import Button from '../../components/Button'
@@ -82,13 +82,17 @@ const SignUp = (props: any) => {
                     onChange={(e: any) => setCredentials({ ...credentials, ['username']: e.target.value })}
                 />
 
-                <TextField
-                    label="Password"
-                    type="password"
-                    variant="standard"
-                    value={credentials.password}
-                    onChange={(e: any) => setCredentials({ ...credentials, ['password']: e.target.value })}
-                />
+                <div className={styles.passwordSection}>
+                    <TextField
+                        label="Password"
+                        type="password"
+                        variant="standard"
+                        value={credentials.password}
+                        onChange={(e: any) => setCredentials({ ...credentials, ['password']: e.target.value })}
+                    />
+
+                    <Link href='/' className={styles.forgotPasswordLink}>Forgot password?</Link>
+                </div>
 
                 <Button label="Sign In" onClick={submit}>
                     Sign in

@@ -2,6 +2,10 @@
     @apply bg-primary text-white shadow-none normal-case font-bold font-[inherit] py-[12px] leading-[20px] rounded-full
 }
 
+.button:hover {
+    @apply shadow-none
+}
+
 .content {
     @apply relative
 }
