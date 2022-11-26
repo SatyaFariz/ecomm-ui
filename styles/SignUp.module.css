@@ -7,9 +7,17 @@
 }
 
 .passwordSection {
-    @apply flex flex-col gap-4
+    @apply flex flex-col gap-2
 }
 
 .forgotPasswordLink {
     @apply self-end text-sm text-blue-500
+}
+
+.registerTextContainer {
+    @apply mt-5 flex justify-center items-center
+}
+
+.smallText {
+    @apply text-sm
 }

@@ -124,6 +124,11 @@ const SignUp = (props: any) => {
                 </Button>
             </div>
 
+            <div className={styles.registerTextContainer}>
+                <span className={styles.smallText}>Not a member?&nbsp;</span>
+                <Link href='/' className={styles.forgotPasswordLink}>Register</Link>
+            </div>
+
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={5000}
