@@ -77,13 +77,10 @@ const customerQuery = `query {
 }`
 
 function Cart(props: AppProps) {
-    const isMounted: boolean = useIsMounted()
     const [cartId] = useLocalStorage('cart_id')
     const [token] = useLocalStorage('token')
 
-    const cartItems = []
-
-    const { error, data }: any = useQuery('cart/items', () =>
+    const { data }: any = useQuery('cart/items', () =>
         {
             if(token) {
                 return http.post(
@@ -107,8 +104,6 @@ function Cart(props: AppProps) {
             refetchOnWindowFocus: false
         }
     )
-
-    console.log(data)
 
     return (
         <>
