@@ -15,6 +15,20 @@ import Badge from '@mui/material/Badge'
 import Link from './Link'
 import PubSub from 'pubsub-js'
 
+const guestCartQuery = `query cart($cart_id: String!) {
+    cart(
+        cart_id: $cart_id
+    ) {
+        total_quantity
+    }
+}`
+
+const customerCartQuery = `query {
+    customerCart {
+        total_quantity
+    }
+}`
+
 const AppHeader: NextPage = () => {
     const router = useRouter()
     const [isSearching, setIsSearching] = useState(false)
@@ -27,7 +41,13 @@ const AppHeader: NextPage = () => {
 
     const getGuestCartTotals = async (cartId: string): Promise<any> => {
         try {
-            return await http.get(`/api/guest-carts/${cartId}/totals`)
+            return http.post(
+                `/api/graphql`,
+                {
+                    query: guestCartQuery,
+                    variables: { cart_id: cartId }
+                }
+            )
         } catch (error) {
             setCartId(null)
             throw error
@@ -36,8 +56,14 @@ const AppHeader: NextPage = () => {
 
     const { data: cartData }: any = useQuery('cart/totals', () =>
         {
-            if(token)
-                return http.get(`/api/carts/totals`)
+            if(token) {
+                return http.post(
+                    `/api/graphql`,
+                    {
+                        query: customerCartQuery
+                    }
+                )
+            }
             else if(cartId)
                 return getGuestCartTotals(cartId)
         },
@@ -50,7 +76,7 @@ const AppHeader: NextPage = () => {
             }
         }
     )
-
+console.log(cartData)
     const toggleSearch = (isSearching: boolean): void => {
         setIsSearching(isSearching)
     }
@@ -124,7 +150,7 @@ const AppHeader: NextPage = () => {
                         component={Link}
                         href='/cart'
                     >
-                        <Badge badgeContent={cartData?.items_qty} color="primary">
+                        <Badge badgeContent={cartData?.data?.customerCart?.total_quantity || cartData?.data?.cart?.total_quantity} color="primary">
                         <AiOutlineShopping className={styles.icon}/>
                         </Badge>
                     </IconButton>
