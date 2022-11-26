@@ -9,23 +9,24 @@ import axios from 'axios'
 import { useMutation } from 'react-query'
 import TextField from '@mui/material/TextField'
 import { isEmail } from 'validator'
+import http from '../../libs/http'
+import { Snackbar } from '@mui/material'
+import { useRouter } from 'next/router'
 
 const SignUp = (props: any) => {
+    const router = useRouter()
     const isMounted = useIsMounted()
     const [validation, setValidation]: [any, Function] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [snackbarOpen, setSnackbarOpen] = useState(false)
+    const [snackbarMessage, setSnackbarMessage] = useState(null)
     const [customer, setCustomer] = useState({
         name: '',
         email: '',
     })
     const [password, setPassword] = useState('')
     const [repassword, setRepassword] = useState('')
-    const mutation = useMutation((data: any) => {
-        return axios({
-            method: 'post',
-            url: '/api/customers',
-            data
-        })
-    })
+    const mutation = useMutation((data: any) => http.post('/api/customers', data))
 
     const isValid = () => {
         const validator = new Validator([
@@ -37,8 +38,8 @@ const SignUp = (props: any) => {
             },
             {
                 field: 'name',
-                method: (val: string) => val.length > 2,
-                validWhen: false,
+                method: (val: string) => val.length >= 2,
+                validWhen: true,
                 message: 'Your name must be at least 2 characters long.'
             },
             {
@@ -71,8 +72,21 @@ const SignUp = (props: any) => {
             mutation.mutate({ customer, password }, {
                 onSuccess: (data, variables, context) => {
                     console.log(data, variables, context)
+                    router.replace('/sign-in')
+                },
+                onError: (error: any) => {
+                    if(isMounted) {
+                        setSnackbarMessage(error.response.data.message)
+                        setSnackbarOpen(true)
+                    }
+                },
+                onSettled: () => {
+                    if(isMounted) {
+                        setLoading(false)
+                    }
                 }
             })
+            setLoading(true)
         }
     }
 
@@ -119,8 +133,16 @@ const SignUp = (props: any) => {
                     helperText={validation?.repassword?.message}
                 />
 
-                <Button label="Sign Up" onClick={submit}/>
+                <Button label="Sign Up" onClick={submit} loading={loading}>
+                    Sign up
+                </Button>
             </div>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={5000}
+                onClose={() => setSnackbarOpen(false)}
+                message={snackbarMessage}
+            />
         </div>
     )
   }
