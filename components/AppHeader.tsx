@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft } from 'react-icons/ai'
+import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineMenu } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io'
 import { IoLogoWhatsapp } from 'react-icons/io5'
 import { useState, useRef, RefObject, ChangeEvent, useEffect, MutableRefObject } from 'react'
@@ -94,11 +94,16 @@ const AppHeader: NextPage = () => {
 
     return (
         <header className={styles.header}>
-            <div className={isSearching ? styles.hidden : (showsBackButton ? styles.container2 : styles.container)}>
+            <div className={isSearching ? styles.hidden : styles.container}>
                 <div className={styles.logoContainer}>
                     {showsBackButton &&
                         <IconButton onClick={() => router.back()}>
                             <AiOutlineLeft className={styles.icon}/>
+                        </IconButton>
+                    }
+                    {isHomePage &&
+                        <IconButton onClick={() => {}}>
+                            <AiOutlineMenu className={styles.icon}/>
                         </IconButton>
                     }
                     <Link href='/' className={styles.logoContainer}>
