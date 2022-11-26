@@ -5,7 +5,7 @@ const SliderDots = (props: any) => {
     return (
         <div className={styles.container}>
             {new Array(count).fill(null).map((_, i) =>
-                <div className={position === i + 1 ? styles.active : styles.dot}/>
+                <div key={i} className={position === i + 1 ? styles.active : styles.dot}/>
             )}
         </div>
     )

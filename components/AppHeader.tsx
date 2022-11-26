@@ -101,10 +101,12 @@ const AppHeader: NextPage = () => {
                             <AiOutlineLeft className={styles.icon}/>
                         </IconButton>
                     }
-                    <img
-                        src="https://werkidz.mygostore.com/_next/static/images/goStore-logo-64f7ac0ca37c2341f8ae739a75345580.svg"
-                        alt="app logo"
-                    />
+                    <Link href='/' className={styles.logoContainer}>
+                        <img
+                            src="https://werkidz.mygostore.com/_next/static/images/goStore-logo-64f7ac0ca37c2341f8ae739a75345580.svg"
+                            alt="app logo"
+                        />
+                    </Link>
                 </div>
 
                 <div className={styles.icons}>
