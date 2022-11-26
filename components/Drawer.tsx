@@ -5,6 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Link from '../components/Link'
 
 const CustomDrawer = (props: any) => {
     return (
@@ -20,7 +21,7 @@ const CustomDrawer = (props: any) => {
                 />
             </div>
             <List>
-                <ListItem disablePadding>
+                <ListItem disablePadding component={Link} href='/sign-in'>
                     <ListItemButton>
                     <ListItemText primary="Inbox" />
                     </ListItemButton>

@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import TextField from '@mui/material/TextField'
 import { isEmail } from 'validator'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import { Snackbar } from '@mui/material'
 
 const SignUp = (props: any) => {
     const queryClient = useQueryClient()
@@ -20,6 +21,8 @@ const SignUp = (props: any) => {
     const [loading, setLoading] = useState(false)
     const [_, setToken] = useLocalStorage('token')
     const [cartId, setCardId] = useLocalStorage('cart_id')
+    const [snackbarOpen, setSnackbarOpen] = useState(false)
+    const [snackbarMessage, setSnackbarMessage] = useState(null)
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
@@ -76,7 +79,10 @@ const SignUp = (props: any) => {
                     }
                 },
                 onError: (error: any) => {
-                    alert(error.response.data.message)
+                    if(isMounted) {
+                        setSnackbarMessage(error.response.data.message)
+                        setSnackbarOpen(true)
+                    }
                 }
             })
             setLoading(true)
@@ -117,6 +123,13 @@ const SignUp = (props: any) => {
                     Sign in
                 </Button>
             </div>
+
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={5000}
+                onClose={() => setSnackbarOpen(false)}
+                message={snackbarMessage}
+            />
         </div>
     )
   }
