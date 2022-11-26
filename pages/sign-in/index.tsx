@@ -1,6 +1,6 @@
 import Link from '../../components/Link'
 import { useQueryClient } from 'react-query'
-import styles from '../../styles/SignUp.module.css'
+import styles from '../../styles/SignIn.module.css'
 import Button from '../../components/Button'
 import { useState } from 'react'
 import useIsMounted from '../../hooks/useIsMounted'
