@@ -6,8 +6,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Link from '../components/Link'
+import useAuthedQuery from '../hooks/useAuthedQuery'
+import Http from '../libs/http'
 
 const CustomDrawer = (props: any) => {
+    const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
+        Http.get('/api/customers/me')
+    )
+
+    console.log('USER DATA', userResponseData)
     return (
         <Drawer
         anchor='left'
@@ -21,11 +28,19 @@ const CustomDrawer = (props: any) => {
                 />
             </div>
             <List>
-                <ListItem disablePadding component={Link} href='/sign-in'>
+                {userResponseData ?
+                <ListItem disablePadding>
                     <ListItemButton>
-                    <ListItemText primary="Inbox" />
+                    <ListItemText primary="Logout" />
                     </ListItemButton>
                 </ListItem>
+                :
+                <ListItem disablePadding component={Link} href='/sign-in'>
+                    <ListItemButton>
+                    <ListItemText primary="Login" />
+                    </ListItemButton>
+                </ListItem>
+                }
                 <ListItem disablePadding>
                     <ListItemButton>
                     <ListItemText primary="Drafts" />
