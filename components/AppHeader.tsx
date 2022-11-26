@@ -76,7 +76,7 @@ const AppHeader: NextPage = () => {
             }
         }
     )
-console.log(cartData)
+    
     const toggleSearch = (isSearching: boolean): void => {
         setIsSearching(isSearching)
     }
