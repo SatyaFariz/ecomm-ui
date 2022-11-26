@@ -22,6 +22,9 @@ const useLocalStorage = (key: string): [(string | null), SetLocalStorageFunction
     })
 
     const reset = (value: string | null) => {
+        resetValue(value)
+
+        // publish to other subscribers
         PubSub.publish(topic, value)
     }
 

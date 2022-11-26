@@ -140,16 +140,20 @@ const Product = (props: any) => {
         setSwiperIndex(obj.activeIndex + 1)
     }
 
-    const generateCartId = async (): Promise<string> => {
-        const newCartId = await Http.post('/api/guest-carts')
-        setCartId(newCartId)
-        return newCartId
+    const getCurrentCartId = async (): Promise<string> => {
+        if(cartId) {console.log('getting from existing cart id')
+            return cartId
+        } else {console.log('generating new cart id')
+            const newCartId = await Http.post('/api/guest-carts')
+            setCartId(newCartId)
+            return newCartId
+        }
     }
 
     const addToCart = async () => {
         setLoading(true)
-        const cart_id = cartId || await generateCartId()
-        mutation.mutate(cart_id, {
+        const currentCartId = await getCurrentCartId()
+        mutation.mutate(currentCartId, {
             onSuccess: () => {
                 queryClient.invalidateQueries('cart/totals')
             },
