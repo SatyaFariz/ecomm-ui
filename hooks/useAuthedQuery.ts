@@ -1,8 +1,9 @@
 import useQuery from './useQuery'
 import { QueryFunction } from 'react-query'
+import useLocalStorage from './useLocalStorage'
 
 const useAuthedQuery = (key: any, callback: QueryFunction): any => {
-    const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null
+    const [token] = useLocalStorage('token')
     
     const { isLoading, error, data }: any = useQuery(
         key, 
