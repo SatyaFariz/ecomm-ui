@@ -127,32 +127,29 @@ const Product = (props: any) => {
     const category = product?.categories && product.categories[product.categories.length - 1]
     const minimum_price = product?.price_range?.minimum_price
 
-    const mutation = useMutation((data: any) => {
+    const mutation = useMutation((cartId: string) => {
         const cartItem = {
-            qty: data.qty,
-            sku: data.sku
+            qty: qty,
+            sku: product.sku
         }
         if(token) return Http.post(`/api/carts/items`, cartItem)
-        return Http.post(`/api/guest-carts/${data.cartId}/items`, cartItem)
+        return Http.post(`/api/guest-carts/${cartId}/items`, cartItem)
     })
 
     const handleSwipe = (obj: any) => {
         setSwiperIndex(obj.activeIndex + 1)
     }
 
+    const generateCartId = async (): Promise<string> => {
+        const newCartId = await Http.post('/api/guest-carts')
+        setCartId(newCartId)
+        return newCartId
+    }
+
     const addToCart = async () => {
         setLoading(true)
-        if(!cartId) {
-            const newCartId = await Http.post('/api/guest-carts')
-            setCartId(newCartId)
-        }
-
-        const body = {
-            cartId,
-            sku: product.sku,
-            qty
-        }
-        mutation.mutate(body, {
+        const cart_id = cartId || await generateCartId()
+        mutation.mutate(cart_id, {
             onSuccess: () => {
                 queryClient.invalidateQueries('cart/totals')
             },
