@@ -10,6 +10,7 @@ import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 import TextField from '@mui/material/TextField'
 import { isEmail } from 'validator'
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 const SignUp = (props: any) => {
     const queryClient = useQueryClient()
@@ -17,6 +18,8 @@ const SignUp = (props: any) => {
     const isMounted = useIsMounted()
     const [validation, setValidation]: [any, Function] = useState({})
     const [loading, setLoading] = useState(false)
+    const [_, setToken] = useLocalStorage('token')
+    const [cartId, setCardId] = useLocalStorage('cart_id')
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
@@ -56,17 +59,14 @@ const SignUp = (props: any) => {
         if(isValid()) {
             mutation.mutate(credentials, {
                 onSuccess: async (data) => {
-                    window.localStorage.setItem('token', data)
+                    setToken(data)
                     router.replace('/')
-
-                    const cartIdKey = 'cart_id'
-                    const cartId = window.localStorage.getItem(cartIdKey)
                     
                     if(cartId) {
-                        window.localStorage.removeItem(cartIdKey)
                         await http.post('/api/carts/merge', { source_cart_id: cartId })
                         queryClient.invalidateQueries('cart/totals')
                         queryClient.invalidateQueries('cart/items')
+                        setCardId(null)
                     }
 
                 },
