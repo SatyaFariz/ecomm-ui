@@ -1,4 +1,5 @@
 import styles from './Drawer.module.css'
+import { useQueryClient } from 'react-query'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -8,12 +9,24 @@ import ListItemText from '@mui/material/ListItemText';
 import Link from '../components/Link'
 import useAuthedQuery from '../hooks/useAuthedQuery'
 import Http from '../libs/http'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const CustomDrawer = (props: any) => {
+    const queryClient = useQueryClient()
+    const [__, setToken] = useLocalStorage('token')
+    const [_, setCardId] = useLocalStorage('cart_id')
+
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
         Http.get('/api/customers/me')
     )
 
+    const logout = () => {
+        setCardId(null)
+        setToken(null)
+        queryClient.invalidateQueries('me')
+        queryClient.invalidateQueries('cart/totals')
+        queryClient.invalidateQueries('cart/items')
+    }
     return (
         <Drawer
         anchor='left'
@@ -28,7 +41,7 @@ const CustomDrawer = (props: any) => {
             </div>
             <List>
                 {userResponseData ?
-                <ListItem disablePadding>
+                <ListItem disablePadding onClick={logout}>
                     <ListItemButton>
                     <ListItemText primary="Logout" />
                     </ListItemButton>
