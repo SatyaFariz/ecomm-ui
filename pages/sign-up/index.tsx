@@ -5,19 +5,22 @@ import Button from '../../components/Button'
 import { useState } from 'react'
 import useIsMounted from '../../hooks/useIsMounted'
 import Validator from '../../helpers/Validator'
-import axios from 'axios'
 import { useMutation } from 'react-query'
 import TextField from '@mui/material/TextField'
 import { isEmail } from 'validator'
 import http from '../../libs/http'
-import { Snackbar } from '@mui/material'
+import { Snackbar, InputAdornment, IconButton } from '@mui/material'
 import { useRouter } from 'next/router'
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+import { MouseEvent } from 'react'
 
 const SignUp = (props: any) => {
     const router = useRouter()
     const isMounted = useIsMounted()
     const [validation, setValidation]: [any, Function] = useState({})
     const [loading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showRepassword, setShowRepassword] = useState(false)
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMessage, setSnackbarMessage] = useState(null)
     const [customer, setCustomer] = useState({
@@ -111,6 +114,10 @@ const SignUp = (props: any) => {
         }
     }
 
+    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
+    }
+
     return (
         <div className={styles.container}>
             <div className="text-blue-500">
@@ -139,7 +146,7 @@ const SignUp = (props: any) => {
                 />
                 <TextField
                     label="Password"
-                    type="password"
+                    type={showPassword ? 'text' : "password"}
                     variant="standard"
                     value={password}
                     onChange={(e: any) => setPassword(e.target.value.trim())}
@@ -148,11 +155,25 @@ const SignUp = (props: any) => {
                     inputProps={{
                         maxLength: 30
                     }}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() => setShowPassword(prev => !prev)}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                                >
+                                {showPassword ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
 
                 <TextField
                     label="Confirm Password"
-                    type="password"
+                    type={showRepassword ? 'text' : "password"}
                     variant="standard"
                     value={repassword}
                     onChange={(e: any) => setRepassword(e.target.value.trim())}
@@ -160,6 +181,20 @@ const SignUp = (props: any) => {
                     helperText={validation?.repassword?.message}
                     inputProps={{
                         maxLength: 30
+                    }}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() => setShowRepassword(prev => !prev)}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                                >
+                                {showRepassword ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}
+                                </IconButton>
+                            </InputAdornment>
+                        )
                     }}
                 />
 
