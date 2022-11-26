@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { AiOutlineSearch, AiOutlineShopping, AiOutlineLeft, AiOutlineMenu } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io'
 import { IoLogoWhatsapp } from 'react-icons/io5'
-import { useState, useRef, RefObject, ChangeEvent, useEffect, MutableRefObject } from 'react'
+import { useState, useRef, RefObject, ChangeEvent, useEffect } from 'react'
 import styles from './AppHeader.module.css'
 import { useRouter } from 'next/router'
 import { useDebounce } from 'use-debounce'
@@ -12,7 +12,8 @@ import http from '../libs/http'
 import useQuery from '../hooks/useQuery'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
-import Link from '../components/Link'
+import Link from './Link'
+import Drawer from './Drawer'
 import PubSub from 'pubsub-js'
 
 const AppHeader: NextPage = () => {
@@ -24,6 +25,7 @@ const AppHeader: NextPage = () => {
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const [cartId, setCartId] = useLocalStorage('cart_id')
     const [token] = useLocalStorage('token')
+    const [drawerOpen, setDrawerOpen] = useState(false)
 
     const getGuestCartTotals = async (cartId: string): Promise<any> => {
         try {
@@ -94,6 +96,7 @@ const AppHeader: NextPage = () => {
 
     return (
         <header className={styles.header}>
+            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}/>
             <div className={isSearching ? styles.hidden : styles.container}>
                 <div className={styles.logoContainer}>
                     {showsBackButton &&
@@ -102,7 +105,7 @@ const AppHeader: NextPage = () => {
                         </IconButton>
                     }
                     {isHomePage &&
-                        <IconButton onClick={() => {}}>
+                        <IconButton onClick={() => setDrawerOpen(true)}>
                             <AiOutlineMenu className={styles.icon}/>
                         </IconButton>
                     }
