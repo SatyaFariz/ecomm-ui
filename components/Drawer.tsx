@@ -14,7 +14,6 @@ const CustomDrawer = (props: any) => {
         Http.get('/api/customers/me')
     )
 
-    console.log('USER DATA', userResponseData)
     return (
         <Drawer
         anchor='left'
