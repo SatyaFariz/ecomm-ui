@@ -58,11 +58,32 @@ const SignUp = (props: any) => {
                 field: 'password',
                 method: Validator.isEmpty,
                 validWhen: false,
-                message: ''
+                message: 'Please enter a password containing at least 1 upper case letter, 1 lower case letter, a number and at least 8 characters long.'
+            },
+            {
+                field: 'password',
+                method: (value: string) => {
+                    const regexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,30}$/
+                    return regexp.test(value)
+                },
+                validWhen: true,
+                message: 'Password must contain at least 1 upper case letter, 1 lower case letter, a number and at least 8 characters long.'
+            },
+            {
+                field: 'repassword',
+                method: Validator.isEmpty,
+                validWhen: false,
+                message: 'Please re-enter your password above.'
+            },
+            {
+                field: 'repassword',
+                method: (value: string) => value === password,
+                validWhen: true,
+                message: "Doesn't match your password above."
             }
         ])
 
-        const validation = validator.validate({ ...customer, password })
+        const validation = validator.validate({ ...customer, password, repassword })
         setValidation(validation)
         return validation.isValid
     }
