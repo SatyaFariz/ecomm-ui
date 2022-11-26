@@ -124,6 +124,9 @@ const SignUp = (props: any) => {
                     onChange={(e: any) => setCustomer({ ...customer, ['name']: e.target.value })}
                     error={validation?.name?.isInvalid}
                     helperText={validation?.name?.message}
+                    inputProps={{
+                        maxLength: 30
+                    }}
                 />
                 <TextField
                     label="Email"
@@ -142,6 +145,9 @@ const SignUp = (props: any) => {
                     onChange={(e: any) => setPassword(e.target.value.trim())}
                     error={validation?.password?.isInvalid}
                     helperText={validation?.password?.message}
+                    inputProps={{
+                        maxLength: 30
+                    }}
                 />
 
                 <TextField
@@ -152,6 +158,9 @@ const SignUp = (props: any) => {
                     onChange={(e: any) => setRepassword(e.target.value.trim())}
                     error={validation?.repassword?.isInvalid}
                     helperText={validation?.repassword?.message}
+                    inputProps={{
+                        maxLength: 30
+                    }}
                 />
 
                 <Button label="Sign Up" onClick={submit} loading={loading}>
