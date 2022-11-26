@@ -126,7 +126,7 @@ const SignUp = (props: any) => {
 
             <div className={styles.registerTextContainer}>
                 <span className={styles.smallText}>Not a member?&nbsp;</span>
-                <Link href='/' className={styles.forgotPasswordLink}>Register</Link>
+                <Link href='/sign-up' className={styles.forgotPasswordLink}>Register</Link>
             </div>
 
             <Snackbar

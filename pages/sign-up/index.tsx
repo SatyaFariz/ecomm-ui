@@ -7,14 +7,18 @@ import useIsMounted from '../../hooks/useIsMounted'
 import Validator from '../../helpers/Validator'
 import axios from 'axios'
 import { useMutation } from 'react-query'
+import TextField from '@mui/material/TextField'
+import { isEmail } from 'validator'
 
 const SignUp = (props: any) => {
     const isMounted = useIsMounted()
+    const [validation, setValidation]: [any, Function] = useState({})
     const [customer, setCustomer] = useState({
-        fullname: '',
+        name: '',
         email: '',
     })
     const [password, setPassword] = useState('')
+    const [repassword, setRepassword] = useState('')
     const mutation = useMutation((data: any) => {
         return axios({
             method: 'post',
@@ -26,16 +30,28 @@ const SignUp = (props: any) => {
     const isValid = () => {
         const validator = new Validator([
             {
-                field: 'fullname',
+                field: 'name',
                 method: Validator.isEmpty,
                 validWhen: false,
-                message: ''
+                message: 'Please enter your name.'
+            },
+            {
+                field: 'name',
+                method: (val: string) => val.length > 2,
+                validWhen: false,
+                message: 'Your name must be at least 2 characters long.'
             },
             {
                 field: 'email',
                 method: Validator.isEmpty,
                 validWhen: false,
-                message: ''
+                message: 'Please enter your email.'
+            },
+            {
+                field: 'email',
+                method: isEmail,
+                validWhen: true,
+                message: 'Please enter a valid email.'
             },
             {
                 field: 'password',
@@ -46,7 +62,7 @@ const SignUp = (props: any) => {
         ])
 
         const validation = validator.validate({ ...customer, password })
-        console.log(validation)
+        setValidation(validation)
         return validation.isValid
     }
 
@@ -66,23 +82,41 @@ const SignUp = (props: any) => {
                 <Link href='/'>Back</Link>
             </div>
             <div className={styles.inputContainer}>
-                <TextInput
-                    placeholder="Full name"
-                    type="text"
-                    value={customer.fullname}
-                    onChange={(e: any) => setCustomer({ ...customer, ['fullname']: e.target.value })}
+                <TextField
+                    label="Name"
+                    variant="standard"
+                    value={customer.name}
+                    onChange={(e: any) => setCustomer({ ...customer, ['name']: e.target.value })}
+                    error={validation?.name?.isInvalid}
+                    helperText={validation?.name?.message}
                 />
-                <TextInput
-                    placeholder="Email"
+                <TextField
+                    label="Email"
                     type="email"
+                    variant="standard"
                     value={customer.email}
                     onChange={(e: any) => setCustomer({ ...customer, ['email']: e.target.value })}
+                    error={validation?.email?.isInvalid}
+                    helperText={validation?.email?.message}
                 />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
+                <TextField
+                    label="Password"
                     type="password"
-                    onChange={(e: any) => setPassword(e.target.value)}
+                    variant="standard"
+                    value={password}
+                    onChange={(e: any) => setPassword(e.target.value.trim())}
+                    error={validation?.password?.isInvalid}
+                    helperText={validation?.password?.message}
+                />
+
+                <TextField
+                    label="Confirm Password"
+                    type="password"
+                    variant="standard"
+                    value={repassword}
+                    onChange={(e: any) => setRepassword(e.target.value.trim())}
+                    error={validation?.repassword?.isInvalid}
+                    helperText={validation?.repassword?.message}
                 />
 
                 <Button label="Sign Up" onClick={submit}/>
