@@ -3,6 +3,7 @@ import ProductList from '../components/ProductList'
 import ProductListShimmer from '../components/ProductListShimmer'
 import Pagination from '../components/Pagination'
 import useQuery from '../hooks/useQuery'
+import useSubscribe from '../hooks/useSubscribe'
 import useAuthedQuery from '../hooks/useAuthedQuery'
 import getDataFromDehydratedState from '../helpers/getDataFromDehydratedState'
 import qs from 'query-string'
@@ -15,6 +16,7 @@ import { ReactElement, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SliderDots from '../components/SliderDots'
+import Drawer from '../components/Drawer'
 import Image from 'next/image'
 import 'swiper/css'
 
@@ -117,6 +119,7 @@ export async function getServerSideProps(context: any) {
 const Home = (props: any) => {
     const { dehydratedState } = props
     const [swiperIndex, setSwiperIndex] = useState(1)
+    const [drawerOpen, setDrawerOpen] = useState(false)
     const router = useRouter()
     const [key, variables] = getKeyAndVariablesFromQuery(router.query)
 
@@ -144,6 +147,8 @@ const Home = (props: any) => {
         setSwiperIndex(obj.activeIndex + 1)
     }
 
+    useSubscribe('TOGGLE_DRAWER', () => setDrawerOpen(prev => !prev))
+
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
         Http.get('/api/customers/me')
     )
@@ -151,6 +156,7 @@ const Home = (props: any) => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <>
+            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}/>
             <div className={styles.bannersContainer}>
                 <Swiper 
                     onSlideChange={handleSwipe}

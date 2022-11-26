@@ -13,7 +13,6 @@ import useQuery from '../hooks/useQuery'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
 import Link from './Link'
-import Drawer from './Drawer'
 import PubSub from 'pubsub-js'
 
 const AppHeader: NextPage = () => {
@@ -25,7 +24,6 @@ const AppHeader: NextPage = () => {
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const [cartId, setCartId] = useLocalStorage('cart_id')
     const [token] = useLocalStorage('token')
-    const [drawerOpen, setDrawerOpen] = useState(false)
 
     const getGuestCartTotals = async (cartId: string): Promise<any> => {
         try {
@@ -96,7 +94,6 @@ const AppHeader: NextPage = () => {
 
     return (
         <header className={styles.header}>
-            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}/>
             <div className={isSearching ? styles.hidden : styles.container}>
                 <div className={styles.logoContainer}>
                     {showsBackButton &&
@@ -105,7 +102,7 @@ const AppHeader: NextPage = () => {
                         </IconButton>
                     }
                     {isHomePage &&
-                        <IconButton onClick={() => setDrawerOpen(true)}>
+                        <IconButton onClick={() => PubSub.publish('TOGGLE_DRAWER', null)}>
                             <AiOutlineMenu className={styles.icon}/>
                         </IconButton>
                     }
