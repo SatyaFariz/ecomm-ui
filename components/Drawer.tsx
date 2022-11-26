@@ -7,18 +7,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Link from '../components/Link'
-import useAuthedQuery from '../hooks/useAuthedQuery'
-import Http from '../libs/http'
 import useLocalStorage from '../hooks/useLocalStorage'
+import useCurrentUser from '../hooks/useCurrentUser'
 
 const CustomDrawer = (props: any) => {
     const queryClient = useQueryClient()
     const [__, setToken] = useLocalStorage('token')
     const [_, setCardId] = useLocalStorage('cart_id')
 
-    const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
-        Http.get('/api/customers/me')
-    )
+    const { user } = useCurrentUser()
 
     const logout = () => {
         setCardId(null)
@@ -40,7 +37,7 @@ const CustomDrawer = (props: any) => {
                 />
             </div>
             <List>
-                {userResponseData ?
+                {user ?
                 <ListItem disablePadding onClick={logout}>
                     <ListItemButton>
                     <ListItemText primary="Logout" />
