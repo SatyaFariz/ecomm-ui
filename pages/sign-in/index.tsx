@@ -11,7 +11,9 @@ import { useRouter } from 'next/router'
 import TextField from '@mui/material/TextField'
 import { isEmail } from 'validator'
 import useLocalStorage from '../../hooks/useLocalStorage'
-import { Snackbar } from '@mui/material'
+import { Snackbar, InputAdornment, IconButton } from '@mui/material'
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+import { MouseEvent } from 'react'
 
 const SignUp = (props: any) => {
     const queryClient = useQueryClient()
@@ -19,6 +21,7 @@ const SignUp = (props: any) => {
     const isMounted = useIsMounted()
     const [validation, setValidation]: [any, Function] = useState({})
     const [loading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
     const [_, setToken] = useLocalStorage('token')
     const [cartId, setCardId] = useLocalStorage('cart_id')
     const [snackbarOpen, setSnackbarOpen] = useState(false)
@@ -89,6 +92,10 @@ const SignUp = (props: any) => {
         }
     }
 
+    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
+    }
+
     return (
         <div className={styles.container}>
             <div className="text-blue-500">
@@ -108,12 +115,26 @@ const SignUp = (props: any) => {
                 <div className={styles.passwordSection}>
                     <TextField
                         label="Password"
-                        type="password"
+                        type={showPassword ? 'text' : "password"}
                         variant="standard"
                         value={credentials.password}
                         onChange={(e: any) => setCredentials({ ...credentials, ['password']: e.target.value })}
                         error={validation?.password?.isInvalid}
                         helperText={validation?.password?.message}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => setShowPassword(prev => !prev)}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                    >
+                                    {showPassword ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
                     />
 
                     <Link href='/' className={styles.forgotPasswordLink}>Forgot password?</Link>
