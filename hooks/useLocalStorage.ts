@@ -1,10 +1,13 @@
 import { useState, useEffect, SetStateAction } from "react";
+import useSubscribe from './useSubscribe'
+import PubSub from 'pubsub-js'
 
 type SetLocalStorageFunction = (a: string | null) => void;
 
 const useLocalStorage = (key: string): [(string | null), SetLocalStorageFunction] => {
     const [value, setValue] = useState(null)
-
+    const topic = `UPDATE_LOCAL_STORAGE_${key}`
+    
     const resetValue = (value: string | null) => {
         if(!value)
             window.localStorage.removeItem(key)
@@ -14,11 +17,19 @@ const useLocalStorage = (key: string): [(string | null), SetLocalStorageFunction
         setValue(value as SetStateAction<null>)
     }
 
+    useSubscribe(topic, (value) => {
+        resetValue(value)
+    })
+
+    const reset = (value: string | null) => {
+        PubSub.publish(topic, value)
+    }
+
     useEffect(() => {
         const value = window.localStorage.getItem(key)
         setValue(value as SetStateAction<null>)
     }, [])
-    return [value, resetValue]
+    return [value, reset]
 }
 
 export default useLocalStorage;
