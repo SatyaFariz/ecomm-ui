@@ -13,7 +13,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     const {
         customer: {
             email,
-            fullname
+            name
         },
         password
     } = req.body
@@ -21,7 +21,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     const body = {
         customer: {
             email,
-            firstname: fullname,
+            firstname: name,
             lastname: '_', // we don't use last name
         },
         password
