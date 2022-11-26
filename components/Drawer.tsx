@@ -13,6 +13,12 @@ const CustomDrawer = (props: any) => {
         {...props}
         className={styles.drawer}
         >
+            <div className={styles.header}>
+                <img
+                    src="https://werkidz.mygostore.com/_next/static/images/goStore-logo-64f7ac0ca37c2341f8ae739a75345580.svg"
+                    alt="app logo"
+                />
+            </div>
             <List>
                 <ListItem disablePadding>
                     <ListItemButton>
