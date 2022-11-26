@@ -119,7 +119,7 @@ const SignUp = (props: any) => {
                     <Link href='/' className={styles.forgotPasswordLink}>Forgot password?</Link>
                 </div>
 
-                <Button label="Sign In" onClick={submit} loading={loading}>
+                <Button onClick={submit} loading={loading}>
                     Sign in
                 </Button>
             </div>

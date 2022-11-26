@@ -163,7 +163,7 @@ const SignUp = (props: any) => {
                     }}
                 />
 
-                <Button label="Sign Up" onClick={submit} loading={loading}>
+                <Button onClick={submit} loading={loading}>
                     Sign up
                 </Button>
             </div>
