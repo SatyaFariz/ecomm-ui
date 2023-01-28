@@ -152,7 +152,7 @@ const Product = (props: any) => {
     const [currentSelected, setCurrentSelected] = useState(product.variants?.findIndex(variant => {
       if(variant.product?.stock_status === 'IN_STOCK') return true
       return false
-    }))
+    }) || 0)
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
@@ -192,6 +192,15 @@ const Product = (props: any) => {
             }
         })
 
+    }
+
+    const selectVariant = (attributeIndex: number, valueId: string) => {
+      const variants = product?.variants
+      const currentVariant = variants && variants[currentSelected]
+      const otherAttributeValues = (currentVariant?.attributes || [])?.filter((_, i) => i !== attributeIndex).map(attribute => attribute.uid)
+      const currentCombination = [...otherAttributeValues, valueId]
+      const matchingVariantIndex = product.variants?.findIndex(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid))) || 0
+      setCurrentSelected(matchingVariantIndex)
     }
  
     if (error) return 'An error has occurred: ' + error.message
@@ -275,7 +284,13 @@ const Product = (props: any) => {
                                 const matchingVariant = product.variants?.find(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid)))
                                 const isDisabled = matchingVariant?.product?.stock_status === 'OUT_OF_STOCK'
                                 return (
-                                <div key={value.uid} className={isSelected ? styles.optionValueActive : (isDisabled ? styles.optionValueDisabled : styles.optionValue)}>{value.label}</div>
+                                <div 
+                                  onClick={() => selectVariant(i, value.uid)}
+                                  key={value.uid} 
+                                  className={isSelected ? styles.optionValueActive : (isDisabled ? styles.optionValueDisabled : styles.optionValue)}
+                                >
+                                  {value.label}
+                                </div>
                               )})}
                             </div>
                           </div>
