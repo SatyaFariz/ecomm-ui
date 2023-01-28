@@ -5,7 +5,8 @@ import formatCurrency from '../helpers/formatCurrency'
 
 const ProductItem = (props: any) => {
     const { product } = props
-    const nameTrimmed = product.name?.trim()
+    const name = product.name?.trim()
+    const alt = product?.image?.label?.trim()
     const {
         minimum_price,
         // maximum_price
@@ -25,14 +26,14 @@ const ProductItem = (props: any) => {
                         src={product?.image?.url}
                         layout="fill"
                         priority={true}
-                        alt={nameTrimmed}
+                        alt={alt?.length > 0 ? alt : name}
                     />
                     {product.stock_status === 'OUT_OF_STOCK' &&
                     <div className={styles.outOfStock}>OUT OF STOCK</div>
                     }
                 </div>
 
-                <p className={styles.name}>{nameTrimmed}</p>
+                <p className={styles.name}>{name}</p>
                 <p className={styles.price}>{formatCurrency(product.price_range.minimum_price.final_price.value)}</p>
                 {minimum_price.discount.percent_off > 0 &&
                 <p className={styles.salePrice}>Rp {formatCurrency(product.price_range.minimum_price.regular_price.value)}</p>

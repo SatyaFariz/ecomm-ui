@@ -45,7 +45,8 @@ const graphql = `query search($search_term: String) {
             }
         },
         image {
-            url
+            url,
+            label
         }
      
     },
