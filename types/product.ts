@@ -8,6 +8,7 @@ interface Attribute {
 export interface MediaGallery {
   disabled?: boolean
   url?: string
+  label?: string
 }
 
 interface Variant {

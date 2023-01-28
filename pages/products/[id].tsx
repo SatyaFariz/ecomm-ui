@@ -39,6 +39,7 @@ const productQuery = `query productDetails($id: String!) {
             meta_keyword,
             meta_description,
             media_gallery {
+              label,
               disabled,
               url
             },
@@ -81,9 +82,11 @@ const productQuery = `query productDetails($id: String!) {
               variants {
                 product {
                   uid,
+                  name,
                   stock_status,
                   only_x_left_in_stock,
                   media_gallery {
+                    label,
                     disabled,
                     url
                   }
@@ -151,6 +154,7 @@ const Product = (props: any) => {
 
     const products = data?.data?.products?.items
     const product: Product = products && products[0]
+    const productName = product.name?.trim()
     const category = product?.categories && product.categories[product.categories.length - 1]
     const minimum_price = product?.price_range?.minimum_price
     
@@ -209,10 +213,20 @@ const Product = (props: any) => {
     }
 
     const combinedGallery = [
-      ...(product.media_gallery || []),
+      ...((product.media_gallery || []).map(gallery => {
+        const alt = gallery.label?.trim()
+        return { 
+          ...gallery,
+          label: (alt as string)?.length > 0 ? alt : productName
+        }
+      })),
       ...((product?.variants || [])?.reduce((array: MediaGallery[], variant) => {
           for(const gallery of (variant.product?.media_gallery || [])) {
-            array.push(gallery)
+            const alt = gallery.label?.trim()
+            array.push({
+              ...gallery,
+              label: (alt as string)?.length > 0 ? alt : variant.product?.name?.trim()
+            })
           }
 
         return array
@@ -235,16 +249,17 @@ const Product = (props: any) => {
                         virtual={false}
                         className={styles.image}
                     >
-                        {combinedGallery?.map((item: any, i: number) => {
+                        {combinedGallery?.map((item: MediaGallery, i: number) => {
                             return (
                             <SwiperSlide
                                 key={i}
                             >
                                 <Image 
                                     className={styles.image} 
-                                    src={item.url}
+                                    src={item.url as string}
                                     layout="fill"
                                     priority={true}
+                                    alt={item.label}
                                 />
                             </SwiperSlide>
                             )
