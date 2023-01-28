@@ -19,7 +19,7 @@ import Button from '../../components/Button'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
 import ProductDetailShimmer from '../../components/ProductDetailShimmer'
-import Product from '../../types/product'
+import Product, { MediaGallery } from '../../types/product'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -206,6 +206,17 @@ const Product = (props: any) => {
       const matchingVariantIndex = product.variants?.findIndex(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid)))
       setCurrentSelected(matchingVariantIndex as number)
     }
+
+    const combinedGallery = [
+      ...(product.media_gallery || [])?.filter(gallery => !gallery.disabled),
+      ...((product?.variants || [])?.reduce((array: MediaGallery[], variant) => {
+          for(const gallery of (variant.product?.media_gallery || [])) {
+            array.push(gallery)
+          }
+
+        return array
+      }, []))
+    ]
  
     if (error) return 'An error has occurred: ' + error.message
     return (
@@ -223,7 +234,7 @@ const Product = (props: any) => {
                         virtual={false}
                         className={styles.image}
                     >
-                        {product.media_gallery?.map((item: any, i: number) => {
+                        {combinedGallery?.map((item: any, i: number) => {
                             return (
                             <SwiperSlide
                                 key={i}
@@ -239,9 +250,9 @@ const Product = (props: any) => {
                         })}
                     </Swiper>
                     
-                    {(product.media_gallery || [])?.length > 1 &&
+                    {(combinedGallery || [])?.length > 1 &&
                     <div className={styles.swipeIndicator}>
-                        {swiperIndex}/{product.media_gallery?.length}
+                        {swiperIndex}/{combinedGallery?.length}
                     </div>
                     }
                 </div>

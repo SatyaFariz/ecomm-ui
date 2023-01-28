@@ -5,7 +5,7 @@ interface Attribute {
   uid?: string
 }
 
-interface MediaGallery {
+export interface MediaGallery {
   disabled?: boolean
   url?: string
 }
