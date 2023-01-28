@@ -29,6 +29,7 @@ const productQuery = `query productDetails($id: String!) {
         }
     ) {
         items {
+            __typename,
             sku,
             name,
             stock_status,
@@ -65,6 +66,22 @@ const productQuery = `query productDetails($id: String!) {
             },
             short_description {
                 html
+            },
+            ... on ConfigurableProduct {
+              variants {
+                product {
+                  uid,
+                  stock_status,
+                  only_x_left_in_stock
+                },
+                attributes {
+                  uid,
+                  value_index,
+                  label,
+                  code,
+                  
+                }
+              }
             }
         }
     }
