@@ -39,7 +39,8 @@ const productQuery = `query productDetails($id: String!) {
             meta_keyword,
             meta_description,
             media_gallery {
-                url
+              disabled,
+              url
             },
             categories {
                 level,
