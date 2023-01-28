@@ -5,6 +5,11 @@ interface Attribute {
   uid?: string
 }
 
+interface MediaGallery {
+  disabled?: boolean
+  url?: string
+}
+
 interface Variant {
   attributes?: Attribute[]
   product?: Product
@@ -32,7 +37,7 @@ interface Product {
   only_x_left_in_stock?: number
   categories?: any
   price_range?: any
-  media_gallery?: any
+  media_gallery?: MediaGallery[]
   stock_status?: StockStatus
   short_description?: any
   variants?: Variant[]

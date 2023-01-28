@@ -219,7 +219,7 @@ const Product = (props: any) => {
                         virtual={false}
                         className={styles.image}
                     >
-                        {product.media_gallery.map((item: any, i: number) => {
+                        {product.media_gallery?.map((item: any, i: number) => {
                             return (
                             <SwiperSlide
                                 key={i}
@@ -235,9 +235,9 @@ const Product = (props: any) => {
                         })}
                     </Swiper>
                     
-                    {product.media_gallery.length > 1 &&
+                    {(product.media_gallery || [])?.length > 1 &&
                     <div className={styles.swipeIndicator}>
-                        {swiperIndex}/{product.media_gallery.length}
+                        {swiperIndex}/{product.media_gallery?.length}
                     </div>
                     }
                 </div>
