@@ -1,4 +1,5 @@
 type Typename = 'ConfigurableProduct' | 'SimpleProduct'
+type StockStatus = 'IN_STOCK' | 'OUT_OF_STOCK'
 
 interface Attribute {
   uid?: string
@@ -6,7 +7,7 @@ interface Attribute {
 
 interface Variant {
   attributes?: Attribute[]
-  products?: Product[]
+  product?: Product
 }
 
 interface ConfigurableOption {
@@ -32,7 +33,7 @@ interface Product {
   categories?: any
   price_range?: any
   media_gallery?: any
-  stock_status?: string
+  stock_status?: StockStatus
   short_description?: any
   variants?: Variant[]
   configurable_options?: ConfigurableOption[]

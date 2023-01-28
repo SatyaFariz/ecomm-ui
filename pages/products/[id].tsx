@@ -148,6 +148,11 @@ const Product = (props: any) => {
     const product: Product = products && products[0]
     const category = product?.categories && product.categories[product.categories.length - 1]
     const minimum_price = product?.price_range?.minimum_price
+    
+    const [currentSelected, setCurrentSelected] = useState(product.variants?.findIndex(variant => {
+      if(variant.product?.stock_status === 'IN_STOCK') return true
+      return false
+    }))
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
@@ -257,16 +262,25 @@ const Product = (props: any) => {
 
                     {product.__typename === 'ConfigurableProduct' &&
                     <div className={styles.options}>
-                      {product.configurable_options?.map(option => (
-                        <div key={option.uid}>
-                          <div className={styles.attributeLabel}>{option.label}:</div>
-                          <div className={styles.optionValues}>
-                            {option.values?.map((value, i) => (
-                              <div key={value.uid} className={i === 0 ? styles.optionValueActive : (i === 1 ? styles.optionValueDisabled : styles.optionValue)}>{value.label}</div>
-                            ))}
+                      {product.configurable_options?.map((option, i) => {
+                        const currentVariant = (product?.variants || [])[currentSelected || 0]
+                        return (
+                          <div key={option.uid}>
+                            <div className={styles.attributeLabel}>{option.label}:</div>
+                            <div className={styles.optionValues}>
+                              {option.values?.map((value) => {
+                                const isSelected = currentVariant.attributes?.some(attribute => attribute.uid === value.uid)
+                                const otherAttributeValues = (currentVariant.attributes || [])?.filter((_, j) => j !== i).map(attribute => attribute.uid)
+                                const currentCombination = [...otherAttributeValues, value.uid]
+                                const matchingVariant = product.variants?.find(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid)))
+                                const isDisabled = matchingVariant?.product?.stock_status === 'OUT_OF_STOCK'
+                                return (
+                                <div key={value.uid} className={isSelected ? styles.optionValueActive : (isDisabled ? styles.optionValueDisabled : styles.optionValue)}>{value.label}</div>
+                              )})}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
                     }
 
