@@ -52,7 +52,7 @@
 }
 
 .discountPrice {
-    @apply text-xs line-through text-gray-500
+    @apply text-sm line-through text-rose-500 font-bold
 }
 
 .price {
