@@ -104,7 +104,7 @@
 }
 
 .options {
-  @apply gap-2 flex-col flex py-2
+  @apply gap-2 flex-col flex py-2 mt-1
 }
 
 .optionValues {
