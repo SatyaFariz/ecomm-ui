@@ -182,6 +182,7 @@ const Product = (props: any) => {
     const productDesc = variants && variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
     const minimum_price = variants && variants[currentSelected]?.product?.price_range?.minimum_price || product.price_range.minimum_price
     const only_x_left_in_stock = variants && variants[currentSelected]?.product?.only_x_left_in_stock || product.only_x_left_in_stock
+    const stock_status = variants && variants[currentSelected]?.product?.stock_status || product.stock_status
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
@@ -315,7 +316,7 @@ const Product = (props: any) => {
                         <div className={styles.percentOff}>{Math.floor(minimum_price.discount.percent_off)}% Off</div>
                         }
 
-                        {product.stock_status === 'OUT_OF_STOCK' &&
+                        {stock_status === 'OUT_OF_STOCK' &&
                         <div className={styles.outOfStock}>Out of stock</div>
                         }
                     </div>
