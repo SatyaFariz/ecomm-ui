@@ -225,9 +225,9 @@ const Product = (props: any) => {
             {product?
             <>
                 <Head>
-                    <title>{product.name}</title>
-                    <meta name="description" content={product.meta_description}/>
-                    <meta name="keywords" content={product.meta_keyword}/>
+                    <title>{product.name?.trim()}</title>
+                    <meta name="description" content={product.meta_description?.trim()}/>
+                    <meta name="keywords" content={product.meta_keyword?.trim()}/>
                 </Head>
                 <div className={styles.imageContainer}>
                     <Swiper 
@@ -263,14 +263,14 @@ const Product = (props: any) => {
                     <div className={styles.breadcrumbs}>
                         {category.breadcrumbs.map((item: any) =>
                             <Fragment key={item.category_uid}>
-                                <div>{item.category_name}</div>
+                                <div>{item.category_name?.trim()}</div>
                                 <div>/</div>
                             </Fragment>
                         )}
-                        <div>{category.name}</div>
+                        <div>{category.name?.trim()}</div>
                     </div>
                     }
-                    <p className={styles.name}>{product.name}</p>
+                    <p className={styles.name}>{product.name?.trim()}</p>
                     {minimum_price.discount.percent_off > 0 &&
                     <p className={styles.discountPrice}>Rp {product.price_range.minimum_price.regular_price.value}</p>
                     }
@@ -291,7 +291,7 @@ const Product = (props: any) => {
                         const currentVariant = (product?.variants || [])[currentSelected || 0]
                         return (
                           <div key={option.uid}>
-                            <div className={styles.attributeLabel}>{option.label}:</div>
+                            <div className={styles.attributeLabel}>{option.label?.trim()}:</div>
                             <div className={styles.optionValues}>
                               {option.values?.map((value) => {
                                 const isSelected = currentVariant.attributes?.some(attribute => attribute.uid === value.uid)
@@ -305,7 +305,7 @@ const Product = (props: any) => {
                                   key={value.uid} 
                                   className={isSelected ? styles.optionValueActive : (isDisabled ? styles.optionValueDisabled : styles.optionValue)}
                                 >
-                                  {value.label}
+                                  {value.label?.trim()}
                                 </div>
                               )})}
                             </div>
@@ -322,7 +322,7 @@ const Product = (props: any) => {
                     <hr className={styles.divider}/>
 
                     <div className={styles.description}>
-                        {product.short_description?.html}
+                        {product.short_description?.html?.trim()}
                     </div>
                 </div>
 
