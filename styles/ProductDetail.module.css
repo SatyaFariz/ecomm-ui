@@ -112,15 +112,15 @@
 }
 
 .optionValue {
-  @apply flex px-5 py-1 border-slate-400 border-[1px] rounded text-slate-500 text-sm
+  @apply flex px-5 py-1 border-slate-300 border-[1px] rounded text-slate-300 text-sm font-bold
 }
 
 .optionValueActive {
   @apply optionValue;
-  @apply text-black border-black font-bold
+  @apply text-primary border-primary
 }
 
 .optionValueDisabled {
   @apply optionValue;
-  @apply text-slate-200 border-slate-200 font-bold
+  @apply text-slate-200/70 border-slate-200/70
 }
