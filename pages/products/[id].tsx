@@ -81,7 +81,11 @@ const productQuery = `query productDetails($id: String!) {
                 product {
                   uid,
                   stock_status,
-                  only_x_left_in_stock
+                  only_x_left_in_stock,
+                  media_gallery {
+                    disabled,
+                    url
+                  }
                 },
                 attributes {
                   uid
