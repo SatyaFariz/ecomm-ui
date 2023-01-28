@@ -209,7 +209,7 @@ const Product = (props: any) => {
     }
 
     const combinedGallery = [
-      ...(product.media_gallery || [])?.filter(gallery => !gallery.disabled),
+      ...(product.media_gallery || []),
       ...((product?.variants || [])?.reduce((array: MediaGallery[], variant) => {
           for(const gallery of (variant.product?.media_gallery || [])) {
             array.push(gallery)
@@ -217,7 +217,7 @@ const Product = (props: any) => {
 
         return array
       }, []))
-    ]
+    ].filter(gallery => !gallery.disabled)
  
     if (error) return 'An error has occurred: ' + error.message
     return (
