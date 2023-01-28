@@ -165,8 +165,9 @@ const Product = (props: any) => {
       return false
     }) || 0)
 
-    const productName = product.name?.trim()
-    const productDesc = product?.variants && product?.variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
+    const variants = product.variants
+    const productName = variants && variants[currentSelected]?.product?.name?.trim() || product.name?.trim() || ''
+    const productDesc = variants && variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
@@ -290,7 +291,7 @@ const Product = (props: any) => {
                         <div>{category.name?.trim()}</div>
                     </div>
                     }
-                    <p className={styles.name}>{product.name?.trim()}</p>
+                    <p className={styles.name}>{productName}</p>
                     {minimum_price.discount.percent_off > 0 &&
                     <p className={styles.discountPrice}>Rp {product.price_range.minimum_price.regular_price.value}</p>
                     }
