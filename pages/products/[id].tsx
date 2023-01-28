@@ -19,6 +19,7 @@ import Button from '../../components/Button'
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
 import ProductDetailShimmer from '../../components/ProductDetailShimmer'
+import Product from '../../types/product'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -140,7 +141,7 @@ const Product = (props: any) => {
     )
 
     const products = data?.data?.products?.items
-    const product = products && products[0]
+    const product: Product = products && products[0]
     const category = product?.categories && product.categories[product.categories.length - 1]
     const minimum_price = product?.price_range?.minimum_price
 
