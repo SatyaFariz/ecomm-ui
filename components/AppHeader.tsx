@@ -13,6 +13,7 @@ import useQuery from '../hooks/useQuery'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
 import Link from './Link'
+import useOutsideClick from '../hooks/useOutsideClick'
 import PubSub from 'pubsub-js'
 
 const guestCartQuery = `query cart($cart_id: String!) {
@@ -38,6 +39,11 @@ const AppHeader: NextPage = () => {
     const [debouncedSearchTerm] = useDebounce(searchTerm, 500)
     const [cartId, setCartId] = useLocalStorage('cart_id')
     const [token] = useLocalStorage('token')
+    const headerRef: RefObject<HTMLElement> = useRef(null)
+
+    useOutsideClick([headerRef], () => {
+      if(isSearching) setIsSearching(false)
+    })
 
     const getGuestCartTotals = async (cartId: string): Promise<any> => {
         try {
@@ -119,7 +125,7 @@ const AppHeader: NextPage = () => {
     const isProductPage = router.pathname.startsWith('/products')
 
     return (
-        <header className={styles.header}>
+        <header className={styles.header} ref={headerRef}>
             <div className={isSearching ? styles.hidden : styles.container}>
                 <div className={styles.logoContainer}>
                     {showsBackButton &&
@@ -175,7 +181,6 @@ const AppHeader: NextPage = () => {
                         ref={inputRef}
                         value={searchTerm}
                         onChange={handleInputChange}
-                        onBlur={() => toggleSearch(false)}
                     />
                     {searchTerm.length > 0 &&
                     <IconButton onClick={resetInput}>
