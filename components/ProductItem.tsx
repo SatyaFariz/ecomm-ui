@@ -34,10 +34,10 @@ const ProductItem = (props: any) => {
                 </div>
 
                 <p className={styles.name}>{name}</p>
-                <p className={styles.price}>{formatCurrency(product.price_range.minimum_price.final_price.value)}</p>
                 {minimum_price.discount.percent_off > 0 &&
-                <p className={styles.salePrice}>Rp {formatCurrency(product.price_range.minimum_price.regular_price.value)}</p>
+                <p className={styles.salePrice}>{formatCurrency(product.price_range.minimum_price.regular_price.value)}</p>
                 }
+                <p className={styles.price}>{formatCurrency(product.price_range.minimum_price.final_price.value)}</p>
             </div>
         </Link>
     )
