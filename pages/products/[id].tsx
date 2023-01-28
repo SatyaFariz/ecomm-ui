@@ -92,6 +92,16 @@ const productQuery = `query productDetails($id: String!) {
                     label,
                     disabled,
                     url
+                  },
+                  price_range {
+                    minimum_price {
+                      final_price {
+                        value
+                      }
+                      regular_price {
+                        value
+                      }
+                    }
                   }
                 },
                 attributes {
@@ -168,6 +178,7 @@ const Product = (props: any) => {
     const variants = product.variants
     const productName = variants && variants[currentSelected]?.product?.name.trim() || product.name.trim()
     const productDesc = variants && variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
+    // const minimum_price = variants && variants[currentSelected]?.product?.price_range?.minimum_price || product.price_range.minimum_price
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {

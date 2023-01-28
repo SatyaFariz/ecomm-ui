@@ -12,7 +12,8 @@ interface PriceRange {
 
 interface MinMaxPrice {
   regular_price: Price,
-  finalPrice: Price
+  final_price: Price,
+  discount: any
 }
 
 interface Price {
