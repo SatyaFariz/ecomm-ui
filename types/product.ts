@@ -44,7 +44,7 @@ interface Product {
   price_range?: any
   media_gallery?: MediaGallery[]
   stock_status?: StockStatus
-  short_description?: Description
+  short_description: Description
   variants?: Variant[]
   configurable_options?: ConfigurableOption[]
 }

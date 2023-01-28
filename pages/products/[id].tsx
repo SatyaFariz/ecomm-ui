@@ -166,7 +166,7 @@ const Product = (props: any) => {
     }) || 0)
 
     const productName = product.name?.trim()
-    const productDesc = product?.variants && product?.variants[currentSelected]?.product?.short_description?.html?.trim() || product.short_description.html.trim()
+    const productDesc = product?.variants && product?.variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
@@ -342,7 +342,7 @@ const Product = (props: any) => {
                     <hr className={styles.divider}/>
 
                     <div className={styles.description}>
-                        {product.short_description?.html?.trim()}
+                        {productDesc}
                     </div>
                 </div>
 
