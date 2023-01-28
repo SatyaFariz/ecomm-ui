@@ -1,3 +1,5 @@
+type Typename = 'ConfigurableProduct' | 'SimpleProduct'
+
 interface Attribute {
   uid?: string
 }
@@ -19,7 +21,7 @@ interface ConfigurableOptionValue {
 }
 
 interface Product {
-  __typename?: string
+  __typename?: Typename
   uid?: string
   name?: string
   sku?: string

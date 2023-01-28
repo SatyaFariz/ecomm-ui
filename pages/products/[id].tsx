@@ -255,6 +255,21 @@ const Product = (props: any) => {
                         }
                     </div>
 
+                    {product.__typename === 'ConfigurableProduct' &&
+                    <div>
+                      {product.configurable_options?.map(option => (
+                        <div>
+                          <label>{option.label}</label>
+                          <div>
+                            {option.values?.map(value => (
+                              <div>{value.label}</div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    }
+
                     {product.only_x_left_in_stock &&
                     <p className={styles.stockThreshold}>Only {product.only_x_left_in_stock} left in stock</p>
                     }
