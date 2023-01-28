@@ -199,8 +199,8 @@ const Product = (props: any) => {
       const currentVariant = variants && variants[currentSelected]
       const otherAttributeValues = (currentVariant?.attributes || [])?.filter((_, i) => i !== attributeIndex).map(attribute => attribute.uid)
       const currentCombination = [...otherAttributeValues, valueId]
-      const matchingVariantIndex = product.variants?.findIndex(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid))) || 0
-      setCurrentSelected(matchingVariantIndex)
+      const matchingVariantIndex = product.variants?.findIndex(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid)))
+      setCurrentSelected(matchingVariantIndex as number)
     }
  
     if (error) return 'An error has occurred: ' + error.message
@@ -285,7 +285,7 @@ const Product = (props: any) => {
                                 const isDisabled = matchingVariant?.product?.stock_status === 'OUT_OF_STOCK'
                                 return (
                                 <div 
-                                  onClick={() => selectVariant(i, value.uid)}
+                                  onClick={() => selectVariant(i, value.uid as string)}
                                   key={value.uid} 
                                   className={isSelected ? styles.optionValueActive : (isDisabled ? styles.optionValueDisabled : styles.optionValue)}
                                 >
