@@ -317,7 +317,7 @@ const Product = (props: any) => {
                         }
 
                         {stock_status === 'OUT_OF_STOCK' &&
-                        <div className={styles.outOfStock}>Out of stock</div>
+                        <div className={styles.outOfStock}>Out of Stock</div>
                         }
                     </div>
 
