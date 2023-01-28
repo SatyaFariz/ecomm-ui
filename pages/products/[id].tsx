@@ -95,11 +95,14 @@ const productQuery = `query productDetails($id: String!) {
                   },
                   price_range {
                     minimum_price {
-                      final_price {
-                        value
-                      }
+                      discount {
+                        percent_off
+                      },
                       regular_price {
-                        value
+                          value
+                      },
+                      final_price {
+                          value
                       }
                     }
                   }
@@ -168,7 +171,6 @@ const Product = (props: any) => {
     const products = data?.data?.products?.items
     const product: Product = products && products[0]
     const category = product?.categories && product.categories[product.categories.length - 1]
-    const minimum_price = product?.price_range?.minimum_price
     
     const [currentSelected, setCurrentSelected] = useState(product.variants?.findIndex(variant => {
       if(variant.product?.stock_status === 'IN_STOCK') return true
@@ -178,7 +180,7 @@ const Product = (props: any) => {
     const variants = product.variants
     const productName = variants && variants[currentSelected]?.product?.name.trim() || product.name.trim()
     const productDesc = variants && variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
-    // const minimum_price = variants && variants[currentSelected]?.product?.price_range?.minimum_price || product.price_range.minimum_price
+    const minimum_price = variants && variants[currentSelected]?.product?.price_range?.minimum_price || product.price_range.minimum_price
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
@@ -304,10 +306,10 @@ const Product = (props: any) => {
                     }
                     <p className={styles.name}>{productName}</p>
                     {minimum_price.discount.percent_off > 0 &&
-                    <p className={styles.discountPrice}>Rp {product.price_range.minimum_price.regular_price.value}</p>
+                    <p className={styles.discountPrice}>Rp {minimum_price.regular_price.value}</p>
                     }
                     <div className={styles.price}>
-                        <p className={styles.finalPrice}>Rp {product.price_range.minimum_price.final_price.value}</p>
+                        <p className={styles.finalPrice}>Rp {minimum_price.final_price.value}</p>
                         {minimum_price.discount.percent_off > 0 &&
                         <div className={styles.percentOff}>{Math.floor(minimum_price.discount.percent_off)}% Off</div>
                         }
