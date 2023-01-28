@@ -7,6 +7,17 @@ interface Variant {
   products?: Product[]
 }
 
+interface ConfigurableOption {
+  uid?: string
+  label?: string
+  values?: ConfigurableOptionValue[]
+}
+
+interface ConfigurableOptionValue {
+  uid?: string
+  label?: string
+}
+
 interface Product {
   __typename?: string
   uid?: string
@@ -22,6 +33,7 @@ interface Product {
   stock_status?: string
   short_description?: any
   variants?: Variant[]
+  configurable_options?: ConfigurableOption[]
 }
 
 export default Product

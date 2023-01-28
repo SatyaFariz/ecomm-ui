@@ -69,6 +69,14 @@ const productQuery = `query productDetails($id: String!) {
                 html
             },
             ... on ConfigurableProduct {
+              configurable_options {
+                uid,
+                label,
+                values {
+                  uid,
+                  label
+                }
+              },
               variants {
                 product {
                   uid,
@@ -76,11 +84,7 @@ const productQuery = `query productDetails($id: String!) {
                   only_x_left_in_stock
                 },
                 attributes {
-                  uid,
-                  value_index,
-                  label,
-                  code,
-                  
+                  uid
                 }
               }
             }
