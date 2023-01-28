@@ -5,6 +5,20 @@ interface Attribute {
   uid?: string
 }
 
+interface PriceRange {
+  minimum_price: MinMaxPrice,
+  maximum_price: MinMaxPrice
+}
+
+interface MinMaxPrice {
+  regular_price: Price,
+  finalPrice: Price
+}
+
+interface Price {
+  value: number
+}
+
 export interface MediaGallery {
   disabled?: boolean
   url?: string
@@ -41,7 +55,7 @@ interface Product {
   meta_description?: string
   only_x_left_in_stock?: number
   categories?: any
-  price_range?: any
+  price_range: PriceRange
   media_gallery?: MediaGallery[]
   stock_status?: StockStatus
   short_description: Description
