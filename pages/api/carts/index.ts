@@ -10,7 +10,7 @@ export default async function handler(
 
 async function post(req: NextApiRequest, res: NextApiResponse) {
 
-    const url = `http://localhost/rest/default/V1/carts/mine`
+    const url = `${process.env.API_BASE_URL}/rest/default/V1/carts/mine`
 
     const headers = {
         authorization: req.headers.authorization as string

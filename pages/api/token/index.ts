@@ -10,7 +10,7 @@ export default async function handler(
 
 async function post(req: NextApiRequest, res: NextApiResponse) {
 
-    const url = `http://localhost/rest/default/V1/integration/customer/token`
+    const url = `${process.env.API_BASE_URL}/rest/default/V1/integration/customer/token`
 
     try {
         const result = await axios.post(url, req.body)

@@ -12,7 +12,7 @@ export default async function handler(
 async function get(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query
     
-    const url = `http://localhost/rest/default/V1/cmsPage/${id}`
+    const url = `${process.env.API_BASE_URL}/rest/default/V1/cmsPage/${id}`
 
     const request = {
         url,

@@ -10,7 +10,7 @@ export default async function handler(
 }
 
 async function post(req: NextApiRequest, res: NextApiResponse) {
-    const url = `http://localhost/rest/default/V1/carts/mine/items/${req.query.id}`
+    const url = `${process.env.API_BASE_URL}/rest/default/V1/carts/mine/items/${req.query.id}`
 
     const body = {
         cartItem: {
@@ -39,7 +39,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function del(req: NextApiRequest, res: NextApiResponse) {
-    const url = `http://localhost/rest/default/V1/carts/mine/items/${req.query.id}`
+    const url = `${process.env.API_BASE_URL}/rest/default/V1/carts/mine/items/${req.query.id}`
 
     const headers = {
         authorization: req.headers.authorization as string

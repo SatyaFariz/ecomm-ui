@@ -9,7 +9,7 @@ export default async function handler(
 }
 
 async function post(req: NextApiRequest, res: NextApiResponse) {
-    const url = `http://localhost/graphql`
+    const url = `${process.env.API_BASE_URL}/graphql`
 
     const headers: any = {
     }
