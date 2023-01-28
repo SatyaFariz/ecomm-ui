@@ -181,6 +181,7 @@ const Product = (props: any) => {
     const productName = variants && variants[currentSelected]?.product?.name.trim() || product.name.trim()
     const productDesc = variants && variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
     const minimum_price = variants && variants[currentSelected]?.product?.price_range?.minimum_price || product.price_range.minimum_price
+    const only_x_left_in_stock = variants && variants[currentSelected]?.product?.only_x_left_in_stock || product.only_x_left_in_stock
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
@@ -349,8 +350,8 @@ const Product = (props: any) => {
                     </div>
                     }
 
-                    {product.only_x_left_in_stock &&
-                    <p className={styles.stockThreshold}>Only {product.only_x_left_in_stock} left in stock</p>
+                    {only_x_left_in_stock &&
+                    <p className={styles.stockThreshold}>Only {only_x_left_in_stock} left in stock</p>
                     }
                     
                     <hr className={styles.divider}/>
