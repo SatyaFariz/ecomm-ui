@@ -33,9 +33,9 @@ interface ConfigurableOptionValue {
 
 interface Product {
   __typename?: Typename
-  uid?: string
-  name?: string
-  sku?: string
+  uid: string
+  name: string
+  sku: string
   meta_title?: string
   meta_keyword?: string
   meta_description?: string

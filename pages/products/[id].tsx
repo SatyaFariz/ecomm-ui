@@ -166,7 +166,7 @@ const Product = (props: any) => {
     }) || 0)
 
     const variants = product.variants
-    const productName = variants && variants[currentSelected]?.product?.name?.trim() || product.name?.trim() || ''
+    const productName = variants && variants[currentSelected]?.product?.name.trim() || product.name.trim()
     const productDesc = variants && variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
 
     const mutation = useMutation((cartId: string) => {
