@@ -98,3 +98,29 @@
 .qty {
     @apply flex items-center justify-center w-[22px]
 }
+
+.attributeLabel {
+  @apply mb-1
+}
+
+.options {
+  @apply gap-2 flex-col flex py-2
+}
+
+.optionValues {
+  @apply flex gap-2
+}
+
+.optionValue {
+  @apply flex px-5 py-1 border-slate-400 border-[1px] rounded text-slate-500 text-sm
+}
+
+.optionValueActive {
+  @apply optionValue;
+  @apply text-black border-black font-bold
+}
+
+.optionValueDisabled {
+  @apply optionValue;
+  @apply text-slate-200 border-slate-200 font-bold
+}

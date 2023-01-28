@@ -256,13 +256,13 @@ const Product = (props: any) => {
                     </div>
 
                     {product.__typename === 'ConfigurableProduct' &&
-                    <div>
+                    <div className={styles.options}>
                       {product.configurable_options?.map(option => (
                         <div>
-                          <label>{option.label}</label>
-                          <div>
-                            {option.values?.map(value => (
-                              <div>{value.label}</div>
+                          <div className={styles.attributeLabel}>{option.label}:</div>
+                          <div className={styles.optionValues}>
+                            {option.values?.map((value, i) => (
+                              <div className={i === 0 ? styles.optionValueActive : (i === 1 ? styles.optionValueDisabled : styles.optionValue)}>{value.label}</div>
                             ))}
                           </div>
                         </div>
