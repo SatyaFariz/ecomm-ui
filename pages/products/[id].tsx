@@ -85,6 +85,9 @@ const productQuery = `query productDetails($id: String!) {
                   name,
                   stock_status,
                   only_x_left_in_stock,
+                  short_description {
+                    html
+                  },
                   media_gallery {
                     label,
                     disabled,
@@ -154,7 +157,6 @@ const Product = (props: any) => {
 
     const products = data?.data?.products?.items
     const product: Product = products && products[0]
-    const productName = product.name?.trim()
     const category = product?.categories && product.categories[product.categories.length - 1]
     const minimum_price = product?.price_range?.minimum_price
     
@@ -162,6 +164,9 @@ const Product = (props: any) => {
       if(variant.product?.stock_status === 'IN_STOCK') return true
       return false
     }) || 0)
+
+    const productName = product.name?.trim()
+    const productDesc = product?.variants && product?.variants[currentSelected]?.product?.short_description?.html?.trim() || product.short_description.html.trim()
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {

@@ -11,6 +11,10 @@ export interface MediaGallery {
   label?: string
 }
 
+interface Description {
+  html: string
+}
+
 interface Variant {
   attributes?: Attribute[]
   product?: Product
@@ -40,7 +44,7 @@ interface Product {
   price_range?: any
   media_gallery?: MediaGallery[]
   stock_status?: StockStatus
-  short_description?: any
+  short_description?: Description
   variants?: Variant[]
   configurable_options?: ConfigurableOption[]
 }
