@@ -258,11 +258,11 @@ const Product = (props: any) => {
                     {product.__typename === 'ConfigurableProduct' &&
                     <div className={styles.options}>
                       {product.configurable_options?.map(option => (
-                        <div>
+                        <div key={option.uid}>
                           <div className={styles.attributeLabel}>{option.label}:</div>
                           <div className={styles.optionValues}>
                             {option.values?.map((value, i) => (
-                              <div className={i === 0 ? styles.optionValueActive : (i === 1 ? styles.optionValueDisabled : styles.optionValue)}>{value.label}</div>
+                              <div key={value.uid} className={i === 0 ? styles.optionValueActive : (i === 1 ? styles.optionValueDisabled : styles.optionValue)}>{value.label}</div>
                             ))}
                           </div>
                         </div>
