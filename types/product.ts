@@ -2,7 +2,7 @@ type Typename = 'ConfigurableProduct' | 'SimpleProduct'
 type StockStatus = 'IN_STOCK' | 'OUT_OF_STOCK'
 
 interface Attribute {
-  uid?: string
+  uid: string
 }
 
 interface PriceRange {
@@ -21,8 +21,8 @@ interface Price {
 }
 
 export interface MediaGallery {
-  disabled?: boolean
-  url?: string
+  disabled: boolean
+  url: string
   label?: string
 }
 
@@ -36,18 +36,18 @@ interface Variant {
 }
 
 interface ConfigurableOption {
-  uid?: string
-  label?: string
-  values?: ConfigurableOptionValue[]
+  uid: string
+  label: string
+  values: ConfigurableOptionValue[]
 }
 
 interface ConfigurableOptionValue {
-  uid?: string
-  label?: string
+  uid: string
+  label: string
 }
 
 interface Product {
-  __typename?: Typename
+  __typename: Typename
   uid: string
   name: string
   sku: string
@@ -58,7 +58,7 @@ interface Product {
   categories?: any
   price_range: PriceRange
   media_gallery?: MediaGallery[]
-  stock_status?: StockStatus
+  stock_status: StockStatus
   short_description: Description
   variants?: Variant[]
   configurable_options?: ConfigurableOption[]
