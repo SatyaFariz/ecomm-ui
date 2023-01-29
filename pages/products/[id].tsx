@@ -236,18 +236,16 @@ const Product = (props: any) => {
 
     const combinedGallery = [
       ...((product.media_gallery || []).map(gallery => {
-        const alt = gallery.label?.trim()
         return { 
           ...gallery,
-          label: (alt as string)?.length > 0 ? alt : productName
+          label: gallery.label?.trim() || productName
         }
       })),
-      ...((product?.variants || [])?.reduce((array: MediaGallery[], variant) => {
-          for(const gallery of (variant.product?.media_gallery || [])) {
-            const alt = gallery.label?.trim()
+      ...((product.variants || [])?.reduce((array: MediaGallery[], variant) => {
+          for(const gallery of (variant.product.media_gallery || [])) {
             array.push({
               ...gallery,
-              label: (alt as string)?.length > 0 ? alt : variant.product?.name?.trim()
+              label: gallery.label?.trim() || variant.product.name.trim()
             })
           }
 
