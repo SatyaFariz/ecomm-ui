@@ -20,6 +20,7 @@ import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai'
 import IconButton from '@mui/material/IconButton'
 import ProductDetailShimmer from '../../components/ProductDetailShimmer'
 import Product, { MediaGallery } from '../../types/product'
+import formatCurrency from '../../helpers/formatCurrency'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -307,10 +308,10 @@ const Product = (props: any) => {
                     }
                     <p className={styles.name}>{productName}</p>
                     {minimum_price.discount.percent_off > 0 &&
-                    <p className={styles.discountPrice}>Rp {minimum_price.regular_price.value}</p>
+                    <p className={styles.discountPrice}>{formatCurrency(minimum_price.regular_price.value)}</p>
                     }
                     <div className={styles.price}>
-                        <p className={styles.finalPrice}>Rp {minimum_price.final_price.value}</p>
+                        <p className={styles.finalPrice}>{formatCurrency(minimum_price.final_price.value)}</p>
                         {minimum_price.discount.percent_off > 0 &&
                         <div className={styles.percentOff}>{Math.floor(minimum_price.discount.percent_off)}% Off</div>
                         }
