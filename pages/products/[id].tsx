@@ -170,19 +170,19 @@ const Product = (props: any) => {
 
     const products = data?.data?.products?.items
     const product: Product = products && products[0]
-    const category = product?.categories && product.categories[product.categories.length - 1]
+    const category = product.categories && product.categories[product.categories.length - 1]
     
     const [currentSelected, setCurrentSelected] = useState(product.variants?.findIndex(variant => {
-      if(variant.product?.stock_status === 'IN_STOCK') return true
+      if(variant.product.stock_status === 'IN_STOCK') return true
       return false
     }) || 0)
 
     const variants = product.variants
-    const productName = variants && variants[currentSelected]?.product?.name.trim() || product.name.trim()
-    const productDesc = variants && variants[currentSelected]?.product?.short_description.html.trim() || product.short_description.html.trim()
-    const minimum_price = variants && variants[currentSelected]?.product?.price_range?.minimum_price || product.price_range.minimum_price
-    const only_x_left_in_stock = variants && variants[currentSelected]?.product?.only_x_left_in_stock || product.only_x_left_in_stock
-    const stock_status = variants && variants[currentSelected]?.product?.stock_status || product.stock_status
+    const productName = variants && variants[currentSelected].product.name.trim() || product.name.trim()
+    const productDesc = variants && variants[currentSelected].product.short_description.html.trim() || product.short_description.html.trim()
+    const minimum_price = variants && variants[currentSelected].product.price_range.minimum_price || product.price_range.minimum_price
+    const only_x_left_in_stock = variants && variants[currentSelected].product.only_x_left_in_stock || product.only_x_left_in_stock
+    const stock_status = variants && variants[currentSelected].product.stock_status || product.stock_status
 
     const mutation = useMutation((cartId: string) => {
         const cartItem = {
