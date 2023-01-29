@@ -335,13 +335,13 @@ const Product = (props: any) => {
                                 const matchingVariant = product.variants?.find(variant => variant.attributes.every(attribute => currentCombination.includes(attribute.uid)))
                                 const isDisabled = matchingVariant?.product?.stock_status === 'OUT_OF_STOCK'
                                 return (
-                                <div 
+                                <button 
                                   onClick={() => selectVariant(i, value.uid)}
                                   key={value.uid} 
                                   className={isSelected ? styles.optionValueActive : (isDisabled ? styles.optionValueDisabled : styles.optionValue)}
                                 >
                                   {value.label?.trim()}
-                                </div>
+                                </button>
                               )})}
                             </div>
                           </div>
