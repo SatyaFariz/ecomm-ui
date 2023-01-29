@@ -225,12 +225,13 @@ const Product = (props: any) => {
     }
 
     const selectVariant = (attributeIndex: number, valueId: string) => {
-      const variants = product?.variants
-      const currentVariant = variants && variants[currentSelected]
-      const otherAttributeValues = (currentVariant?.attributes || [])?.filter((_, i) => i !== attributeIndex).map(attribute => attribute.uid)
-      const currentCombination = [...otherAttributeValues, valueId]
-      const matchingVariantIndex = product.variants?.findIndex(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid)))
-      setCurrentSelected(matchingVariantIndex as number)
+      if(Array.isArray(product.variants)) {
+        const currentVariant = product.variants[currentSelected]
+        const otherAttributeValues = currentVariant.attributes.filter((_, i) => i !== attributeIndex).map(attribute => attribute.uid)
+        const currentCombination = [...otherAttributeValues, valueId]
+        const matchingVariantIndex = product.variants.findIndex(variant => variant.attributes.every(attribute => currentCombination.includes(attribute.uid)))
+        setCurrentSelected(matchingVariantIndex)
+      }
     }
 
     const combinedGallery = [

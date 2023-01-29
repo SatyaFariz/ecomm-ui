@@ -31,8 +31,8 @@ interface Description {
 }
 
 interface Variant {
-  attributes?: Attribute[]
-  product?: Product
+  attributes: Attribute[]
+  product: Product
 }
 
 interface ConfigurableOption {
