@@ -323,20 +323,20 @@ const Product = (props: any) => {
                     {product.__typename === 'ConfigurableProduct' &&
                     <div className={styles.options}>
                       {product.configurable_options?.map((option, i) => {
-                        const currentVariant = (product?.variants || [])[currentSelected || 0]
+                        const currentVariant = (product.variants || [])[currentSelected]
                         return (
                           <div key={option.uid}>
                             <div className={styles.attributeLabel}>{option.label?.trim()}:</div>
                             <div className={styles.optionValues}>
-                              {option.values?.map((value) => {
-                                const isSelected = currentVariant.attributes?.some(attribute => attribute.uid === value.uid)
-                                const otherAttributeValues = (currentVariant.attributes || [])?.filter((_, j) => j !== i).map(attribute => attribute.uid)
+                              {option.values.map((value) => {
+                                const isSelected = currentVariant.attributes.some(attribute => attribute.uid === value.uid)
+                                const otherAttributeValues = currentVariant.attributes.filter((_, j) => j !== i).map(attribute => attribute.uid)
                                 const currentCombination = [...otherAttributeValues, value.uid]
-                                const matchingVariant = product.variants?.find(variant => variant.attributes?.every(attribute => currentCombination.includes(attribute.uid)))
+                                const matchingVariant = product.variants?.find(variant => variant.attributes.every(attribute => currentCombination.includes(attribute.uid)))
                                 const isDisabled = matchingVariant?.product?.stock_status === 'OUT_OF_STOCK'
                                 return (
                                 <div 
-                                  onClick={() => selectVariant(i, value.uid as string)}
+                                  onClick={() => selectVariant(i, value.uid)}
                                   key={value.uid} 
                                   className={isSelected ? styles.optionValueActive : (isDisabled ? styles.optionValueDisabled : styles.optionValue)}
                                 >
