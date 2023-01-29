@@ -259,7 +259,7 @@ const Product = (props: any) => {
             {product?
             <>
                 <Head>
-                    <title>{product.name?.trim()}</title>
+                    <title>{productName}</title>
                     <meta name="description" content={product.meta_description?.trim()}/>
                     <meta name="keywords" content={product.meta_keyword?.trim()}/>
                 </Head>
@@ -269,14 +269,14 @@ const Product = (props: any) => {
                         virtual={false}
                         className={styles.image}
                     >
-                        {combinedGallery?.map((item: MediaGallery, i: number) => {
+                        {combinedGallery.map((item: MediaGallery, i: number) => {
                             return (
                             <SwiperSlide
                                 key={i}
                             >
                                 <Image 
                                     className={styles.image} 
-                                    src={item.url as string}
+                                    src={item.url}
                                     layout="fill"
                                     priority={true}
                                     alt={item.label}
@@ -286,9 +286,9 @@ const Product = (props: any) => {
                         })}
                     </Swiper>
                     
-                    {(combinedGallery || [])?.length > 1 &&
+                    {combinedGallery.length > 1 &&
                     <div className={styles.swipeIndicator}>
-                        {swiperIndex}/{combinedGallery?.length}
+                        {swiperIndex}/{combinedGallery.length}
                     </div>
                     }
                 </div>
