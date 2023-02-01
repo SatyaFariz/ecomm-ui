@@ -23,10 +23,11 @@ import 'swiper/css'
 
 import banners from '../mock-data/banners.json'
 
-const graphql = `query search($search_term: String) {
+const graphql = `query search($search_term: String, $page: Int) {
 	products(
     search: $search_term,
-    pageSize: 8
+    pageSize: 8,
+    currentPage: $page
   ) {
     items {
         uid,
@@ -74,7 +75,7 @@ const cmsGraphql = `{
 const getKeyAndVariablesFromQuery = (query: any): [string, object] => {
     const variables = {
         search_term: query.search_term || '',
-        page: query.page,
+        page: parseInt(query.page || '1'),
         limit: query.limit
     }
     const key = qs.stringify(variables)
