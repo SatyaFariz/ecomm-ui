@@ -18,6 +18,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SliderDots from '../components/SliderDots'
 import Drawer from '../components/Drawer'
 import Image from 'next/image'
+import PageInfo from '../types/page_info'
 import 'swiper/css'
 
 import banners from '../mock-data/banners.json'
@@ -153,7 +154,7 @@ const Home = (props: any) => {
     const { error: userResponseError, data: userResponseData }: any = useAuthedQuery('me', () =>
         Http.get('/api/customers/me')
     )
-    
+
     if (error) return 'An error has occurred: ' + error.message
     return (
         <>
@@ -207,11 +208,9 @@ const Home = (props: any) => {
                 {(data) ?
                 <>
                     <ProductList products={data.data?.products?.items}/>
-                    {/* <Pagination 
-                        pageSize={data.search_criteria?.page_size} 
-                        currentPage={data.search_criteria?.current_page}
-                        totalCount={data.total_count} 
-                    /> */}
+                    <Pagination 
+                        pageInfo={data.data?.products?.page_info}
+                    />
                 </>
                 :
                 <ProductListShimmer/>

@@ -4,13 +4,14 @@ import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
 import Link from 'next/link'
 import qs from 'query-string'
 import useQueryParams from '../hooks/useQueryParams'
+import PageInfo from '../types/page_info'
 
-const Pagination = (props: any) => {
+const Pagination = (props: { pageInfo: PageInfo }) => {
+    const { pageInfo } = props
     const router = useRouter()
     const query = useQueryParams()
-    const currentPage = parseInt(query.page?.toString() || '1')
-    const { pageSize, totalCount } = props
-    const totalPage = Math.ceil(totalCount / pageSize)
+    const currentPage = pageInfo.current_page
+    const totalPage = pageInfo.total_pages
 
     const prevLink = (): string => {
         const params = { ...query }
@@ -40,7 +41,7 @@ const Pagination = (props: any) => {
     const prevButtonDisabled = currentPage.toString() === '1'
     const nextButtonDisabled = currentPage === totalPage
 
-    if(totalPage === 1 || totalCount === 0) return null
+    if(totalPage === 1) return null
     return (
         <div className={styles.container}>
             {prevButtonDisabled ?
