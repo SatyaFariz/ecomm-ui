@@ -25,7 +25,8 @@ import banners from '../mock-data/banners.json'
 
 const graphql = `query search($search_term: String) {
 	products(
-    search: $search_term
+    search: $search_term,
+    pageSize: 8
   ) {
     items {
         uid,
