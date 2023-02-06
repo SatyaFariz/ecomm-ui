@@ -158,8 +158,7 @@ const Home = (props: any) => {
     const [drawerOpen, setDrawerOpen] = useState(false)
     const router = useRouter()
 
-    const categories = getDataFromDehydratedState('categories', dehydratedState)
-    console.log('categories', categories)
+    const categoriesData = getDataFromDehydratedState('categories', dehydratedState)
 
     const [key, variables] = getKeyAndVariablesFromQuery(router.query)
 
@@ -196,7 +195,11 @@ const Home = (props: any) => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <>
-            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}/>
+            <Drawer 
+              open={drawerOpen} 
+              onClose={() => setDrawerOpen(false)}
+              categories={categoriesData.categories}
+            />
             <div className={styles.bannersContainer}>
                 <Swiper 
                     onSlideChange={handleSwipe}
