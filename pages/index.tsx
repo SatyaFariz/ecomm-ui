@@ -198,7 +198,11 @@ const Home = (props: any) => {
             <Drawer 
               open={drawerOpen} 
               onClose={() => setDrawerOpen(false)}
-              categoriesHydratedData={categoriesData}
+              dehydratedState={dehydratedState}
+              graphql={{
+                query: categoriesGraphql,
+                variables: {}
+              }}
             />
             <div className={styles.bannersContainer}>
                 <Swiper 

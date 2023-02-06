@@ -10,12 +10,23 @@ import Link from '../components/Link'
 import useLocalStorage from '../hooks/useLocalStorage'
 import useCurrentUser from '../hooks/useCurrentUser'
 import Category from '../types/category'
+import getDataFromDehydratedState from '../helpers/getDataFromDehydratedState'
+import Http from '../libs/http'
+import useQuery from '../hooks/useQuery'
 
 const CustomDrawer = (props: any) => {
-    const categories: Category[] = props.categoriesHydratedData.data.categories.items[0]?.children
+    const { dehydratedState } = props
+    const key = 'categories'
     const queryClient = useQueryClient()
     const [__, setToken] = useLocalStorage('token')
     const [_, setCardId] = useLocalStorage('cart_id')
+
+    const { data: categoriesData }: any = useQuery(key, () =>
+        Http.post('/api/graphql', props.graphql),
+        {},
+        getDataFromDehydratedState(key, dehydratedState)
+    )
+    const categories: Category[] = categoriesData.data.categories.items[0]?.children
 
     const { user } = useCurrentUser()
 
@@ -56,7 +67,8 @@ const CustomDrawer = (props: any) => {
                   <ListItem
                     disablePadding 
                     key={category.uid}
-                    component={Link} href={category.url_key}
+                    component={Link} 
+                    href={category.url_key}
                   >
                     <ListItemButton>
                     <ListItemText primary={category.name} />
