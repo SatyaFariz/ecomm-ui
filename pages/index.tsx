@@ -156,8 +156,6 @@ const Home = (props: any) => {
     const [drawerOpen, setDrawerOpen] = useState(false)
     const router = useRouter()
 
-    const categoriesData = getDataFromDehydratedState('categories', dehydratedState)
-
     const [key, variables] = getKeyAndVariablesFromQuery(router.query)
 
     const productsQueryKey = ['product_list_home', key]
