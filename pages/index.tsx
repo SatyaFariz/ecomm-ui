@@ -16,7 +16,7 @@ import { ReactElement, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SliderDots from '../components/SliderDots'
-import Drawer from '../components/Drawer'
+import CustomDrawer from '../components/Drawer'
 import Image from 'next/image'
 import PageInfo from '../types/page_info'
 import 'swiper/css'
@@ -195,13 +195,16 @@ const Home = (props: any) => {
     if (error) return 'An error has occurred: ' + error.message
     return (
         <>
-            <Drawer 
+            <CustomDrawer 
               open={drawerOpen} 
               onClose={() => setDrawerOpen(false)}
-              dehydratedState={dehydratedState}
+              parentDehydratedState={dehydratedState}
               graphql={{
                 query: categoriesGraphql,
                 variables: {}
+              }}
+              ModalProps={{
+                keepMounted: true,
               }}
             />
             <div className={styles.bannersContainer}>

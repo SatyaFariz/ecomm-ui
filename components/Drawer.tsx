@@ -15,7 +15,7 @@ import Http from '../libs/http'
 import useQuery from '../hooks/useQuery'
 
 const CustomDrawer = (props: any) => {
-    const { dehydratedState } = props
+    const { parentDehydratedState } = props
     const key = 'categories'
     const queryClient = useQueryClient()
     const [__, setToken] = useLocalStorage('token')
@@ -24,7 +24,7 @@ const CustomDrawer = (props: any) => {
     const { data: categoriesData }: any = useQuery(key, () =>
         Http.post('/api/graphql', props.graphql),
         {},
-        getDataFromDehydratedState(key, dehydratedState)
+        getDataFromDehydratedState(key, parentDehydratedState)
     )
     const categories: Category[] = categoriesData.data.categories.items[0]?.children
 
@@ -39,9 +39,10 @@ const CustomDrawer = (props: any) => {
     }
     return (
         <Drawer
-        anchor='left'
-        {...props}
-        className={styles.drawer}
+          anchor='left'
+          open={props.open}
+          onClose={props.onClose}
+          className={styles.drawer}
         >
             <div className={styles.header}>
                 <img
