@@ -9,14 +9,16 @@ import ListItemText from '@mui/material/ListItemText';
 import Link from '../components/Link'
 import useLocalStorage from '../hooks/useLocalStorage'
 import useCurrentUser from '../hooks/useCurrentUser'
+import Category from '../types/category'
 
 const CustomDrawer = (props: any) => {
+    const categories: Category[] = props.categories
     const queryClient = useQueryClient()
     const [__, setToken] = useLocalStorage('token')
     const [_, setCardId] = useLocalStorage('cart_id')
 
     const { user } = useCurrentUser()
-
+console.log(props)
     const logout = () => {
         setCardId(null)
         setToken(null)
@@ -50,6 +52,13 @@ const CustomDrawer = (props: any) => {
                     </ListItemButton>
                 </ListItem>
                 }
+                {categories?.map((category) => (
+                  <ListItem disablePadding key={category.uid}>
+                    <ListItemButton>
+                    <ListItemText primary={category.name} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
                 <ListItem disablePadding>
                     <ListItemButton>
                     <ListItemText primary="Drafts" />
