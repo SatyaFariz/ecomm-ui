@@ -73,20 +73,18 @@ const cmsGraphql = `{
 }`
 
 const categoriesGraphql = `{
-  categories(filters: {
+  categoryList(filters: {
     url_key: {
       eq: "root"
     }
   }) {
-    items {
+    uid,
+    url_key,
+    name
+    children {
       uid,
       url_key,
       name
-      children {
-        uid,
-        url_key,
-        name
-      }
     }
   }
 }`

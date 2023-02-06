@@ -26,7 +26,7 @@ const CustomDrawer = (props: any) => {
         {},
         getDataFromDehydratedState(key, parentDehydratedState)
     )
-    const categories: Category[] = categoriesData.data.categories.items[0]?.children
+    const categories: Category[] = categoriesData.data.categoryList[0]?.children
 
     const { user } = useCurrentUser()
 
