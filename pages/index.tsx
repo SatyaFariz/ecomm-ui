@@ -72,6 +72,25 @@ const cmsGraphql = `{
     }
 }`
 
+const categoriesGraphql = `{
+  categories(filters: {
+    url_key: {
+      eq: "root"
+    }
+  }) {
+    items {
+      uid,
+      url_key,
+      name
+      children {
+        uid,
+        url_key,
+        name
+      }
+    }
+  }
+}`
+
 const getKeyAndVariablesFromQuery = (query: any): [string, object] => {
     const variables = {
         search_term: query.search_term || '',
@@ -113,6 +132,19 @@ export async function getServerSideProps(context: any) {
         }).then(res => res.json())
     })
 
+    await queryClient.prefetchQuery('categories', () => {
+      return fetch(`${process.env.BASE_URL}/api/graphql`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              query: categoriesGraphql,
+              variables: {}
+          })
+      }).then(res => res.json())
+    })
+
     return {
         props: {
             dehydratedState: dehydrate(queryClient),
@@ -125,6 +157,10 @@ const Home = (props: any) => {
     const [swiperIndex, setSwiperIndex] = useState(1)
     const [drawerOpen, setDrawerOpen] = useState(false)
     const router = useRouter()
+
+    const categories = getDataFromDehydratedState('categories', dehydratedState)
+    console.log('categories', categories)
+
     const [key, variables] = getKeyAndVariablesFromQuery(router.query)
 
     const productsQueryKey = ['product_list_home', key]
