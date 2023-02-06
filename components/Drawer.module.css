@@ -5,3 +5,7 @@
 .header {
     @apply bg-white h-[64px] border-b border-slate-900/10 px-6 flex items-center
 }
+
+.icon {
+  @apply text-black text-[24px]
+}

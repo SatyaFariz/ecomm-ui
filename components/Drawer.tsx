@@ -1,4 +1,5 @@
 import styles from './Drawer.module.css'
+import { MdExpandLess, MdExpandMore } from 'react-icons/md'
 import { Fragment, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import Drawer from '@mui/material/Drawer'
@@ -75,6 +76,7 @@ const CustomDrawer = (props: any) => {
                           onClick={() => setOpen((prev: { [key: string]: boolean }) => ({ ...prev, [category.uid]: !prev[category.uid] }))}
                         >
                           <ListItemText primary={category.name} />
+                          {open[category.uid] ? <MdExpandLess className={styles.icon} /> : <MdExpandMore className={styles.icon} />}
                         </ListItemButton>
                         <Collapse in={!!open[category.uid]} timeout="auto" unmountOnExit>
                           <List component="div" disablePadding>
