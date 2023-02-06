@@ -18,7 +18,7 @@ const CustomDrawer = (props: any) => {
     const [_, setCardId] = useLocalStorage('cart_id')
 
     const { user } = useCurrentUser()
-console.log(props)
+
     const logout = () => {
         setCardId(null)
         setToken(null)

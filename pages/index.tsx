@@ -159,7 +159,7 @@ const Home = (props: any) => {
     const router = useRouter()
 
     const categoriesData = getDataFromDehydratedState('categories', dehydratedState)
-console.log(categoriesData)
+
     const [key, variables] = getKeyAndVariablesFromQuery(router.query)
 
     const productsQueryKey = ['product_list_home', key]
