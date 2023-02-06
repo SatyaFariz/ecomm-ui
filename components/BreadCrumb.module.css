@@ -1,3 +1,11 @@
 .container {
   @apply flex gap-2 mb-2
 }
+
+.text {
+  @apply text-slate-500
+}
+
+.textActive {
+  @apply text-black font-bold
+}

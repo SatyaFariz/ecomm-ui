@@ -137,6 +137,7 @@ const CategoryPage = (props: any) => {
     <div>
       <BreadCrumb
         category={category}
+        lastItemActive={true}
       />
     </div>
   )

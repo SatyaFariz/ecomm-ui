@@ -21,6 +21,7 @@ import IconButton from '@mui/material/IconButton'
 import ProductDetailShimmer from '../../components/ProductDetailShimmer'
 import Product, { MediaGallery } from '../../types/product'
 import formatCurrency from '../../helpers/formatCurrency'
+import BreadCrumb from '../../components/BreadCrumb'
 
 const productQuery = `query productDetails($id: String!) {
 	products(
@@ -45,12 +46,11 @@ const productQuery = `query productDetails($id: String!) {
               url
             },
             categories {
-                level,
                 uid,
                 name,
-                path,
+                url_key,
                 breadcrumbs {
-                    category_level,
+                    category_url_key,
                     category_uid,
                     category_name
                 }
@@ -296,15 +296,7 @@ const Product = (props: any) => {
                 
                 <div className={styles.section}>
                     {category &&
-                    <div className={styles.breadcrumbs}>
-                        {category.breadcrumbs.map((item: any) =>
-                            <Fragment key={item.category_uid}>
-                                <div>{item.category_name?.trim()}</div>
-                                <div>/</div>
-                            </Fragment>
-                        )}
-                        <div>{category.name?.trim()}</div>
-                    </div>
+                    <BreadCrumb category={category}/>
                     }
                     <p className={styles.name}>{productName}</p>
                     {minimum_price.discount.percent_off > 0 &&
