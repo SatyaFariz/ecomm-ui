@@ -53,7 +53,11 @@ const CustomDrawer = (props: any) => {
                 </ListItem>
                 }
                 {categories?.map((category) => (
-                  <ListItem disablePadding key={category.uid}>
+                  <ListItem
+                    disablePadding 
+                    key={category.uid}
+                    component={Link} href={category.url_key}
+                  >
                     <ListItemButton>
                     <ListItemText primary={category.name} />
                     </ListItemButton>
