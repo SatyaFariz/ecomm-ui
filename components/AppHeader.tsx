@@ -122,7 +122,7 @@ const AppHeader: NextPage = () => {
 
     const showsBackButton = router.pathname !== '/'
     const isHomePage = router.pathname === '/'
-    const isProductPage = router.pathname.startsWith('/products')
+    const isCategoryPage = router.pathname === '/[category_slug]'
 
     return (
         <header className={styles.header} ref={headerRef}>
@@ -147,7 +147,7 @@ const AppHeader: NextPage = () => {
                 </div>
 
                 <div className={styles.icons}>
-                    {isHomePage &&
+                    {(isHomePage || isCategoryPage) &&
                     <IconButton onClick={() => toggleSearch(true)}>
                         <AiOutlineSearch className={styles.icon}/>
                     </IconButton>

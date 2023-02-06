@@ -151,8 +151,6 @@ const CategoryPage = (props: any) => {
       getDataFromDehydratedState(key, dehydratedState)
   )
 
-  console.log(data, 'products')
-
   if(!category) return null
   return (
     <div className={styles.container}>
