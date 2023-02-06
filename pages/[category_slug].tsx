@@ -1,4 +1,5 @@
 import { ReactElement, useState } from 'react'
+import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import qs from 'query-string'
 import { dehydrate, QueryClient } from 'react-query'
@@ -56,10 +57,10 @@ const categoriesQuery = `query categoryList($slug: String!) {
     uid,
     url_key,
     name
-    children {
-      uid,
-      url_key,
-      name
+    breadcrumbs {
+      category_level,
+      category_uid,
+      category_name
     }
   }
 }`
@@ -125,10 +126,12 @@ export async function getServerSideProps(context: any) {
 
 const CategoryPage = (props: any) => {
   const { dehydratedState } = props
-  console.log(dehydratedState)
+  const router = useRouter()
+  const { category_slug } = router.query
+  const categoriesData = getDataFromDehydratedState(['category', category_slug], dehydratedState)
   return (
     <div>
-
+      {JSON.stringify(categoriesData)}
     </div>
   )
 }
