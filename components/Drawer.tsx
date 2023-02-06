@@ -1,6 +1,8 @@
 import styles from './Drawer.module.css'
+import { Fragment } from 'react'
 import { useQueryClient } from 'react-query'
 import Drawer from '@mui/material/Drawer'
+import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -64,18 +66,52 @@ const CustomDrawer = (props: any) => {
                     </ListItemButton>
                 </ListItem>
                 }
-                {categories?.map((category) => (
-                  <ListItem
-                    disablePadding 
-                    key={category.uid}
-                    component={Link} 
-                    href={category.url_key}
-                  >
-                    <ListItemButton>
-                    <ListItemText primary={category.name} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                {categories?.map((category) => {
+                  if(category.children.length > 0) {
+                    return (
+                      <Fragment key={category.uid}>
+                        <ListItem
+                          disablePadding
+                          component={Link} 
+                          href={category.url_key}
+                        >
+                          <ListItemButton>
+                          <ListItemText primary={category.name} />
+                          </ListItemButton>
+                        </ListItem>
+                        <Collapse in={true} timeout="auto" unmountOnExit>
+                          <List component="div" disablePadding>
+                            {category.children.map(child => (
+                              <ListItem
+                                sx={{ pl: 4 }}
+                                disablePadding 
+                                key={child.uid}
+                                component={Link} 
+                                href={child.url_key}
+                              >
+                                <ListItemButton>
+                                <ListItemText primary={child.name} />
+                                </ListItemButton>
+                              </ListItem>
+                            ))}
+                          </List>
+                        </Collapse>
+                      </Fragment>
+                    )
+                  }
+                  return (
+                    <ListItem
+                      disablePadding 
+                      key={category.uid}
+                      component={Link} 
+                      href={category.url_key}
+                    >
+                      <ListItemButton>
+                      <ListItemText primary={category.name} />
+                      </ListItemButton>
+                    </ListItem>
+                  )
+                })}
                 <ListItem disablePadding>
                     <ListItemButton>
                     <ListItemText primary="Drafts" />

@@ -84,7 +84,12 @@ const categoriesGraphql = `{
     children {
       uid,
       url_key,
-      name
+      name,
+      children {
+        uid,
+        url_key,
+        name
+      }
     }
   }
 }`
