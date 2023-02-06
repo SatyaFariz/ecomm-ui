@@ -12,7 +12,7 @@ const BreadCrumb = (props: any) => {
                     <div>/</div>
                 </Fragment>
             )}
-            <div>{category.name?.trim()}</div>
+            <div>{category.name.trim()}</div>
         </div>
     )
 }
