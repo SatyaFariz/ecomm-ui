@@ -12,7 +12,7 @@ import useCurrentUser from '../hooks/useCurrentUser'
 import Category from '../types/category'
 
 const CustomDrawer = (props: any) => {
-    const categories: Category[] = props.categories
+    const categories: Category[] = props.categoriesHydratedData.data.categories.items[0]?.children
     const queryClient = useQueryClient()
     const [__, setToken] = useLocalStorage('token')
     const [_, setCardId] = useLocalStorage('cart_id')

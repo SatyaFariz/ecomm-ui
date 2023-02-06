@@ -198,7 +198,7 @@ const Home = (props: any) => {
             <Drawer 
               open={drawerOpen} 
               onClose={() => setDrawerOpen(false)}
-              categories={categoriesData.data.categories.items[0]?.children}
+              categoriesHydratedData={categoriesData}
             />
             <div className={styles.bannersContainer}>
                 <Swiper 
