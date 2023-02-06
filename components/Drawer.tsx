@@ -17,7 +17,7 @@ import Http from '../libs/http'
 import useQuery from '../hooks/useQuery'
 
 const CustomDrawer = (props: any) => {
-    const [open, setOpen] = useState({})
+    const [open, setOpen]: [{ [key: string]: boolean }, Function] = useState({})
     const { parentDehydratedState } = props
     const key = 'categories'
     const queryClient = useQueryClient()
@@ -72,24 +72,21 @@ const CustomDrawer = (props: any) => {
                     return (
                       <Fragment key={category.uid}>
                         <ListItemButton
-                          onClick={() => setOpen(prev => ({ ...prev, [category.uid]: !prev[category.uid] }))}
+                          onClick={() => setOpen((prev: { [key: string]: boolean }) => ({ ...prev, [category.uid]: !prev[category.uid] }))}
                         >
                           <ListItemText primary={category.name} />
                         </ListItemButton>
                         <Collapse in={!!open[category.uid]} timeout="auto" unmountOnExit>
                           <List component="div" disablePadding>
                             {category.children.map(child => (
-                              <ListItem
+                              <ListItemButton
                                 sx={{ pl: 4 }}
-                                disablePadding 
                                 key={child.uid}
                                 component={Link} 
                                 href={child.url_key}
                               >
-                                <ListItemButton>
-                                <ListItemText primary={child.name} />
-                                </ListItemButton>
-                              </ListItem>
+                                  <ListItemText primary={child.name} />
+                              </ListItemButton>
                             ))}
                           </List>
                         </Collapse>
@@ -97,16 +94,13 @@ const CustomDrawer = (props: any) => {
                     )
                   }
                   return (
-                    <ListItem
-                      disablePadding 
+                    <ListItemButton
                       key={category.uid}
                       component={Link} 
                       href={category.url_key}
                     >
-                      <ListItemButton>
-                      <ListItemText primary={category.name} />
-                      </ListItemButton>
-                    </ListItem>
+                        <ListItemText primary={category.name} />
+                    </ListItemButton>
                   )
                 })}
                 <ListItem disablePadding>
