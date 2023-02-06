@@ -34,7 +34,7 @@ const CustomDrawer = (props: any) => {
         >
             <div className={styles.header}>
                 <img
-                    src="https://werkidz.mygostore.com/_next/static/images/goStore-logo-64f7ac0ca37c2341f8ae739a75345580.svg"
+                    src="https://s3.ap-southeast-1.amazonaws.com/assets.femaledaily.com/web-assets/icon/ic-fd.svg"
                     alt="app logo"
                 />
             </div>
