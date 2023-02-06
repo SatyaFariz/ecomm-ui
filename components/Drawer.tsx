@@ -1,5 +1,5 @@
 import styles from './Drawer.module.css'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import Drawer from '@mui/material/Drawer'
 import Collapse from '@mui/material/Collapse';
@@ -17,6 +17,7 @@ import Http from '../libs/http'
 import useQuery from '../hooks/useQuery'
 
 const CustomDrawer = (props: any) => {
+    const [open, setOpen] = useState({})
     const { parentDehydratedState } = props
     const key = 'categories'
     const queryClient = useQueryClient()
@@ -70,16 +71,12 @@ const CustomDrawer = (props: any) => {
                   if(category.children.length > 0) {
                     return (
                       <Fragment key={category.uid}>
-                        <ListItem
-                          disablePadding
-                          component={Link} 
-                          href={category.url_key}
+                        <ListItemButton
+                          onClick={() => setOpen(prev => ({ ...prev, [category.uid]: !prev[category.uid] }))}
                         >
-                          <ListItemButton>
                           <ListItemText primary={category.name} />
-                          </ListItemButton>
-                        </ListItem>
-                        <Collapse in={true} timeout="auto" unmountOnExit>
+                        </ListItemButton>
+                        <Collapse in={!!open[category.uid]} timeout="auto" unmountOnExit>
                           <List component="div" disablePadding>
                             {category.children.map(child => (
                               <ListItem
