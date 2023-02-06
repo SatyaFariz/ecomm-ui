@@ -8,7 +8,10 @@ import getDataFromDehydratedState from '../helpers/getDataFromDehydratedState'
 import BreadCrumb from '../components/BreadCrumb'
 import useQuery from '../hooks/useQuery'
 import Http from '../libs/http'
+import ProductList from '../components/ProductList'
+import Pagination from '../components/Pagination'
 import Category from '../types/category'
+import ProductListShimmer from '../components/ProductListShimmer'
 
 const productQuery = `query search($search_term: String, $page: Int, $category_uid: String!) {
 	products(
@@ -157,6 +160,17 @@ const CategoryPage = (props: any) => {
         category={category}
         lastItemActive={true}
       />
+
+      {data ?
+      <>
+        <ProductList products={data.data?.products?.items}/>
+        <Pagination 
+            pageInfo={data.data?.products?.page_info}
+        />
+      </>
+      :
+      <ProductListShimmer/>
+      }
     </div>
   )
 }
