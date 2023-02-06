@@ -87,7 +87,7 @@ const CustomDrawer = (props: any) => {
                                 component={Link} 
                                 href={child.url_key}
                               >
-                                  <ListItemText primary={child.name} />
+                                  <ListItemText primary={child.name} className={styles.subcat} />
                               </ListItemButton>
                             ))}
                           </List>
