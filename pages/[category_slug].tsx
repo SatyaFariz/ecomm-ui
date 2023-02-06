@@ -155,7 +155,7 @@ const CategoryPage = (props: any) => {
 
   if(!category) return null
   return (
-    <div>
+    <div className={styles.container}>
       <BreadCrumb
         category={category}
         lastItemActive={true}
