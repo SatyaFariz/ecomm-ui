@@ -1,10 +1,14 @@
 import { ReactElement, useState } from 'react'
+import styles from '../styles/CategoryPage.module.css'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import qs from 'query-string'
 import { dehydrate, QueryClient } from 'react-query'
 import getDataFromDehydratedState from '../helpers/getDataFromDehydratedState'
 import BreadCrumb from '../components/BreadCrumb'
+import useQuery from '../hooks/useQuery'
+import Http from '../libs/http'
+import Category from '../types/category'
 
 const productQuery = `query search($search_term: String, $page: Int, $category_uid: String!) {
 	products(
@@ -130,7 +134,21 @@ const CategoryPage = (props: any) => {
   const router = useRouter()
   const { category_slug } = router.query
   const categoriesData = getDataFromDehydratedState(['category', category_slug], dehydratedState)
-  const category = categoriesData.data.categoryList[0]
+  const category: Category = categoriesData.data.categoryList[0]
+
+  const [key, variables] = getKeyAndVariablesFromQuery(category?.uid, router.query)
+  const { error, data }: any = useQuery(key, () =>
+      Http.post('/api/graphql', {
+          query: productQuery,
+          variables
+      }),
+      {
+        enabled: !!category
+      },
+      getDataFromDehydratedState(key, dehydratedState)
+  )
+
+  console.log(data, 'products')
 
   if(!category) return null
   return (
