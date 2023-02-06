@@ -54,7 +54,7 @@ const CustomDrawer = (props: any) => {
                     alt="app logo"
                 />
             </div>
-            <List>
+            <List className={styles.list}>
                 {user ?
                 <ListItem disablePadding onClick={logout}>
                     <ListItemButton>

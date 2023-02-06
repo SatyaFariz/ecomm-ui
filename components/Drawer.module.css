@@ -2,6 +2,10 @@
     @apply z-[9999999999]
 }
 
+.list {
+  @apply min-w-[65vw]
+}
+
 .header {
     @apply bg-white h-[64px] border-b border-slate-900/10 px-6 flex items-center
 }
