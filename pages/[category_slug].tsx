@@ -59,7 +59,7 @@ const categoriesQuery = `query categoryList($slug: String!) {
     url_key,
     name
     breadcrumbs {
-      category_level,
+      category_url_key,
       category_uid,
       category_name
     }
