@@ -8,7 +8,7 @@ interface Category {
   name: string,
   url_key?: string,
   children: Category[],
-  breadcrumbs: BreadCrumb[]
+  breadcrumbs?: BreadCrumb[]
 }
 
 export default Category

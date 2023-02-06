@@ -4,6 +4,7 @@ import Layout from '../components/Layout'
 import qs from 'query-string'
 import { dehydrate, QueryClient } from 'react-query'
 import getDataFromDehydratedState from '../helpers/getDataFromDehydratedState'
+import BreadCrumb from '../components/BreadCrumb'
 
 const productQuery = `query search($search_term: String, $page: Int, $category_uid: String!) {
 	products(
@@ -129,9 +130,14 @@ const CategoryPage = (props: any) => {
   const router = useRouter()
   const { category_slug } = router.query
   const categoriesData = getDataFromDehydratedState(['category', category_slug], dehydratedState)
+  const category = categoriesData.data.categoryList[0]
+
+  if(!category) return null
   return (
     <div>
-      {JSON.stringify(categoriesData)}
+      <BreadCrumb
+        category={category}
+      />
     </div>
   )
 }
